@@ -1,10 +1,12 @@
-# Nonuniqueness for Bernoulli percolation on nonamenable quasi-transitive graphs: a cleaned-up edition
+# Nonuniqueness for Bernoulli percolation on nonamenable quasi-transitive graphs: towards a deslopped cleaned-up version
 
-This repository hosts an **edited, human-readable version** of a recent
+The goal of this project is to create an **human-readable version** of the recent
 machine-generated manuscript:
 
 > *Nonuniqueness of percolation on nonamenable quasi-transitive graphs*
 > (credited to "OpenAI", dated 24 September 2026), referred to below as **[AI]**.
+
+Additionally, it would be nice to also obtain a lean verification of the proof. 
 
 The manuscript claims a proof of the Benjamini–Schramm conjecture
 `p_c < p_u` for Bernoulli **bond** percolation on every nonamenable
