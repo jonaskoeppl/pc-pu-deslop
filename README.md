@@ -252,10 +252,3 @@ latexmk -pdf main.tex
   quasi-transitive graphs.* J. Stat. Phys. 130 (2008).
 
 The full bibliography is in `paper/refs.bib`.
-
-## License
-
-Editorial material in this repository (edits, notes, reviews) is released
-under CC BY 4.0, unless stated otherwise. The licensing status of the
-original manuscript is noted in `original/README`. Please check it before
-redistributing.
