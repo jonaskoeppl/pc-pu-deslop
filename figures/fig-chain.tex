@@ -1,0 +1,29 @@
+% The switched root cluster as a chain of pieces attached by single seams (schematic)
+\begin{tikzpicture}[scale=0.95,
+    vtx/.style={circle, fill, inner sep=1.3pt},
+    piece/.style={draw=figaux, fill=figaux!10, rounded corners=9pt, thick},
+    root/.style={draw=figgrey, fill=figgrey!12, rounded corners=12pt},
+    seam/.style={figmain, line width=1.6pt}]
+  \draw[root] (0,-0.9) rectangle (3.2,0.9);
+  \node[font=\small] at (1.6,-1.25) {$A$};
+  \node[vtx] (x) at (0.6,0) {};
+  \node[font=\small, anchor=east] at (x.west) {$x$};
+  % pieces
+  \draw[piece] (4.2,-0.6) rectangle (6.2,0.6);
+  \draw[piece] (7.2,-0.6) rectangle (9.2,0.6);
+  \draw[piece] (11.0,-0.6) rectangle (13.0,0.6);
+  \node[font=\small] at (5.2,-0.95) {$B_{i_1}$};
+  \node[font=\small] at (8.2,-0.95) {$B_{i_2}$};
+  \node[font=\small] at (12.0,-0.95) {$B_{i_t}$};
+  \node at (10.1,0) {$\cdots$};
+  % seams
+  \draw[seam] (3.0,0.2) -- (4.4,0.1);
+  \draw[seam] (6.0,-0.1) -- (7.4,0.0);
+  \draw[seam] (9.0,0.15) -- (9.55,0.15);
+  \draw[seam] (10.65,0.1) -- (11.2,0.1);
+  \node[font=\small, text=figmain, anchor=south] at (3.7,0.2) {$e_{i_1}$};
+  \node[font=\small, text=figmain, anchor=south] at (6.7,0.05) {$e_{i_2}$};
+  \node[font=\small, text=figmain, anchor=south] at (10.9,0.15) {$e_{i_t}$};
+  \node[vtx] (z) at (12.6,0) {};
+  \node[font=\small, anchor=west] at (z.east) {$z$};
+\end{tikzpicture}

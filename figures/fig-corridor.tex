@@ -1,0 +1,39 @@
+% A corridor on the event Cor_w (schematic)
+\begin{tikzpicture}[scale=0.95,
+    vtx/.style={circle, fill, inner sep=1.3pt},
+    blob/.style={draw=figgrey, fill=figgrey!12, rounded corners=14pt},
+    corr/.style={figmain, line width=1.6pt},
+    blk/.style={figgrey, dashed, thick},
+    leg/.style={black, thick, decorate, decoration={snake, amplitude=0.9pt, segment length=6pt}}]
+  % exterior clusters
+  \draw[blob] (-2.6,-1.25) rectangle (1.5,1.25);
+  \draw[blob] (8.1,-1.25) rectangle (12.2,1.25);
+  \node[font=\small] at (-0.55,-1.6) {$C_u^{\Lambda_w}$};
+  \node[font=\small] at (10.15,-1.6) {$C_v^{\Lambda_w}$};
+  % corridor
+  \coordinate (u) at (1.1,0);
+  \coordinate (a) at (2.9,0.55);
+  \coordinate (b) at (4.8,0.75);
+  \coordinate (c) at (6.7,0.45);
+  \coordinate (v) at (8.5,0);
+  \draw[corr] (u) -- (a) -- (b) -- (c) -- (v);
+  % closed blockers at interior vertices
+  \foreach \p/\ang in {a/100, a/250, a/300, b/80, b/120, b/265, c/70, c/240, c/290} {
+    \draw[blk] (\p) -- ++(\ang:0.6);
+  }
+  \foreach \p in {a,b,c} \node[vtx, figmain] at (\p) {};
+  \node[vtx] at (u) {};
+  \node[vtx] at (v) {};
+  \node[font=\small, anchor=north east] at (1.15,-0.05) {$u$};
+  \node[font=\small, anchor=north west] at (8.45,-0.05) {$v$};
+  \node[font=\small, text=figmain] at (4.8,1.75) {interior $I_w$};
+  % terminals and exterior legs
+  \coordinate (x) at (-1.9,0.35);
+  \coordinate (y) at (11.5,-0.35);
+  \draw[leg] (x) -- (-0.4,-0.45) -- (u);
+  \draw[leg] (v) -- (9.9,0.45) -- (y);
+  \node[vtx] at (x) {};
+  \node[vtx] at (y) {};
+  \node[font=\small, anchor=south] at (x) {$x$};
+  \node[font=\small, anchor=south] at (y) {$y$};
+\end{tikzpicture}

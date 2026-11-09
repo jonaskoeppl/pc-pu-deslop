@@ -1,0 +1,272 @@
+\section{Critical moments and the near-critical susceptibility}\label{sec:moments}
+
+In this section we prove \cref{prop:efficient}, which completes the proof of \cref{thm:moments}, and
+then the susceptibility bound~\eqref{eq:apriori-chi} of \cref{thm:apriori}. We assume
+\cref{ass:G,ass:U} throughout. For a domain $\Lambda$, $p<p_c$ and $v\in V$ we write
+\begin{equation*}
+  \chi^\Lambda(v)\coloneqq\EE_p\abs{C^\Lambda_v}\,,
+\end{equation*}
+with $\chi^\Lambda(v)=0$ for $v\notin\Lambda$; the parameter $p$ will be clear from the context.
+
+The strategy for \cref{prop:efficient} was described after its statement in \cref{sec:part1}. We run a
+fixed efficient map slightly below $p_c$ and compare two bounds on the normalised susceptibility in the
+complement of an independent cluster~$A$, evaluated at the endpoint of $\ell$ steps of the map. The upper
+bound (\cref{sec:comparison}) says that one step can only multiply this quantity by a bounded factor,
+up to a boundary contribution controlled by $\Delta(p)$. The lower bound says that after
+$\ell\approx\log\chi(p)/\log(1/r)$ steps the endpoint has escaped from~$A$. Together they bound $\Delta(p)$
+from below, which by Russo's formula controls the growth of~$\chi$ (\cref{sec:proof-efficient}).
+
+\subsection{Two comparison lemmas}\label{sec:comparison}
+
+For a domain $\Lambda$, $v\in\Lambda$ and $M\in\N_0$, let $B^\Lambda_{\mathrm{int}}(v,M)$ be the set of
+vertices joined to $v$ by an open path in $\Lambda$ of length at most~$M$.
+
+\begin{lemma}[Maximal susceptibility in an intrinsic ball]\label{lem:intrinsic-ball}
+For every domain $\Lambda$, $v\in\Lambda$, $M\in\N_0$ and $p\in(0,p_c)$,
+\begin{equation}\label{eq:intrinsic-ball}
+  \EE_p\max_{z\in B^\Lambda_{\mathrm{int}}(v,M)}\chi^\Lambda(z)\le\Bigl(1+\frac{1-p}{p}\,M\Bigr)\chi^\Lambda(v)\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $M=0$ there is nothing to prove. Let first $\Lambda$ be finite, and let $Y=Y(\omega)$ be a maximiser
+of $\chi^\Lambda$ over $B^\Lambda_{\mathrm{int}}(v,M)$, chosen by a fixed rule.
+
+\emph{A resampling identity.} For $w\in\Lambda$, let $W\coloneqq C^\Lambda_w(\omega)$, and let
+$\tilde\omega$ be obtained from $\omega$ by resampling, independently, all edges with an endpoint in~$W$.
+Given $W$, the other edges keep their product law, because the event $\{C^\Lambda_w=W\}$ depends only on
+the edges with an endpoint in~$W$. Hence $\tilde\omega$ has law $\PP_p$ and is independent of~$W$, and
+$\PP(Y(\tilde\omega)\in W)=\sum_z\PP_p(Y=z)\,T_p^\Lambda(w,z)$. Summing over $w$ and using the symmetry of
+$T^\Lambda_p$ gives
+\begin{equation}\label{eq:intrinsic-identity}
+  \sum_{w\in\Lambda}\PP\bigl(Y(\tilde\omega)\in C^\Lambda_w(\omega)\bigr)
+  =\EE_p\,\chi^\Lambda(Y)=\EE_p\max_{z\in B^\Lambda_{\mathrm{int}}(v,M)}\chi^\Lambda(z)\,.
+\end{equation}
+
+\emph{Entering the cluster of~$w$.} If $v\notin W$ and $Y(\tilde\omega)\in W$, take a self-avoiding
+$\tilde\omega$-open path in $\Lambda$ of length at most $M$ from $v$ to $Y(\tilde\omega)$, and its first
+edge $\{b,a\}$ with $b\notin W$ and $a\in W$. This edge is closed in~$\omega$, since it belongs to the
+boundary of the $\omega$-cluster~$W$. The part of the path before it uses only edges without an
+endpoint in~$W$, which are the same in $\omega$ and $\tilde\omega$, and it has length at most $M-1$.
+Let $N_w(\omega)$ be the number of edges $\{b,a\}$ with $a\in W$, $b\in\Lambda\setminus W$, such that
+$b$ is joined to $v$ by an $\omega$-open path in $\Lambda\setminus W$ of length at most $M-1$; put
+$N_w\coloneqq0$ if $v\in W$. Then
+\begin{equation*}
+  \PP\bigl(Y(\tilde\omega)\in W\bigr)\le T^\Lambda_p(v,w)+\EE_pN_w\,.
+\end{equation*}
+
+\emph{Counting the entering edges.} Let $e$ be counted by $N_w(\omega)$, and let $\omega^e$ be $\omega$
+with $e$ opened. In $\omega^e$, the edge $e$ is the only open edge between $W$ and its complement, so
+$v\connin{\Lambda}w$ and $e$ is a bridge separating $v$ from~$w$. Every bridge separating $v$ from $w$
+that comes before $e$ lies on the path of length at most $M-1$ from $v$ to~$b$. Hence $e$ is among the
+first $M$ bridges separating $v$ from $w$ in~$\omega^e$. Since $\omega$ is recovered from $\omega^e$ by
+closing~$e$, each configuration $\omega'$ with $v\connin{\Lambda}w$ arises from at most $M$ pairs
+$(\omega,e)$, and $\PP_p(\omega)=((1-p)/p)\,\PP_p(\omega^e)$. Therefore
+$\EE_pN_w\le((1-p)/p)\,M\,T_p^\Lambda(v,w)$. Summing over $w$ and using~\eqref{eq:intrinsic-identity}
+proves~\eqref{eq:intrinsic-ball} for finite~$\Lambda$.
+
+\emph{Infinite domains.} Exhaust $\Lambda$ by finite domains containing~$v$. The susceptibilities
+increase to $\chi^\Lambda$, the intrinsic balls increase to $B^\Lambda_{\mathrm{int}}(v,M)\subseteq
+B(v,M)$, and the maxima increase to the maximum. Monotone convergence concludes.
+\end{proof}
+
+Recall from \cref{lem:map-basic} the unconditional endpoint kernel $F_p$ of a map and its success
+probability $s_p$ at parameter~$p$, and put $K_p\coloneqq F_p/s_p$.
+
+\begin{lemma}[A map in a deleted domain]\label{lem:map-deleted}
+Let $\Phi$ be a local endpoint map with cap $M\ge2$, success probability $s>0$ and kernel norm $r<1$.
+There is $p_\Phi\in[p_c/2,p_c)$ such that $s_p\ge s/2$ and $\norm{K_p}\le\e r$ for $p\in[p_\Phi,p_c)$.
+Moreover, there are $Z\in[2,CM/s]$, with $C$ depending only on~$G$, and $C_\Phi<\infty$ such that for
+all $p\in[p_\Phi,p_c)$, $A\subseteq V$ and $v\in V$,
+\begin{equation}\label{eq:map-deleted}
+  (K_pF_A)(v)\le Z\,F_A(v)+C_\Phi\,g_A(v)\,,
+\end{equation}
+where
+\begin{equation*}
+  F_A(v)\coloneqq\frac{\chi^{V\setminus A}(v)}{\chi(p)}\qquad\text{and}\qquad
+  g_A(v)\coloneqq\sum_{\substack{a\in A\\\dist(v,a)\le M}}\ \sum_{b\sim a}F_A(b)\,.
+\end{equation*}
+\end{lemma}
+
+The function $F_A$ is the susceptibility in the complement of~$A$, normalised by the full
+susceptibility; it vanishes on~$A$. The term $g_A(v)$ collects its values at the outer boundary of $A$
+near~$v$.
+
+\begin{proof}
+By \cref{lem:map-basic}, $s_p\to s$ and $\norm{F_p-F_{p_c}}\to0$ as $p\to p_c$, so
+$\norm{K_p}\to\norm{K}=r$; this gives~$p_\Phi$. Fix $p\in[p_\Phi,p_c)$, $A$ and $v$. Whenever the rule at
+$v$ outputs $y$, the cluster $C_v$ has at most $M$ vertices, so a self-avoiding open path $\pi$ of length
+at most $M$ joins $v$ to~$y$; choose one by a fixed rule. We bound $\sum_yF_p(v,y)F_A(y)$ by splitting
+according to~$\pi$.
+
+If $\pi$ avoids $A$, then $v\notin A$ and $y\in B^{V\setminus A}_{\mathrm{int}}(v,M)$, so by
+\cref{lem:intrinsic-ball} this part is at most
+$\EE_p\max_{z\in B^{V\setminus A}_{\mathrm{int}}(v,M)}F_A(z)\le(1+(1-p)M/p)\,F_A(v)$. If $y\in A$, then
+$F_A(y)=0$. In the remaining case $\pi$ meets $A$ and $y\notin A$. Let $\{a,b\}$ be the last edge of
+$\pi$ with $a\in A$ and $b\notin A$; then $\dist(v,a)\le M$, and the segment of $\pi$ from $b$ to $y$
+lies in $V\setminus A$ and has length $l\le M$. By the Harris inequality applied to the event that this
+segment is open,
+\begin{equation*}
+  \chi^{V\setminus A}(b)\ge\EE_p\bigl[\abs{C^{V\setminus A}_y};\text{ the segment is open}\bigr]
+  \ge p^l\chi^{V\setminus A}(y)\,,
+\end{equation*}
+so $F_A(y)\le p^{-M}F_A(b)$, and this part is at most $p^{-M}g_A(v)$. Altogether
+$\sum_yF_p(v,y)F_A(y)\le(1+(1-p)M/p)F_A(v)+p^{-M}g_A(v)$. Dividing by $s_p\ge s/2$ and using
+$p\ge p_c/2$ gives~\eqref{eq:map-deleted} with $Z\coloneqq\max\{2,(2/s)(1+2M/p_c)\}$ and
+$C_\Phi\coloneqq(2/s)(2/p_c)^M$.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{\cref{prop:efficient}}{Proposition 3.7}}\label{sec:proof-efficient}
+
+\begin{proof}[Proof of \cref{prop:efficient}]
+\emph{Stage 1: choice of a map.} Let $\gamma\in(0,1)$. Let $C_Z$ be a constant, depending only on~$G$,
+with $\log Z\le\log(1/s)+\log M+C_Z$ for the constant $Z$ of \cref{lem:map-deleted}. If a map $\Phi$
+with $r<\e^{-1}$ satisfies $\operatorname{eff}(\Phi)\le(\log2)/2$, then
+$\log(1/r)\ge(\log2)/\operatorname{eff}(\Phi)\ge2$, because $\log(1/s)+\log M\ge\log 2$, and
+\begin{equation*}
+  \frac{\log(1/s)+\log M+C_Z}{\log(1/r)-1}=\frac{\operatorname{eff}(\Phi)\log(1/r)+C_Z}{\log(1/r)-1}
+  \le\Bigl(2+\frac{2C_Z}{\log2}\Bigr)\operatorname{eff}(\Phi)\,.
+\end{equation*}
+By hypothesis there are such maps with arbitrarily small efficiency ratio. We fix one, $\Phi$, with cap
+$M\ge2$, success probability $s$ and $r<\e^{-1}$, for which the left-hand side is at most~$\gamma$. Let
+$p_\Phi$, $Z$ and $C_\Phi$ be as in \cref{lem:map-deleted}, and note that $\log Z/(\log(1/r)-1)\le\gamma$.
+
+\emph{Stage 2: an upper bound through the boundary.} Fix $p\in[p_\Phi,p_c)$ and write $\chi=\chi(p)$.
+Let $A\coloneqq C_o(\hat\omega)$ for an independent configuration $\hat\omega$ with law $\PP_p$, and
+size-bias it: for functions $\mathsf G$ of a vertex set put
+$\Ehat[\mathsf G(A)]\coloneqq\EE_p[\abs{C_o}\,\mathsf G(C_o)]/\chi$. For each vertex $a$, exposing the
+cluster $C_a$ leaves the edges without an endpoint in $C_a$ fresh, so
+\begin{equation*}
+  \Ehat\Bigl[\1\{a\in A\}\sum_{b\sim a}F_A(b)\Bigr]
+  =\frac1{\chi^2}\sum_{b\sim a}\EE_p\bigl[\abs{C_a}\1\{o\in C_a\}\,\abs{C_b}\1\{C_b\neq C_a\}\bigr]
+  \le\Delta(p)\,,
+\end{equation*}
+where we used that $\abs{C_b^{V\setminus C_a}}=\abs{C_b}\1\{C_b\neq C_a\}$ and, by transitivity, that
+$\sum_{b\sim a}\EE_p[\abs{C_a}\abs{C_b};C_a\neq C_b]=\chi^2\Delta(p)$ for every~$a$. Hence
+$\Ehat\,g_A(v)\le\abs{B(o,M)}\,\Delta(p)$ for every~$v$. Iterating~\eqref{eq:map-deleted}, using that
+$K_p$ has nonnegative entries,
+\begin{equation*}
+  K_p^\ell F_A\le Z^\ell F_A+C_\Phi\sum_{i=0}^{\ell-1}Z^{\ell-1-i}K_p^ig_A\,.
+\end{equation*}
+Evaluate at $o\in A$, where $F_A(o)=0$, and take $\Ehat$; the kernel $K_p$ is deterministic and
+stochastic, and $Z\ge2$. This gives
+\begin{equation}\label{eq:efficient-upper}
+  \Ehat\,(K_p^\ell F_A)(o)\le C_\Phi\abs{B(o,M)}\,\Delta(p)\sum_{i=0}^{\ell-1}Z^{\ell-1-i}
+  \le2C_\Phi\abs{B(o,M)}\,Z^{\ell-1}\Delta(p)\,.
+\end{equation}
+
+\emph{Stage 3: a lower bound from spreading.} Exposing $A=C_o$ as before,
+\begin{equation*}
+  \Ehat\,(K_p^\ell F_A)(o)=\frac1{\chi^2}\sum_vK_p^\ell(o,v)\,\EE_p\bigl[\abs{C_o}\abs{C_v};\,C_o\neq C_v\bigr]\,.
+\end{equation*}
+Without the restriction $C_o\neq C_v$, the Harris inequality gives
+$\EE_p[\abs{C_o}\abs{C_v}]\ge\chi^2$, and $K_p^\ell$ is stochastic, so the sum would be at least one. The
+removed part equals, by the mass-transport principle applied to the mass
+$\abs{C_z}\sum_{v\in C_z}K_p^\ell(z,v)$ sent from $z$ to every vertex of~$C_z$,
+\begin{equation*}
+  \sum_vK_p^\ell(o,v)\,\EE_p\bigl[\abs{C_o}^2;\,v\in C_o\bigr]
+  =\EE_p\bigl[\abs{C_o}\,\langle\1_{C_o},K_p^\ell\1_{C_o}\rangle\bigr]
+  \le\norm{K_p}^\ell\,\EE_p\abs{C_o}^2\le(\e r)^\ell\chi^3\,,
+\end{equation*}
+by \cref{lem:correlation}\ref{it:tree}. Choose $\ell\coloneqq\lceil\log(2\chi)/(\log(1/r)-1)\rceil$, so
+that $(\e r)^\ell\chi=\e^{-(\log(1/r)-1)\ell}\chi\le1/2$. Then $\Ehat\,(K_p^\ell F_A)(o)\ge1/2$.
+
+\emph{Stage 4: growth of the susceptibility.} Since $\ell-1\le\log(2\chi)/(\log(1/r)-1)$ and
+$\log Z\le\gamma(\log(1/r)-1)$, we have $Z^{\ell-1}\le(2\chi)^\gamma$. Comparing
+with~\eqref{eq:efficient-upper}, we obtain $\Delta(p)\ge c_\Phi\chi^{-\gamma}$ for all $p\in[p_\Phi,p_c)$, with $c_\Phi>0$ depending on the fixed map. By \cref{lem:russo},
+$(1-p)\chi'=\chi^2\Delta(p)\ge c_\Phi\chi^{2-\gamma}$ for almost every such~$p$. Hence the locally
+absolutely continuous function $\chi^{-(1-\gamma)}$ has derivative at most $-(1-\gamma)c_\Phi$ almost
+everywhere on $[p_\Phi,p_c)$. Integrating from $p$ to $p'<p_c$ and letting $p'\uparrow p_c$ gives
+$\chi(p)^{-(1-\gamma)}\ge(1-\gamma)c_\Phi(p_c-p)$. Since $\chi$ is bounded on $[0,p_\Phi]$, we conclude
+that for every $\gamma\in(0,1)$ there is $C_\gamma$ with
+\begin{equation}\label{eq:efficient-chi}
+  \chi(p)\le C_\gamma\,(p_c-p)^{-1/(1-\gamma)}\qquad\text{for all }p\in[0,p_c)\,.
+\end{equation}
+
+\emph{Stage 5: the critical tail.} Let $N\in\N$ be large and $p\coloneqq p_c-N^{-1/2}$. Explore $C_o$ in
+a fixed order, testing each edge at most once, until the cluster is exhausted or $N$ vertices have been
+found. This uses at most $dN$ tests, and the record of the exploration decides the event
+$\{\abs{C_o}\ge N\}$. Let $\mathcal L_N$ be the likelihood ratio of the record under $\PP_{p_c}$ with
+respect to~$\PP_p$; each test contributes a factor $p_c/p$ if the edge is open and $(1-p_c)/(1-p)$ if it
+is closed. For $b>1$, the conditional $b$-th moment of one such factor under $\PP_p$ is
+\begin{equation*}
+  \varphi_b(p)\coloneqq p\Bigl(\frac{p_c}p\Bigr)^b+(1-p)\Bigl(\frac{1-p_c}{1-p}\Bigr)^b
+  \le1+C_b(p_c-p)^2\,,
+\end{equation*}
+because $\varphi_b$ is smooth near the interior point $p_c$, with $\varphi_b(p_c)=1$ and
+$\varphi_b'(p_c)=0$. Conditioning successively on the at most $dN$ tests gives
+$\EE_p\mathcal L_N^b\le(1+C_b/N)^{dN}\le\e^{dC_b}$. By Hölder's and Markov's inequalities,
+\begin{equation*}
+  \PP_{p_c}(\abs{C_o}\ge N)=\EE_p\bigl[\mathcal L_N\1\{\abs{C_o}\ge N\}\bigr]
+  \le\e^{dC_b/b}\,\Bigl(\frac{\chi(p)}{N}\Bigr)^{1-1/b}\,.
+\end{equation*}
+By~\eqref{eq:efficient-chi}, $\chi(p)\le C_\gamma N^{1/(2(1-\gamma))}$, so
+$\PP_{p_c}(\abs{C_o}\ge N)\le C_{\gamma,b}N^{-\alpha'}$ with
+$\alpha'\coloneqq(1-1/b)(1-1/(2(1-\gamma)))$. Given $\alpha\in(0,1/2)$, choose $\gamma$ small and $b$
+large such that $\alpha'>\alpha$. Then
+\begin{equation*}
+  \EE_{p_c}\abs{C_o}^\alpha=\sum_{N\ge0}\bigl((N+1)^\alpha-N^\alpha\bigr)\PP_{p_c}(\abs{C_o}>N)
+  \le1+C\sum_{N\ge1}N^{\alpha-1-\alpha'}<\infty\,.\qedhere
+\end{equation*}
+\end{proof}
+
+\subsection{The near-critical susceptibility}\label{sec:chi}
+
+We now prove the susceptibility bound~\eqref{eq:apriori-chi}. Its source is the following covariance
+inequality for functions determined by an algorithm, due to O'Donnell, Saks, Schramm and
+Servedio~\cite[Section~3.3, Equation~(6)]{OSSS05}; we include a proof in \cref{app:osss}.
+
+\begin{lemma}[Decision-tree covariance inequality]\label{lem:osss}
+Let $X=(X_i)_{i\in I}$ be a finite family of independent random variables, each taking finitely many
+values, let $g=g(X)$ take values in
+$[0,1]$, and let an algorithm, possibly using independent randomness, determine $g(X)$ by querying the
+coordinates of $X$ one at a time, never the same coordinate twice. Let $\operatorname{rev}_i$, the
+\emph{revealment} of~$i$, be the probability that coordinate $i$ is queried, and let $X^{(i)}$ be $X$ with $X_i$ replaced by an independent copy.
+Then, for every real function $f$,
+\begin{equation*}
+  \abs{\Cov(f(X),g(X))}\le\sum_{i\in I}\operatorname{rev}_i\,\EE\abs{f(X)-f(X^{(i)})}\,.
+\end{equation*}
+\end{lemma}
+
+\begin{proof}[Proof of~\eqref{eq:apriori-chi}]
+Fix $\alpha\in(0,1/2)$ and put $C_\alpha\coloneqq\EE_{p_c}\abs{C_o}^\alpha$, which is finite by \cref{thm:moments}.
+Let $\Lambda$ be a finite domain, $v\in\Lambda$, $n\ge2$ and $p\in(0,p_c]$. Let
+$f\coloneqq\1\{\abs{C_v^\Lambda}\ge n\}$ and $\Psi(p)\coloneqq\PP_p(\abs{C_v^\Lambda}\ge n)$. Independently,
+mark every vertex of $\Lambda$ with probability $1/n$, and let $g$ be the indicator that $C_v^\Lambda$
+contains a mark. An algorithm that reveals all marks and then explores the clusters in $\Lambda$ of all
+marked vertices determines~$g$. It queries an edge only if one of its endpoints lies in the cluster of a
+marked vertex, which for a given vertex $x$ has probability
+\begin{equation*}
+  \EE_p\bigl[1-(1-1/n)^{\abs{C_x^\Lambda}}\bigr]\le\EE_p\min\{1,\abs{C_x^\Lambda}/n\}
+  \le n^{-\alpha}\EE_p\abs{C_x^\Lambda}^\alpha\le C_\alpha n^{-\alpha}\,,
+\end{equation*}
+by monotonicity in $p$ and in the domain. Thus every edge has revealment at most $2C_\alpha n^{-\alpha}$. The marks
+do not influence~$f$, and for an edge $e$ the increasing indicator $f$ satisfies
+$\EE\abs{f(X)-f(X^{(e)})}=2p(1-p)\PP_p(e\text{ is pivotal for }f)$. By \cref{lem:osss} and Russo's
+formula $\Psi'(p)=\sum_e\PP_p(e\text{ is pivotal for }f)$ on the finite domain,
+\begin{equation*}
+  \Cov(f,g)\le4p(1-p)\,C_\alpha n^{-\alpha}\Psi'(p)\le C_\alpha n^{-\alpha}\Psi'(p)\,.
+\end{equation*}
+On the other hand, conditionally on the configuration, $g=1$ with probability at least $1-(1-1/n)^n$
+on $\{f=1\}$, and $\EE g\le C_\alpha n^{-\alpha}$, so $\Cov(f,g)\ge\Psi(p)\bigl(1-(1-1/n)^n-C_\alpha n^{-\alpha}\bigr)\ge\Psi(p)/2$
+for $n\ge n_\alpha$. Hence $\Psi'(p)\ge c_\alpha n^\alpha\Psi(p)$ on $(0,p_c]$, and integrating from $p$ to $p_c$,
+\begin{equation*}
+  \PP_p\bigl(\abs{C_v^\Lambda}\ge n\bigr)\le\Psi(p_c)\,\e^{-c_\alpha(p_c-p)n^\alpha}\le C_\alpha n^{-\alpha}\e^{-c_\alpha(p_c-p)n^\alpha}\,,
+\end{equation*}
+where $\Psi(p_c)\le\PP_{p_c}(\abs{C_o}\ge n)\le C_\alpha n^{-\alpha}$. Letting $\Lambda\uparrow V$, which is legitimate
+because $\{\abs{C_v}\ge n\}$ has a finite witness, we obtain for $\delta=p_c-p$ and all $n\ge1$
+\begin{equation*}
+  \PP_p(\abs{C_o}\ge n)\le C'_\alpha n^{-\alpha}\e^{-c_\alpha\delta n^\alpha}\,,\qquad
+  C'_\alpha\coloneqq\max\bigl\{C_\alpha,\,n_\alpha^\alpha\e^{c_\alpha n_\alpha^\alpha}\bigr\}\,,
+\end{equation*}
+where the second term of the maximum covers the finitely many $n<n_\alpha$. The function
+$y\mapsto y^{-\alpha}\e^{-c_\alpha\delta y^\alpha}$ is decreasing on $(0,\infty)$, and the substitution
+$y=(c_\alpha\delta)^{-1/\alpha}z$ gives
+\begin{equation*}
+  \chi(p)=\sum_{n\ge1}\PP_p(\abs{C_o}\ge n)\le C'_\alpha\int_0^\infty y^{-\alpha}\e^{-c_\alpha\delta y^\alpha}\dd y
+  =C''_\alpha\,\delta^{-(1-\alpha)/\alpha}
+\end{equation*}
+with $C''_\alpha\coloneqq C'_\alpha c_\alpha^{-(1-\alpha)/\alpha}\int_0^\infty z^{-\alpha}\e^{-z^\alpha}\dd z$, which is finite because
+$\alpha<1$. For $\alpha=1/(2+\eta)$ we have $(1-\alpha)/\alpha=1+\eta$, which
+proves~\eqref{eq:apriori-chi}.
+\end{proof}

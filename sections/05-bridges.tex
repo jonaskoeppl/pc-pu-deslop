@@ -1,0 +1,203 @@
+\section{Bridges in critical clusters}\label{sec:bridges}
+
+In this section we prove \cref{prop:good}. Only \cref{ass:G} is used, and all configurations have
+parameter~$p_c$. The idea is to detect long chains of bridges with random marks. Mark every vertex
+independently with a small probability~$h$. If a vertex $y$ of $C_o$ is the only mark in~$C_o$, then
+every bridge separating $o$ from $y$ is pivotal for the event that $C_o$ contains a mark. An
+exploration-martingale argument shows that this event has, conditionally on its occurrence, at most
+about $\sqrt{\log(1/h)/h}$ open pivotal edges, with exponential tails (\cref{lem:ghost}). Choosing $h$
+as a function of $M$ yields a tail bound for the bridge radius of clusters of size at most~$M$
+(\cref{lem:bridge-radius}). Finally, a cluster that is not $M$-good is turned into one with a large
+bridge radius by closing the few edges that attach a long piece (\cref{sec:proof-good}).
+
+\subsection{Pivotal edges of a marked cluster}\label{sec:ghost}
+
+Let $\Lambda$ be a domain, $x\in\Lambda$ and $h\in(0,1/2]$. Independently of the edges, mark every
+vertex with probability~$h$, and write $\PP$ and $\EE$ for the joint law of the configuration at
+parameter $p_c$ and the marks. Let
+\begin{equation*}
+  \mathcal G=\mathcal G(\Lambda,x,h)\coloneqq\{C_x^\Lambda\text{ contains a mark}\}\,.
+\end{equation*}
+An edge is \emph{pivotal} for $\mathcal G$ if changing its state, with the marks and all other edges
+fixed, changes $\1_{\mathcal G}$. Let $\Piv=\Piv(\Lambda,x,h)$ be the set of open edges that are
+pivotal for~$\mathcal G$. Since $\mathcal G$ is increasing, an open pivotal edge forces $\mathcal G$ to
+occur.
+
+\begin{lemma}[Pivotal edges of the marked event]\label{lem:ghost}
+Assume \cref{ass:G}. There is a constant $C\ge1$, depending only on $d$ and $p_c$, such that with
+$\kappa_h\coloneqq C\sqrt{\log(1/h)/h}$ the following holds for every domain $\Lambda$, every
+$x\in\Lambda$, every integer $i\ge0$ and every $r\ge0$:
+\begin{equation}\label{eq:ghost}
+  \EE\Bigl[\binom{\abs{\Piv}}{i}\1_{\mathcal G}\Bigr]\le\kappa_h^i\,\PP(\mathcal G)\,,\qquad
+  \PP\bigl(\mathcal G,\ \abs{\Piv}\ge r\bigr)\le2\,\PP(\mathcal G)\,\e^{-r/(4\kappa_h)}\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+\emph{Stage 1: an exploration and its score.} Explore $C_x^\Lambda$ edge by edge in an order that does
+not depend on the marks, testing each edge of $\Lambda$ incident to a discovered vertex at most once,
+and check the mark of each newly discovered vertex immediately. Stop at the first mark or when the
+cluster is exhausted. By \cref{lem:pc} the cluster is almost surely finite, so the procedure stops and
+decides~$\mathcal G$. Let $\mathcal T$ be the number of tested edges and
+\begin{equation*}
+  Y\coloneqq\sum_{e\text{ tested}}\bigl(\omega(e)-p_c\bigr)\,.
+\end{equation*}
+Given the configuration, the discovery order of $C_x^\Lambda$ is fixed, and the index $\mathsf g$ of the
+first marked vertex in this order is geometric with parameter~$h$; moreover
+$\mathcal G=\{\mathsf g\le\abs{C_x^\Lambda}\}$ and $\mathcal T\le d\min\{\mathsf g,\abs{C_x^\Lambda}\}$.
+A geometric variable conditioned to be at most $n$ is stochastically smaller than itself, so
+$\EE[\mathsf g\1\{\mathsf g\le n\}]\le\PP(\mathsf g\le n)/h$. Averaging over the configuration gives
+\begin{equation}\label{eq:ghost-T}
+  \EE\mathcal T\le d/h\qquad\text{and}\qquad\EE[\mathcal T\given\mathcal G]\le d/h\,.
+\end{equation}
+
+\emph{Stage 2: the score counts open pivotal edges.} Whether an edge $e$ is tested is determined by the
+marks and the states of the other edges, because the procedure decides to test $e$ before seeing
+$\omega(e)$. Every pivotal edge for $\mathcal G$ is tested, since otherwise the outcome of the
+procedure would not depend on its state. Conditionally on the marks and on all edges other than~$e$,
+either $e$ is pivotal, and then $\1_{\mathcal G}=\omega(e)$ and $e$ is tested, or $\1_{\mathcal G}$ and
+the testing indicator do not depend on $\omega(e)$. In both cases
+$\EE[(\omega(e)-p_c)\1\{e\text{ tested}\}\1_{\mathcal G}\given\cdot\,]=p_c(1-p_c)\1\{e\text{ pivotal}\}$.
+Summing over $e$, which is justified by $\abs{Y}\le\mathcal T$ and~\eqref{eq:ghost-T}, and using that
+pivotality of $e$ does not depend on $\omega(e)$, we get
+\begin{equation}\label{eq:ghost-score}
+  \EE[Y\1_{\mathcal G}]=p_c(1-p_c)\sum_e\PP(e\text{ pivotal})=(1-p_c)\,\EE\abs{\Piv}
+  =(1-p_c)\,\EE\bigl[\abs{\Piv}\1_{\mathcal G}\bigr]\,.
+\end{equation}
+
+\emph{Stage 3: the first moment.} Each tested edge is a fresh Bernoulli variable given the history of
+the exploration, and $\log\EE\e^{\vartheta(\omega(e)-p_c)}\le \vartheta^2/8$ by Hoeffding's lemma. Hence
+$\exp(\vartheta Y_n-\vartheta^2\mathcal T_n/8)$, with $Y_n$ and $\mathcal T_n$ the score and the number of
+tests after $n$ tests, is a supermartingale, and Fatou's lemma gives
+$\EE\exp(\vartheta Y-\vartheta^2\mathcal T/8)\le1$ for all $\vartheta\in\R$. Jensen's inequality conditionally
+on~$\mathcal G$, together with $\PP(\mathcal G)\ge\PP(x\text{ is marked})=h$ and~\eqref{eq:ghost-T},
+yields
+\begin{equation*}
+  \vartheta\,\EE[Y\given\mathcal G]\le\log\frac1{\PP(\mathcal G)}+\frac{\vartheta^2}8\,\EE[\mathcal T\given\mathcal G]
+  \le\log\frac1h+\frac{\vartheta^2d}{8h}\,.
+\end{equation*}
+With $\vartheta=\sqrt{8h\log(1/h)/d}$ and~\eqref{eq:ghost-score} this gives
+\begin{equation*}
+  \EE\bigl[\abs{\Piv}\given\mathcal G\bigr]\le\frac{\sqrt{d/2}}{1-p_c}\sqrt{\frac{\log(1/h)}{h}}\,,
+\end{equation*}
+which is the case $i=1$ of~\eqref{eq:ghost} once $C\ge\sqrt{d/2}/(1-p_c)$. We also take $C\ge1$, so
+that $\kappa_h\ge1$ for $h\le1/2$. The bound is uniform in $\Lambda$ and~$x$.
+
+\emph{Stage 4: a recursion for binomial moments.} Put $b_i(\Lambda,x)\coloneqq
+\EE[\binom{\abs{\Piv}}{i}\1_{\mathcal G}]$, so $b_0(\Lambda,x)=\PP(\mathcal G)$. On $\mathcal G$, every
+open pivotal edge is a bridge of $C_x^\Lambda$ separating $x$ from all marks of $C_x^\Lambda$, so the
+open pivotal edges are linearly ordered from $x$ towards the marks. For an oriented edge $(a,b)$ with
+$a,b\in\Lambda$, let $C^\Lambda_{x,ab}$ be the cluster of $x$ in $\Lambda$ when the edge $\{a,b\}$ is
+declared closed. We claim that, for $i\ge1$,
+\begin{equation}\label{eq:ghost-recursion}
+  b_i(\Lambda,x)=p_c\sum_{(a,b)}\ \sum_{W}\PP\bigl(C^\Lambda_{x,ab}=W\bigr)\,(1-h)^{\abs{W}}\,
+  b_{i-1}(\Lambda\setminus W,b)\,,
+\end{equation}
+where the inner sum runs over finite sets $W\subseteq\Lambda$ with $x,a\in W$ and $b\notin W$. To see
+this, decompose a selected set of $i$ open pivotal edges according to its element $e=\{a,b\}$ closest
+to~$x$, oriented away from~$x$. Then $W=C^\Lambda_{x,ab}$ contains no mark, $e$ is open, and $e$ is the
+only open edge between $W$ and its complement in~$\Lambda$. Hence $C_x^\Lambda=W\cup
+C_b^{\Lambda\setminus W}$, and an edge of $C_b^{\Lambda\setminus W}$ is pivotal for $\mathcal G$ if and
+only if it is pivotal for $\mathcal G(\Lambda\setminus W,b,h)$. So the other $i-1$ selected edges are
+open pivotal edges of the latter event, and conversely every such configuration arises. The event
+$\{C^\Lambda_{x,ab}=W\}$ depends only on the edges with an endpoint in $W$ other than~$e$; the marks of
+$W$, the state of $e$, and the edges and marks in $\Lambda\setminus W$ are independent of it and of
+each other. This gives~\eqref{eq:ghost-recursion}. Every $i$-set is counted once: if there are $n$
+ordered pivotal edges, $\sum_{j=1}^n\binom{n-j}{i-1}=\binom ni$. All terms are nonnegative, so no
+integrability is needed.
+
+\emph{Stage 5: conclusion.} By Stage~3, $b_1\le\kappa_hb_0$ for all domains and roots. If $b_{i-1}\le\kappa_h^{i-1}b_0$ for all domains and roots, then
+\eqref{eq:ghost-recursion} and its case $i=1$ give $b_i(\Lambda,x)\le\kappa_h^{i-1}b_1(\Lambda,x)
+\le\kappa_h^ib_0(\Lambda,x)$. This proves the first bound in~\eqref{eq:ghost}. Summing,
+$\EE[(1+1/(2\kappa_h))^{\abs{\Piv}}\1_{\mathcal G}]=\sum_i(2\kappa_h)^{-i}b_i\le2\PP(\mathcal G)$.
+Since $\log(1+1/(2\kappa_h))\ge1/(4\kappa_h)$ for $\kappa_h\ge1$, Markov's inequality gives the
+second bound.
+\end{proof}
+
+\subsection{The bridge radius of a capped cluster}\label{sec:bridge-radius}
+
+Recall that $\varepsilon\in(0,1/2)$ is fixed and $\sigma=1/2+\varepsilon$. A cluster is regarded as a
+graph with its open edges. The \emph{bridge radius} of $C_o$ about $o$ is
+$\radbr(C_o,o)\coloneqq\max_{y\in C_o}\dbr^{C_o}(o,y)$, the largest number of bridges of $C_o$ separating
+$o$ from a vertex of~$C_o$.
+
+\begin{lemma}[Bridge radius]\label{lem:bridge-radius}
+Assume \cref{ass:G}. There is $c>0$ such that for all sufficiently large $M$ and all integers
+$1\le m\le M^{1-\sigma}$,
+\begin{equation}\label{eq:bridge-radius}
+  \PP_{p_c}\bigl(\abs{C_o}\le M,\ \radbr(C_o,o)\ge mM^\sigma/2\bigr)
+  \le\exp\Bigl(-\frac{cm^2M^{2\varepsilon}}{\log M}\Bigr)\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $\mathcal R$ be the event on the left. On $\mathcal R$ choose, by a fixed rule, a vertex $y\in C_o$
+with $\dbr^{C_o}(o,y)\ge mM^\sigma/2$. Mark vertices as in \cref{sec:ghost} with
+$\Lambda=V$ and $x=o$. Conditionally on the configuration, $y$ is the only mark in $C_o$ with
+probability $h(1-h)^{\abs{C_o}-1}\ge h(1-h)^M$. In that case every bridge of $C_o$ separating $o$ from $y$
+is open and pivotal for $\mathcal G$, so $\abs{\Piv}\ge mM^\sigma/2$. By \cref{lem:ghost},
+\begin{equation*}
+  \PP_{p_c}(\mathcal R)\,h(1-h)^M\le\PP\bigl(\mathcal G,\abs{\Piv}\ge mM^\sigma/2\bigr)
+  \le2\e^{-mM^\sigma/(8\kappa_h)}\,.
+\end{equation*}
+Choose
+\begin{equation*}
+  X\coloneqq\frac{m^2M^{2\varepsilon}}{\log M}\,,\qquad h\coloneqq\frac{X}{D_0M}=\frac{m^2M^{2\varepsilon-1}}{D_0\log M}\,,
+\end{equation*}
+with a constant $D_0\ge2$ fixed below. Since $m^2\le M^{2-2\sigma}=M^{1-2\varepsilon}$, we have
+$h\le1/(D_0\log M)\le1/2$ and $h\ge M^{-2}$ for large~$M$, so $\log(1/h)\le2\log M$. Hence
+\begin{equation*}
+  \frac{mM^\sigma}{8\kappa_h}=\frac{mM^\sigma\sqrt h}{8C\sqrt{\log(1/h)}}
+  \ge\frac{m^2M^{2\varepsilon}}{8C\sqrt{2D_0}\,\log M}=\frac{X}{8C\sqrt{2D_0}}\,.
+\end{equation*}
+Using $-\log(1-h)\le2h$, the logarithm of $2/(h(1-h)^M)$ is at most $C'\log M+2X/D_0$. Therefore
+\begin{equation*}
+  \log\PP_{p_c}(\mathcal R)\le C'\log M+\frac{2X}{D_0}-\frac{X}{8C\sqrt{2D_0}}\,.
+\end{equation*}
+Fix $D_0$ so large that $2/D_0\le1/(16C\sqrt{2D_0})$. Since $X\ge M^{2\varepsilon}/\log M$, the term
+$C'\log M$ is at most a small multiple of $X$ for large~$M$, uniformly in~$m$. This
+proves~\eqref{eq:bridge-radius}.
+\end{proof}
+
+\subsection{Proof of \texorpdfstring{\cref{prop:good}}{Proposition 3.4}}\label{sec:proof-good}
+
+\begin{proof}[Proof of \cref{prop:good}]
+\emph{Stage 1: from a bad piece to a large bridge radius.} Let $\omega$ be a configuration with
+$\abs{C_o}\le M$ in which $C_o$ is not $M$-good. Choose, by a fixed rule, a set $A\subseteq C_o$ and a
+component $B$ of the open subgraph induced by $C_o\setminus A$ that violate \cref{def:good}, let
+$\mathcal K\neq\emptyset$ be the set of open edges between $B$ and~$A$, and put $m\coloneqq\abs{\mathcal K}$. Since $\diambr(B)\le\abs{B}-1<M$, a violation
+$mM^\sigma<\diambr(B)$ forces $m<M^{1-\sigma}$.
+
+Every open edge leaving $B$ ends in $A$, because $B$ is a component of $C_o\setminus A$ and $C_o$ is a
+cluster. Define $\omega'$ by closing all edges of $\mathcal K$, except one if $o\notin B$:
+in that case keep the first edge of $B$ entered by a self-avoiding open path from $o$ to~$B$. The part
+of this path before that edge avoids $B$ and uses none of the closed edges, so the new cluster $C_o'$
+of $o$ contains~$B$; if $o\in B$, then $C_o'=B$. In either case $B$ is joined to the rest of $C_o'$ by
+at most one edge. A self-avoiding path between two vertices of $B$ therefore stays in~$B$, so the
+bridges of $C_o'$ separating two vertices of $B$ are exactly the bridges of $B$ separating them.
+Choose $y,y'\in B$ with $\dbr^B(y,y')=\diambr(B)>mM^\sigma$. By the triangle inequality for the bridge
+distance of $C_o'$, one of them has bridge distance more than $mM^\sigma/2$ from~$o$. Moreover
+$\abs{C_o'}\le\abs{C_o}\le M$. Hence $\omega'$ belongs to the event of \cref{lem:bridge-radius}.
+
+\emph{Stage 2: the cost of the modification.} All events involved are determined by the edges with an
+endpoint in $B(o,M)$, because a cluster of at most $M$ vertices containing $o$ lies in $B(o,M-1)$.
+Conditionally on all other edges we compare probabilities on a finite product space. Fix $m$. Given
+$\omega'$, every changed edge is incident to $B\subseteq C_o'$, and $C_o'$ has at most $M$ vertices, so
+the changed edges form a subset of size at most $m$ of a set of at most $dM$ edges determined
+by~$\omega'$. Reopening them recovers~$\omega$. Hence each $\omega'$ has at most
+$\sum_{j\le m}\binom{\lfloor dM\rfloor}{j}\le(m+1)(dM)^m$ preimages, and
+$\PP_{p_c}(\omega)/\PP_{p_c}(\omega')\le\max\{1,p_c/(1-p_c)\}^m$. With \cref{lem:bridge-radius}, the
+probability of a violation with a given $m$ is at most
+\begin{equation*}
+  \exp\Bigl(C'm\log M-\frac{cm^2M^{2\varepsilon}}{\log M}\Bigr)
+  \le\exp\Bigl(-\frac{cM^{2\varepsilon}}{2\log M}\Bigr)
+\end{equation*}
+for $M$ large, uniformly in $m\ge1$, since $M^{2\varepsilon}/(\log M)^2\to\infty$. Summing over the at
+most $M$ values of $m$ gives the bound $M\exp(-cM^{2\varepsilon}/(2\log M))\le\exp(-M^\varepsilon)$ for
+large~$M$.
+
+\emph{Stage 3: locality.} Explore $C_o$ until it is exhausted or more than $M$ vertices are found; this
+uses only edges with an endpoint in $B(o,M)$. In the first case the cluster with its open edges is
+known, and $M$-goodness can be checked by inspecting all subsets $A\subseteq C_o$. In the second case
+the event fails.
+\end{proof}

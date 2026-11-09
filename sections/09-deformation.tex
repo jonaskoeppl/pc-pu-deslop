@@ -1,0 +1,235 @@
+\section{The corridor deformation}\label{sec:deformation}
+
+In this section we prove \cref{prop:deformation}. We assume \cref{ass:G,ass:U} and fix
+$p\in[p_c/2,p_c)$, $q=1-p$ and $k\ge3$; only the deformation time $t\ge0$ varies. We use the notation of
+\cref{def:deformation} and write $T\coloneqq T_p$ and $\chi\coloneqq\chi(p)$. All constants depend only
+on~$G$; in particular they are uniform in~$p\in[p_c/2,p_c)$ and in~$k$.
+
+The section follows the order of \cref{prop:deformation}. After some bookkeeping
+(\cref{lem:deformation-basic}) we identify the corridor event and its probability
+(\cref{lem:calibration}), which gives the norm bound~\ref{it:def-norm} at once. The rate
+bound~\ref{it:def-rate} needs three ingredients: the deletion estimate~\ref{it:def-deletion}, a lower
+bound for the mass of two distinct clusters (\cref{lem:two-clusters}), and the factorisation of the
+penalty of a connection through a corridor into the penalties of its two legs (\cref{lem:two-legs}).
+Item~\ref{it:def-path} is proved last.
+
+\subsection{Bookkeeping}\label{sec:deformation-basic}
+
+\begin{lemma}[Basic bounds and monotonicity]\label{lem:deformation-basic}
+Let $D_1\coloneqq(2/p_c)(1-p_c)^{-d}$, $C_0\coloneqq\max\{\log D_1+1,\,1+2d/p_c\}$ and
+$c_k\coloneqq\e^{C_0k}$. Then the following holds.
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item\label{it:weight-edge} For every edge $e$, $\sum_wc(w)\le c_k/k$, where the sum runs over all
+  templates $w$, of any base, such that $e$ is an edge of~$\gamma_w$.
+  \item\label{it:penalty-size} If $x\connin{\Lambda}y$, then $N^\Lambda_{xy}\le c_k\abs{C^\Lambda_x}$.
+  \item\label{it:monotone-W} For fixed $t$, $W^\Lambda_t(x,y)$ does not decrease when edges are opened
+  or when $\Lambda$ is enlarged.
+\end{enumerate}
+Moreover, \cref{prop:deformation}\ref{it:def-basic} holds, and for every domain $\Lambda$, all
+$t\ge0$ and all $x,y\in V$
+\begin{equation*}
+  -\frac{\d}{\d t}\chi^\Lambda_t(x)=\EE_p\sum_yN^\Lambda_{xy}W^\Lambda_t(x,y)\,,\qquad
+  -\frac{\d}{\d t}\EE_pW^\Lambda_t(x,y)=\EE_p\bigl[N^\Lambda_{xy}W^\Lambda_t(x,y)\bigr]\,.
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+\ref{it:weight-edge}: A template has $\abs{\gamma_w}\le k$ and $\abs{\Bl_w}\le dk$, so
+$p^{-\abs{\gamma_w}}q^{-\abs{\Bl_w}}\le D_1^k$, because $p\ge p_c/2$ and $q\ge1-p_c$. Every edge of
+$\gamma_w$ is traversed by~$w$. Summed over all bases, the probability that a lazy walk traverses
+$e=\{a,b\}$ at its $i$-th step is $\sum_u(P^{i-1}(u,a)P(a,b)+P^{i-1}(u,b)P(b,a))=1/d$, by symmetry of~$P$. A
+union bound over the $k$ steps gives $\sum_wc(w)\le D_1^kk/d$, which is at most
+$D_1^k\e^k/k\le\e^{C_0k}/k$, since $k^2\le\e^k$.
+
+\ref{it:penalty-size}: An edge that is pivotal for $x\connin{\Lambda}y$ lies on every self-avoiding
+open path from $x$ to $y$ in~$\Lambda$. Fix one such path; it has fewer than $\abs{C^\Lambda_x}$ edges,
+and every counted template contains one of them. Apply~\ref{it:weight-edge}.
+
+\ref{it:monotone-W}: Let the configuration or the domain grow, and suppose $x$ and $y$ were already
+connected before; otherwise there is nothing to prove. Every self-avoiding open path from $x$ to $y$
+before the change is still one afterwards. Hence an edge that is pivotal afterwards lies on all old
+paths, so it was open and pivotal before, and the loop-erased path of a template counted afterwards
+was contained in the old domain. A blocker that is closed or outside the domain afterwards was so
+before. Thus every template counted afterwards was counted before, with the same weight, and
+$N^\Lambda_{xy}$ cannot increase.
+
+For \cref{prop:deformation}\ref{it:def-basic}: the counting condition is symmetric in $x$ and $y$, and
+all definitions are covariant, so $T_t$ is symmetric and invariant; $0\le W^V_t\le\1\{x\conn y\}$ gives
+$0\le T_t\le T$ and $\chi_t\le\chi$; and the Schur test gives $\norm{T_t}\le\chi_t$, the row sum. By
+\ref{it:penalty-size}, $\sum_yN^\Lambda_{xy}W^\Lambda_t(x,y)\le c_k\abs{C_x}^2$, whose expectation is at
+most $c_k\chi^3$ by \cref{lem:correlation}\ref{it:tree}; for a single entry the bound
+$N^\Lambda_{xy}W^\Lambda_t(x,y)\le c_k\abs{C^\Lambda_x}$ suffices. Dominated convergence therefore
+justifies differentiating $W^\Lambda_t(x,y)=\1\{x\connin{\Lambda}y\}\e^{-tN^\Lambda_{xy}}$ under the
+expectation and the sum, and shows that the derivatives are continuous in~$t$.
+\end{proof}
+
+\subsection{The corridor event}\label{sec:calibration}
+
+Recall that for a template $w$ with base $u=w_0$ and end $v=w_k$, the interior $I_w$ consists of the
+vertices of $\gamma_w$ other than $u$ and~$v$, and $\Lambda_w=V\setminus I_w$.
+
+\begin{lemma}[The corridor event]\label{lem:calibration}
+Let $w$ be a template with base $u$ and end~$v$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+  \item\label{it:cal-indep} The event $\Cor_w$ depends only on the edges incident to $I_w$; in particular
+  it is independent of the states of the edges with both endpoints in~$\Lambda_w$.
+  \item\label{it:cal-weight} $c(w)\,\PP_p(\Cor_w)=\mu(w)$.
+  \item\label{it:cal-counted} On $\Cor_w$, the template $w$ is counted for $(x,y)$ in $V$ if and only if
+  $C_u^{\Lambda_w}\neq C_v^{\Lambda_w}$ and either $x\in C_u^{\Lambda_w}$ and $y\in C_v^{\Lambda_w}$, or
+  $x\in C_v^{\Lambda_w}$ and $y\in C_u^{\Lambda_w}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Every edge of $\gamma_w$ has an endpoint in $I_w$ because $\abs{\gamma_w}\ge3$, and the blockers are the
+other edges incident to~$I_w$; this gives~\ref{it:cal-indep}. The event $\Cor_w$ prescribes
+$\abs{\gamma_w}$ open and $\abs{\Bl_w}$ closed edges, which gives~\ref{it:cal-weight}.
+
+For~\ref{it:cal-counted}, note that on $\Cor_w$ every interior vertex has exactly two open edges, the
+corridor edges (\cref{fig:corridor}). Suppose $w$ is counted for $(x,y)$. If $x\in I_w$, a
+self-avoiding open path starting at $x$ uses only one of the two corridor edges at~$x$, so the other one
+is not pivotal; hence $x\notin I_w$, and likewise $y\notin I_w$. A self-avoiding open path from $x$ to $y$ uses all corridor
+edges, so it runs through the whole corridor, from $u$ to $v$ or from $v$ to~$u$, and its two remaining
+parts lie in $\Lambda_w$. If $C_u^{\Lambda_w}=C_v^{\Lambda_w}$, an open path from $u$ to $v$ in
+$\Lambda_w$ would bypass the corridor, so its edges would not be pivotal. This proves one direction.
+Conversely, if the two exterior clusters are distinct and contain $x$ and $y$ as stated, then the
+corridor is the only open link between them, so all its edges are open and pivotal for $x\conn y$, and
+all blockers are closed.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:deformation}\ref{it:def-norm}]
+By \cref{lem:deformation-basic} with $\Lambda=V$, $-\partial_tT_t(x,y)=\EE_p[N^V_{xy}W^V_t(x,y)]\le\EE_pN^V_{xy}=\sum_w
+c(w)\,\PP_p(w\text{ is counted for }(x,y))$. By \cref{lem:calibration}, a counted template requires
+$\Cor_w$ and one of two exterior events, which are independent of~$\Cor_w$. In each exterior event the
+connections from $x$ and from $y$ lie in distinct clusters, so they occur disjointly, and the
+van den Berg--Kesten inequality and $T^{\Lambda_w}\le T$ bound its probability by $T(x,u)T(v,y)$,
+respectively $T(x,v)T(u,y)$. With $c(w)\PP_p(\Cor_w)=\mu(w)$, adding the raw paths that are not
+templates, and summing over raw paths with base $u$ and end $v$, which gives $P^k(u,v)$, we obtain
+\begin{equation*}
+  -\partial_tT_t(x,y)\le\sum_{u,v}P^k(u,v)\bigl(T(x,u)T(v,y)+T(x,v)T(u,y)\bigr)=2\,(TP^kT)(x,y)\,,
+\end{equation*}
+by symmetry of~$P^k$. Integrating, $0\le T-T_t\le2t\,TP^kT$ entrywise. By
+\cref{lem:kernels}\ref{it:domination}, $\norm{T-T_t}\le2t\norm{TP^kT}\le2t\rho^k\norm{T}^2$, and the
+triangle inequality gives~\ref{it:def-norm}. No positivity of $T_t$ is used.
+\end{proof}
+
+\subsection{Deletion and the rate bound}\label{sec:rate}
+
+\begin{proof}[Proof of \cref{prop:deformation}\ref{it:def-deletion}]
+Fix a configuration and $y$, and suppose that $W^\Lambda_t(z,y)>W^{\Lambda\setminus A}_t(z,y)$; recall
+that $W^{\Lambda\setminus A}_t\le W^\Lambda_t$ by \cref{lem:deformation-basic}\ref{it:monotone-W}. We
+claim that some self-avoiding open path from $z$ to $y$ in $\Lambda$ visits~$\Nb[A]$. If
+$z\connin{\Lambda\setminus A}y$ fails, every open path from $z$ to $y$ in $\Lambda$ visits~$A$.
+Otherwise some template $w$ is counted for $(z,y)$ in $\Lambda\setminus A$ but not in~$\Lambda$. Its
+loop-erased path lies in $\Lambda\setminus A$ and is open, so either an edge $e$ of $\gamma_w$ is not
+pivotal in~$\Lambda$, or a blocker $f$ is open with both endpoints in~$\Lambda$. In the first case an
+open path from $z$ to $y$ in $\Lambda$ avoids $e$; it must visit $A$, since $e$ is pivotal in
+$\Lambda\setminus A$. In the second case $f$ has an endpoint in~$A$, because it is not closed and must
+leave $\Lambda\setminus A$; its other endpoint is an interior vertex $i\notin A$ of $\gamma_w$, so
+$i\in\Nb[A]$, and every open path from $z$ to $y$ in $\Lambda\setminus A$ uses all edges of $\gamma_w$
+and hence visits~$i$. This proves the claim; it covers the case of a terminal in~$A$.
+
+The loss $W^\Lambda_t(z,y)-W^{\Lambda\setminus A}_t(z,y)$ is at most one. Splitting a path that visits
+$b\in\Nb[A]$ at $b$ gives two edge-disjoint open paths, so by the van den Berg--Kesten inequality
+\begin{equation*}
+  \EE_p\bigl[W^\Lambda_t(z,y)-W^{\Lambda\setminus A}_t(z,y)\bigr]\le\sum_{b\in\Nb[A]}T(z,b)\,T(b,y)\,.
+\end{equation*}
+Summing over $y$ proves~\ref{it:def-deletion}. A single path event bounds the whole loss; no sum over
+penalty weights appears.
+\end{proof}
+
+\begin{lemma}[Two distinct clusters]\label{lem:two-clusters}
+For every domain $\Lambda$ and $u,v\in\Lambda$, with $X^\Lambda_t(x)\coloneqq\sum_yW^\Lambda_t(x,y)$,
+\begin{equation}\label{eq:two-clusters}
+  \EE_p\bigl[X^\Lambda_t(u)\,X^\Lambda_t(v);\,C^\Lambda_u\neq C^\Lambda_v\bigr]
+  \ge\chi^\Lambda_t(u)\,\chi^\Lambda_t(v)-C_0\,\chi^2\,T^3(u,v)\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expose $A\coloneqq C^\Lambda_u$ together with the states of its internal and boundary edges. This
+determines $X^\Lambda_t(u)$: every template counted for a pair in $A$ has its loop-erased path in~$A$,
+and its blockers are internal edges of $A$, boundary edges of $A$ or edges leaving~$\Lambda$. The edges
+with both endpoints in $\Lambda\setminus A$ remain independent with parameter~$p$. For two terminals in a
+cluster disjoint from $A$, the weighted connections in $\Lambda$ and in $\Lambda\setminus A$ coincide:
+the open paths are the same, and the only blockers that change status are closed edges to~$A$. Hence,
+with $\chi^{\Lambda\setminus A}_t(v)=0$ for $v\in A$,
+\begin{equation*}
+  \EE_p\bigl[X^\Lambda_t(u)\,X^\Lambda_t(v);\,C^\Lambda_u\neq C^\Lambda_v\bigr]
+  =\EE_p\bigl[X^\Lambda_t(u)\,\chi^{\Lambda\setminus A}_t(v)\bigr]\,.
+\end{equation*}
+Apply~\ref{it:def-deletion} inside the expectation, and use $X^\Lambda_t(u)\le\abs A$. For adjacent $a$
+and $z$, the Harris inequality gives $pT(v,z)\le T(v,a)$, so
+$\sum_{z\in\Nb[A]}T(v,z)\le(1+d/p)\sum_{a\in A}T(v,a)$. By \cref{lem:correlation}\ref{it:tree}, summed
+over a third terminal,
+$\EE_p[\abs A\1\{a\in A\}]=\sum_y\PP_p(u\connin{\Lambda}a,u\connin{\Lambda}y)\le\chi\,T^2(u,a)$. The
+error is therefore at most $(1+d/p)\chi^2\sum_aT^2(u,a)T(a,v)$, which proves~\eqref{eq:two-clusters}
+because $1+d/p\le1+2d/p_c\le C_0$.
+\end{proof}
+
+\begin{lemma}[Two legs]\label{lem:two-legs}
+Let $w$ be a template with base $u$ and end $v$. On $\Cor_w$, if $x\in C_u^{\Lambda_w}$,
+$y\in C_v^{\Lambda_w}$ and $C_u^{\Lambda_w}\neq C_v^{\Lambda_w}$, then
+\begin{equation*}
+  N^V_{xy}\le c_k+N^{\Lambda_w}_{xu}+N^{\Lambda_w}_{vy}\,.
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:deformation-basic}\ref{it:weight-edge}, the templates whose loop-erased paths share an edge
+with $\gamma_w$ have total weight at most $\abs{\gamma_w}c_k/k\le c_k$. Let $w'$ be any other template
+counted for $(x,y)$. Its loop-erased path is open and avoids the edges of $\gamma_w$, so it does not
+visit $I_w$, since all open edges at $I_w$ belong to $\gamma_w$. Being connected, it lies in one of the
+two exterior clusters. Suppose it lies in $C_u^{\Lambda_w}$. Each of its edges is pivotal for
+$x\connin{\Lambda_w}u$: otherwise an open path from $x$ to $u$ in $\Lambda_w$ avoiding it, followed by
+the corridor and an open path from $v$ to $y$ in $\Lambda_w$, would connect $x$ to $y$ without it. Its
+blockers are closed, hence closed or outside $\Lambda_w$. So $w'$ is counted for $(x,u)$ in
+$\Lambda_w$, with the same weight. The case of $C_v^{\Lambda_w}$ is symmetric.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:deformation}\ref{it:def-rate}]
+Write $\mathcal C_w(x,y)$ for the event that $w$ is counted for $(x,y)$ in~$V$. By
+\cref{lem:deformation-basic},
+\begin{equation*}
+  -\frac{\d}{\d t}\chi_t=\sum_y\sum_wc(w)\,\EE_p\bigl[\1_{\mathcal C_w(o,y)}W^V_t(o,y)\bigr]\,.
+\end{equation*}
+The mass sent from a terminal $x$ to a base $u$,
+$m(x,u)\coloneqq\sum_y\sum_{w\colon w_0=u}c(w)\,\EE_p[\1_{\mathcal C_w(x,y)}W^V_t(x,y)]$, is diagonally
+invariant and nonnegative. By the mass-transport principle we may move the root from the terminal to the
+base:
+\begin{equation*}
+  -\frac{\d}{\d t}\chi_t=\sum_{w\colon w_0=o}c(w)\sum_{x,y}\EE_p\bigl[\1_{\mathcal C_w(x,y)}\,W^V_t(x,y)\bigr]\,.
+\end{equation*}
+Keep only the orientation $x\in C_u^{\Lambda_w}$, $y\in C_v^{\Lambda_w}$ of \cref{lem:calibration}. On
+this event and on $\Cor_w$, \cref{lem:two-legs} gives
+$W^V_t(x,y)\ge\e^{-tc_k}W^{\Lambda_w}_t(x,u)\,W^{\Lambda_w}_t(v,y)$. By the independence in
+\cref{lem:calibration}\ref{it:cal-indep} and $c(w)\PP_p(\Cor_w)=\mu(w)$, summing over $x$ and $y$
+yields
+\begin{equation*}
+  -\frac{\d}{\d t}\chi_t\ge\e^{-tc_k}\,\Erw\Bigl[\1\{\abs{\gamma_w}\ge3\}\,\EE_p\bigl[X^{\Lambda_w}_t(w_0)\,
+  X^{\Lambda_w}_t(w_k);\,C^{\Lambda_w}_{w_0}\neq C^{\Lambda_w}_{w_k}\bigr]\Bigr]\,.
+\end{equation*}
+Apply \cref{lem:two-clusters} with $\Lambda=\Lambda_w$. For the nonnegative error term we may add the
+raw paths that are not templates, and
+\begin{equation*}
+  \Erw\bigl[T^3(o,w_k)\bigr]=\sum_vP^k(o,v)\,T^3(v,o)=\tr(P^kT^3)\le\rho^k\,\tr(T^3)=\rho^k\,\nabla_p\,,
+\end{equation*}
+by \cref{lem:trace}\ref{it:trace-positive} for the positive operator $T^3$ and the self-adjoint
+operator $P^k$. This proves~\ref{it:def-rate}. No commutation between $P$ and $T$ is needed.
+\end{proof}
+
+\subsection{Transport along a path}\label{sec:transport}
+
+\begin{proof}[Proof of \cref{prop:deformation}\ref{it:def-path}]
+Let $\pi$ be a self-avoiding path in $\Lambda$ of length $l$ from $b$ to~$z$, and let $\mathcal F$ be the
+event that all its edges are open. On $\mathcal F$, every connection $z\connin{\Lambda}y$ gives
+$b\connin{\Lambda}y$. The templates counted for $(b,y)$ whose loop-erased paths use an edge of $\pi$
+have total weight at most $lc_k$, by \cref{lem:deformation-basic}\ref{it:weight-edge}. Every other
+template counted for $(b,y)$ is counted for $(z,y)$: each of its edges $e$ is pivotal for
+$z\connin{\Lambda}y$, since an open path from $z$ to $y$ avoiding $e$, preceded by $\pi$, would connect
+$b$ to $y$ without~$e$; its blocker condition does not depend on the terminals. Hence
+$W^\Lambda_t(b,y)\ge\e^{-tlc_k}W^\Lambda_t(z,y)$ on~$\mathcal F$. Both $\1_{\mathcal F}$ and
+$W^\Lambda_t(z,y)$ are increasing by \cref{lem:deformation-basic}\ref{it:monotone-W}, so the Harris
+inequality and $\PP_p(\mathcal F)=p^l$ give
+$\EE_pW^\Lambda_t(b,y)\ge\e^{-tlc_k}p^l\,\EE_pW^\Lambda_t(z,y)$. Summing over $y$ proves~\ref{it:def-path}.
+\end{proof}

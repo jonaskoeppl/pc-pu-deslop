@@ -1,0 +1,37 @@
+% The labelled experiment of Section 10 (schematic)
+\begin{tikzpicture}[scale=0.88,
+    vtx/.style={circle, fill, inner sep=1.3pt},
+    raw/.style={figmain, line width=1.4pt},
+    rawwalk/.style={figmain, line width=1.4pt, decorate, decoration={snake, amplitude=1.1pt, segment length=9pt}},
+    esc/.style={figaux, thick, dashed},
+    escwalk/.style={figaux, thick, dashed, decorate, decoration={snake, amplitude=1.1pt, segment length=7pt}}]
+  \coordinate (u) at (0,0);
+  \coordinate (gJ) at (1.8,1.6);
+  \coordinate (gmJ) at (-1.8,-1.6);
+  \coordinate (hJ) at (8.2,1.6);
+  \coordinate (v) at (10,0);
+  \coordinate (hmJ) at (11.8,-1.6);
+  \coordinate (z) at (-0.6,-3.1);
+  \coordinate (zp) at (10.6,-3.1);
+  % raw path: first half of g, middle walk, reversed first half of g'
+  \draw[raw] (u) -- (gJ);
+  \draw[rawwalk] (gJ) .. controls (4,2.4) and (6,0.8) .. (hJ);
+  \draw[raw] (hJ) -- (v);
+  % escapes: other halves of the segments, then walk tails
+  \draw[esc] (u) -- (gmJ);
+  \draw[escwalk] (gmJ) .. controls (-2.2,-2.6) and (-1.4,-3.4) .. (z);
+  \draw[esc] (v) -- (hmJ);
+  \draw[escwalk] (hmJ) .. controls (12.2,-2.6) and (11.4,-3.4) .. (zp);
+  \foreach \p in {u,gJ,gmJ,hJ,v,hmJ,z,zp} \node[vtx] at (\p) {};
+  \node[font=\small, anchor=east] at (u) {$u=g_0\ $};
+  \node[font=\small, anchor=south east] at (gJ) {$g_J$};
+  \node[font=\small, anchor=east] at (gmJ) {$g_{-J}$};
+  \node[font=\small, anchor=south west] at (hJ) {$g'_J$};
+  \node[font=\small, anchor=west] at (v) {$\ v=g'_0$};
+  \node[font=\small, anchor=west] at (hmJ) {$g'_{-J}$};
+  \node[font=\small, anchor=north] at (z) {$Z$};
+  \node[font=\small, anchor=north] at (zp) {$Z'$};
+  \node[font=\small, text=figmain] at (5,2.45) {middle walk $\pi$, $k-2J$ steps};
+  \node[font=\small, text=figaux] at (-2.9,-2.7) {tail $\zeta$};
+  \node[font=\small, text=figaux] at (12.9,-2.7) {tail $\zeta'$};
+\end{tikzpicture}

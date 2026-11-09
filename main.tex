@@ -1,0 +1,59 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\hypersetup{pdftitle={Nonuniqueness of percolation on nonamenable transitive graphs},
+  pdfsubject={The Benjamini--Schramm nonuniqueness conjecture: the proof in the transitive case}}
+
+\title{Nonuniqueness of percolation on nonamenable transitive graphs\\[0.4em]
+  \large An account of the proof in the transitive case}
+% TODO(Claude): the author line is a placeholder; to be settled by the user.
+\author{Notes for a reading course\thanks{These notes rewrite,
+  for transitive graphs, the proof given in the manuscript~\cite{Ope26}, where the quasi-transitive
+  case is treated.}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present, for transitive graphs, a proof that Bernoulli bond percolation on every connected,
+locally finite, simple, nonamenable transitive graph has a phase with infinitely many infinite
+clusters, that is, $p_c<p_u$. The argument is the one of~\cite{Ope26}, specialised and reorganised.
+Its core is the statement that the two-point connection operator is bounded on $\ell^2(V)$ at the
+critical parameter. Together with results of Hutchcroft this gives $p_c<\ptwo\le p_u$, where $\ptwo$ is
+the largest parameter up to which the connection operator is bounded, a nonempty interval of
+simultaneous nonuniqueness, the triangle condition and mean-field critical behaviour. The proof of
+the operator bound compares two ways of measuring the connection kernel: its row sums and its norm on
+$\ell^2(V)$. A deformation that penalises connections through isolated open paths reduces the row
+sums at a quadratic rate while barely changing the norm, because the penalised paths are
+loop-erased random-walk paths and the random walk contracts $\ell^2(V)$. Making this quantitative
+needs near-mean-field a priori bounds on the susceptibility and the triangle diagram below $p_c$.
+These are derived from finiteness of all moments of order less than $1/2$ of the critical cluster
+size, which in turn is proved by contradiction with a construction that splices independent
+critical clusters. We decompose the argument into four steps, state each step precisely, and show
+how the steps combine before proving them.
+\end{abstract}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\input{sections/01-introduction}
+\input{sections/02-setting}
+\input{sections/03-strategy}
+\input{sections/04-preliminaries}
+\input{sections/05-bridges}
+\input{sections/06-maps}
+\input{sections/07-moments}
+\input{sections/08-triangle}
+\input{sections/09-deformation}
+\input{sections/10-escapes}
+\input{sections/11-consequences}
+
+\appendix
+\input{sections/A-auxiliary}
+
+\bibliographystyle{amsalpha}
+\bibliography{refs}
+
+\end{document}

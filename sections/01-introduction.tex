@@ -1,0 +1,89 @@
+\section{Introduction}\label{sec:intro}
+
+In Bernoulli bond percolation with parameter $p\in[0,1]$ on an infinite connected graph, every edge is
+declared open with probability~$p$, independently of all other edges, and one studies the connected
+components of the open subgraph, the \emph{clusters}. Two parameters describe the large-scale picture.
+Infinite clusters exist for $p$ above the \emph{critical parameter}~$p_c$, and there is exactly one
+infinite cluster for $p$ above the \emph{uniqueness threshold}~$p_u$. On the hypercubic lattice
+$\Z^d$ there is never more than one infinite cluster~\cite{AKN87,BK89}, and the argument of Burton and
+Keane extends this to every amenable transitive graph (see~\cite[Chapter~7]{LP16}); there the two
+thresholds coincide. On the $3$-regular tree, in contrast, $p_c=1/2$ and $p_u=1$: for every
+$p\in(1/2,1)$ there are infinitely many infinite clusters, kept apart by the branching geometry of the
+tree. Benjamini and Schramm conjectured that the thresholds are separated on every quasi-transitive
+graph that shares the decisive feature of the tree, namely that the boundary of every finite vertex
+set is comparable to its size~\cite[Conjecture~6]{BS96}. Such graphs are called nonamenable.
+
+These notes present a proof of this conjecture for transitive graphs, following the
+manuscript~\cite{Ope26}. In informal terms, the main result reads as follows; the precise statement is
+\cref{thm:main}.
+
+\begin{quote}
+\emph{Let $G$ be a connected, locally finite, simple, nonamenable transitive graph. Then the matrix of
+connection probabilities at the critical parameter defines a bounded operator on $\ell^2(V)$.
+Consequently $p_c<\ptwo\le p_u$, so there is a nonempty interval of parameters with infinitely many
+infinite clusters, and percolation on $G$ has mean-field critical behaviour.}
+\end{quote}
+
+Here $\ptwo$ is the largest parameter up to which the connection probabilities define a bounded
+operator on $\ell^2(V)$. This threshold was introduced by Hutchcroft~\cite{Hut19,Hut20L2}, who
+conjectured that $p_c<\ptwo$ on every nonamenable quasi-transitive graph~\cite[Conjecture~1.3]{Hut20L2}.
+The inequality $\ptwo\le p_u$ is elementary: a unique infinite cluster forces all connection
+probabilities to be bounded away from zero, which is incompatible with boundedness on $\ell^2(V)$
+(\cref{lem:p22-pu}). The strict inequality $p_c<\ptwo$ is the substance of the result. It follows from
+boundedness at $p_c$ itself, because a bounded connection operator remains bounded after a small
+increase of the parameter (\cref{lem:sprinkling}).
+
+\paragraph{Earlier results.}
+Several classes of graphs were known to satisfy $p_c<p_u$. Benjamini and Schramm proved it for
+one-ended nonamenable transitive planar graphs~\cite{BS01}, following Lalley's work on Fuchsian
+groups~\cite{Lal98}. Schonmann treated highly nonamenable graphs~\cite{Sch01}, and Nachmias and Peres
+nonamenable Cayley graphs of large girth~\cite{NP12}. Gaboriau proved $p_c<p_u$ for unimodular
+transitive graphs carrying nonconstant harmonic Dirichlet functions~\cite{Gab05}. For Cayley graphs of
+a given nonamenable group, Pak and Smirnova-Nagnibeda~\cite{PSN00} and Thom~\cite{Tho15} showed that
+\emph{some} generating set has $p_c<p_u$; the result presented here applies to \emph{every} finite
+generating set (\cref{cor:cayley}). In the operator framework, Hutchcroft proved $p_c<\ptwo$ for
+nonamenable Gromov hyperbolic graphs and for graphs with a quasi-transitive nonunimodular group of
+automorphisms~\cite{Hut19}, building on~\cite{Hut20nonuni}. Choi and Seo extended this to Cayley graphs
+of acylindrically hyperbolic groups~\cite{CS25}. The upper inequality $\ptwo\le p_u$ can be an
+equality~\cite{HP24}.
+
+Critical percolation on a nonamenable transitive graph has no infinite cluster: this was proved by
+Benjamini, Lyons, Peres and Schramm in the unimodular case~\cite{BLPS99a} and by Hutchcroft for all
+quasi-transitive graphs of exponential growth~\cite{Hut16}. We use it throughout, since it makes
+critical clusters finite. The behaviour of infinite clusters for $p_c<p<p_u$, including the
+simultaneous statements across parameters, was developed by H\"aggstr\"om, Peres and
+Schonmann~\cite{HP99,Sch99,HPS99}.
+
+\paragraph{Methods.}
+The proof uses the classical toolbox of percolation: the Harris and van den Berg--Kesten
+inequalities~\cite{Har60,vdBK85}, the tree-graph bounds of Aizenman and Newman~\cite{AN84}, sharpness of
+the phase transition~\cite{AB87,Men86,DCT16}, Russo's formula, and the mass-transport
+principle~\cite{BLPS99b,AL07}. Two further tools enter in an essential way. The first is the
+decision-tree covariance inequality of O'Donnell, Saks, Schramm and Servedio~\cite{OSSS05}, used as in
+Hutchcroft's derivation of near-critical bounds from critical tails~\cite{Hut20exp}. The second is a
+concentration estimate for exploration scores in the spirit of Hutchcroft's two-ghost
+inequalities~\cite{Hut20loc,Hut21}. The genuinely new ingredients of~\cite{Ope26} are a construction
+that splices independent critical clusters together (\cref{sec:maps}), whose combinatorics is related
+to the finite modifications in Kozma's work on products of trees~\cite{Koz11}, and a deformation of the
+connection kernel that penalises isolated open paths (\cref{sec:deformation}).
+
+\paragraph{About these notes.}
+The manuscript~\cite{Ope26} treats quasi-transitive graphs, possibly with loops and multiple edges.
+We restrict to transitive simple graphs, which removes the averaging over vertex types, the reduction
+to simple graphs by subdivision and several case distinctions, and lets the main line of the argument
+stand out. The mathematics is that of~\cite{Ope26}; we have re-derived every step while rewriting it,
+specialised the statements to the transitive case, and reorganised the material around four steps
+whose precise statements are collected in \cref{sec:strategy}. Where a proof deviates from~\cite{Ope26}
+beyond this specialisation, we say so. Classical results are cited rather than reproved; proofs are
+given for the less standard variants we need, some of them in \cref{app:aux}.
+
+\paragraph{Outline.}
+\Cref{sec:setting} fixes the setting and states the main results:
+\cref{thm:main}, its consequence for Cayley graphs, and the mean-field consequences in
+\cref{thm:consequences}. \Cref{sec:strategy} is an overview of the whole proof. It reduces
+\cref{thm:main} to the boundedness of the critical connection operator (\cref{thm:crit-bdd}), explains
+the mechanism, states the four steps precisely, and proves \cref{thm:crit-bdd} from them.
+\Cref{sec:prelim} collects the tools. \Cref{sec:bridges,sec:maps,sec:moments,sec:triangle} prove the a
+priori estimates on critical and near-critical clusters (Steps~1 and~2), and
+\cref{sec:deformation,sec:escapes} the properties of the deformation (Steps~3 and~4).
+\Cref{sec:consequences} derives \cref{thm:consequences}.

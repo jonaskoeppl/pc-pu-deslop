@@ -1,0 +1,484 @@
+\section{Local endpoint maps and their amplification}\label{sec:maps}
+
+In this section we prove \cref{prop:amplification}. We assume \cref{ass:G,ass:U}. Let
+$\varepsilon\in(0,1/2)$ be the parameter of \cref{def:good}, to which all caps and $M$-goodness refer
+(\cref{def:good,def:map}), and assume that $\EE_{p_c}\abs{C_o}^\alpha=\infty$ for some
+$\alpha\in(0,1/2-\varepsilon)$. We fix $\beta\in(\alpha,1/2-\varepsilon)$, so that
+\begin{equation}\label{eq:beta-sigma}
+  \beta+\sigma<1\,,\qquad\sigma=\tfrac12+\varepsilon\,.
+\end{equation}
+Configurations have parameter $p_c$ unless stated otherwise.
+
+The heavy tail provides infinitely many scales $n$ at which clusters of size about $n$ are frequent
+(\cref{sec:scales}). One amplification step takes a map $\Phi$ and such a scale~$n$ and constructs a new
+map, in four parts: a splicing experiment (\cref{sec:splicing}), an inverse description of its outcome
+(\cref{sec:codes}), first and second moment bounds for the resulting density (\cref{sec:load}), and a
+truncation (\cref{sec:iteration}). Iterating the step proves \cref{prop:amplification}.
+
+\subsection{Heavy scales and a first map}\label{sec:scales}
+
+\begin{lemma}[Heavy scales]\label{lem:scales}
+There is an infinite set $\mathcal N$ of powers of two such that for every $n\in\mathcal N$
+\begin{equation}\label{eq:scales}
+  \pi_n\coloneqq\PP_{p_c}(n\le\abs{C_o}<2n)\ge n^{-\beta}
+  \qquad\text{and}\qquad
+  \PP_{p_c}(n/2\le\abs{C_o}<2n)\le(1+2^\beta)\,\pi_n\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $\pi'_j\coloneqq\PP_{p_c}(2^j\le\abs{C_o}<2^{j+1})$ for $j\ge0$. Since $\abs{C_o}$ is almost surely
+finite (\cref{lem:pc}), $\EE_{p_c}\abs{C_o}^\alpha\le\sum_j2^{\alpha(j+1)}\pi'_j$. If the sequence
+$2^{\beta j}\pi'_j$ were bounded, the right-hand side would be finite because $\alpha<\beta$, contrary to
+our assumption. So the sequence $2^{\beta j}\pi'_j$ is unbounded, and it has infinitely many
+record indices~$j$, that is, $2^{\beta j}\pi'_j>2^{\beta i}\pi'_i$ for all $i<j$. Keep the records with
+value at least one. At such a record, $\pi'_j\ge2^{-\beta j}$ and $\pi'_{j-1}<2^\beta\pi'_j$, which is
+\eqref{eq:scales} for $n=2^j$.
+\end{proof}
+
+The next lemma collects the basic properties of local endpoint maps. For a map $\Phi$ and $p\in[0,1]$
+we call $F_p(x,y)\coloneqq\EE_p\Phi_x(\omega,y)$ its \emph{unconditional endpoint kernel} at
+parameter~$p$, and $s_p\coloneqq\sum_yF_p(x,y)$ its success probability at~$p$; thus $s=s_{p_c}$ and
+$K=F_{p_c}/s$.
+
+\begin{lemma}[Basic properties]\label{lem:map-basic}
+Let $\Phi$ be a local endpoint map with $s>0$. Then $K$ is invariant and doubly stochastic, and
+$r=\norm K\le1$. For every $p\in[0,1]$ the kernel $F_p$ is invariant, $F_p(x,y)=0$ if
+$\dist(x,y)>r_\Phi+1$, its row and column sums equal $s_p$, and $\norm{F_p-F_{p_c}}\to0$ as
+$p\to p_c$.
+\end{lemma}
+
+\begin{proof}
+Invariance of $F_p$ follows from the covariance of $\Phi$ and the invariance of $\PP_p$. If
+$\dist(x,y)>r_\Phi+1$, closing all edges without an endpoint in $B(x,r_\Phi)$ disconnects $x$ from~$y$
+without changing $\Phi_x(\omega,\cdot)$, so $\Phi_x(\omega,y)=0$ for all~$\omega$. By the mass-transport
+principle the column sums of the nonnegative invariant kernels $F_p$ and $\abs{F_p-F_{p_c}}$ equal their
+row sums; in particular $K$ is doubly stochastic, and the Schur test gives $r\le1$. The entries of $F_p$
+are polynomials in $p$, since $\Phi_x$ depends on finitely many edges. Hence the row sums of
+$\abs{F_p-F_{p_c}}$, which have at most $\abs{B(o,r_\Phi+1)}$ nonzero terms, tend to zero, and the
+Schur test gives $\norm{F_p-F_{p_c}}\to0$.
+\end{proof}
+
+\begin{lemma}[A first map]\label{lem:start}
+For every $M_1$ there is a local endpoint map with cap $M\ge M_1$ and $r<\e^{-1}$.
+\end{lemma}
+
+\begin{proof}
+Fix $\ell_0\in\N$ with $2\rho^{\ell_0}<\e^{-1}$. For a path $w$ of $\ell_0$ steps of the lazy walk, let $e(w)$ be
+the number of distinct edges it traverses; holding steps traverse no edge. Call $w$ \emph{open} if all
+edges it traverses are open. For $M\ge M_1$ put
+\begin{equation*}
+  \Phi_x(\omega,y)\coloneqq\1\{\abs{C_x}\le M,\ C_x\text{ is $M$-good}\}
+  \sum_{w\colon x\to y}\mu(w)\,p_c^{\ell_0-e(w)}\,\1\{w\text{ is open}\}\,,
+\end{equation*}
+where the sum runs over $\ell_0$-step paths from $x$ to~$y$. This is a local endpoint map with cap $M$:
+the sum over $y$ is at most $\sum_w\mu(w)=1$, an open path joins $x$ to~$y$, and by \cref{prop:good} the
+indicator depends only on the edges near~$x$. Without the indicator, the unconditional endpoint
+kernel would be $\sum_w\mu(w)p_c^{\ell_0-e(w)}p_c^{e(w)}=p_c^{\ell_0} P^{\ell_0}(x,y)$. Hence $F_{p_c}\le
+p_c^{\ell_0} P^{\ell_0}$ entrywise and
+\begin{equation*}
+  s\ge p_c^{\ell_0}-\PP_{p_c}(\abs{C_o}>M)-\PP_{p_c}(\abs{C_o}\le M,\ C_o\text{ not $M$-good})\ge p_c^{\ell_0}/2
+\end{equation*}
+for $M$ large, by \cref{lem:pc,prop:good}. Thus $r=\norm{F_{p_c}}/s\le p_c^{\ell_0}\rho^{\ell_0}/(p_c^{\ell_0}/2)
+=2\rho^{\ell_0}<\e^{-1}$.
+\end{proof}
+
+\subsection{The splicing experiment}\label{sec:splicing}
+
+For the rest of this section fix an old map $\Phi$ with cap $M\ge2$, success probability~$s$, endpoint
+kernel $K$ and $r=\norm{K}$; fix $\ell\in\N$ and $n\in\mathcal N$ with $\ell M\le n/2$, and put
+$\nu\coloneqq \ell M$. For vertices $x$ and $z$ we run the following experiment.
+\begin{enumerate}[label=(\arabic*)]
+  \item Sample independent configurations $\omega^{(0)},\omega^{(1)},\dots,\omega^{(\ell)}$ with law
+  $\PP_{p_c}$. We call $\omega^{(0)}$ the \emph{distinguished} configuration.
+  \item Starting from $y_\ell\coloneqq z$, for $i=\ell,\ell-1,\dots,1$ apply the rule $\Phi_{y_i}$ to
+  $\omega^{(i)}$, using randomness that is independent across the steps and of all other randomness;
+  if it outputs a vertex, call it $y_{i-1}$, and if it fails, the experiment fails.
+  \item The experiment \emph{succeeds} if all $\ell$ rules succeed, the cluster
+  $A\coloneqq C_x(\omega^{(0)})$ satisfies $n\le\abs{A}<2n$, and $y_0\in A$.
+\end{enumerate}
+A successful experiment has \emph{weight}~$1/n$. Let $C_i\coloneqq C_{y_i}(\omega^{(i)})$ be the cluster
+used in the $i$-th step; it contains $y_{i-1}$, has at most $M$ vertices and is $M$-good.
+
+On success, the following \emph{switching procedure} splices pieces of the clusters $C_i$ onto $A$. It
+maintains a set $S$, initially $S=A$, and a set of eligible indices, initially $\{1,\dots,\ell\}$. While
+$z\notin S$, it performs a round:
+\begin{enumerate}[label=(\roman*)]
+  \item let $i$ be the largest eligible index with $C_i\cap S\neq\emptyset$, and declare all indices
+  $\le i$ ineligible;
+  \item let $B_i$ be the component of $y_i$ in the subgraph of $\omega^{(i)}$-open edges induced by
+  $V\setminus S$, and let $\mathcal K_i$ be the set of $\omega^{(i)}$-open edges between $B_i$ and~$S$;
+  \item choose the \emph{seam} $e_i\in\mathcal K_i$ uniformly at random, independently of everything
+  else;
+  \item exchange the states of $\omega^{(0)}$ and $\omega^{(i)}$ on the \emph{mask} $\mathcal M_i$, which
+  consists of $e_i$ and of all edges that have an endpoint in $B_i$ and no endpoint in~$S$;
+  \item replace $S$ by $S\cup B_i$.
+\end{enumerate}
+The \emph{output} consists of the configurations $\omega'^{(0)},\dots,\omega'^{(\ell)}$ after all
+exchanges. The random objects of a successful run, namely the input configurations, the chain
+$y_0,\dots,y_{\ell-1}$ and the seams, form its \emph{trajectory}~$\tau$.
+
+\begin{lemma}[Geometry of the switching procedure]\label{lem:switching}
+For a successful experiment every round is well defined, and the procedure stops after at most $\ell$
+rounds. Let $i_1<\dots<i_t$ be the selected indices. Before each round $S=C_x(\omega^{(0)})$ for the
+current $\omega^{(0)}$, and after the round $C_x(\omega^{(0)})=S\cup B_i$, with $e_i$ the only open edge
+between $S$ and~$B_i$. The piece $B_{i_1}$ is attached to $A$ by $e_{i_1}$, and each later piece
+$B_{i_j}$ is attached to $B_{i_{j-1}}$ by $e_{i_j}$ and to no other earlier piece. Consequently, in the
+final distinguished configuration $\omega'^{(0)}$,
+\begin{equation}\label{eq:switch-cluster}
+  C_x(\omega'^{(0)})=A\cup B_{i_1}\cup\dots\cup B_{i_t}\ni z\,,\qquad
+  \abs{C_x(\omega'^{(0)})}<2n+\nu\,,
+\end{equation}
+the seams are bridges of $C_x(\omega'^{(0)})$ separating $x$ from $z$, in the order
+$e_{i_1},\dots,e_{i_t}$ from~$x$, and the open edges of $\omega'^{(0)}$ inside each $B_i$ are those
+of~$\omega^{(i)}$. Every edge whose state in the distinguished configuration is changed has an endpoint
+in the \emph{hanging part} $H\coloneqq B_{i_1}\cup\dots\cup B_{i_t}$, which is the vertex set of the
+component of $C_x(\omega'^{(0)})$ beyond the first seam $e_{i_1}$.
+\end{lemma}
+
+\begin{proof}
+Initially $C_1\ni y_0\in A$, so an index meets~$S$. Suppose index $i$ is selected. Then $y_i\notin S$:
+for $i<\ell$ this holds because $C_{i+1}\ni y_i$ and $i+1$ was eligible but not selected, and for $i=\ell$
+because $y_\ell=z\notin S$. Since $C_i$ is connected, meets $S$ and contains~$y_i$, the piece
+$B_i\subseteq C_i\setminus S$ has at least one open edge to~$S$, so $\mathcal K_i\neq\emptyset$.
+
+Before the exchange all edges of the current $\omega^{(0)}$ leaving $S$ are closed. The exchange
+imports the $\omega^{(i)}$-states of all edges inside $B_i$ and of all edges from $B_i$ to
+$V\setminus(S\cup B_i)$; the latter are closed in~$\omega^{(i)}$, because $B_i$ is a component
+of the $\omega^{(i)}$-open subgraph on $V\setminus S$. It also opens~$e_i$. All other edges between
+$B_i$ and $S$ keep their closed states, and no edge inside $S$ changes. Hence the new cluster of $x$ is
+$S\cup B_i$, with $e_i$ its only open edge between $S$ and~$B_i$. Edges inside $B_i$ are not touched
+again, since later masks consist of edges with no endpoint in the enlarged~$S$, apart from their seams.
+
+Every eligible index larger than the selected $i$ missed the old~$S$. Hence the next selected cluster
+meets the enlarged set only in~$B_i$, so the next piece is attached to $B_i$ and has no open edge to
+earlier pieces or to~$A$. If $i<\ell$ and $z\notin S\cup B_i$, then $C_{i+1}\ni y_i\in B_i$ provides an
+eligible index for the next round; if $i=\ell$, then $z=y_\ell\in B_\ell$ and the procedure stops. Since the
+selected indices increase, there are at most $\ell$ rounds. The pieces form a chain attached by single
+seams, which gives the claims about the seams and~\eqref{eq:switch-cluster}, using $\abs A<2n$ and
+$\abs{B_i}\le M$. Every mask edge has an endpoint in its piece, which proves the last claim.
+\end{proof}
+
+\begin{figure}[t]
+\centering
+\input{figures/fig-chain}
+\caption{The cluster of $x$ after the switching procedure (schematic). Each inserted piece $B_{i_j}$ is
+attached to its predecessor by a single open seam $e_{i_j}$, so the seams are bridges separating $x$
+from~$z$. Cutting the seams recovers $A$ and all pieces (\cref{lem:switching,lem:codes}).}\label{fig:chain}
+\end{figure}
+
+\subsection{Undoing the splicing}\label{sec:codes}
+
+Fix $x$ and~$z$. For a configuration $\omega'$ with $z\in C_x(\omega')$, list the bridges of
+$C_x(\omega')$ that separate $x$ from $z$ in their order from $z$ towards~$x$. A \emph{code} is a
+sequence $c=(c_\ell,\dots,c_1)$ with entries in $\{\ast\}\cup\{1,\dots,M\}$. A successful run with output
+distinguished configuration $\omega'^{(0)}$ has the following code: $c_i=\ast$ if $i$ is not selected,
+and for the selected indices, read from $z$ towards $x$, the entry $c_{i_j}$ is the number of
+separating bridges after the previous seam (or after $z$), up to and including $e_{i_j}$. We call
+$c_{i_j}$ the \emph{gap} of $e_{i_j}$. Recall that $\sigma=1/2+\varepsilon$, and put
+\begin{equation*}
+  \Theta_M\coloneqq1+\sum_{m=1}^M\min\Bigl\{1,\frac{2M^\sigma}{m}\Bigr\}\le CM^\sigma\log M\,.
+\end{equation*}
+
+\begin{lemma}[Inverse codes]\label{lem:codes}
+Fix $x$, $z$ and output configurations $\omega'^{(0)},\dots,\omega'^{(\ell)}$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+  \item\label{it:codes-inverse} A code determines the input configurations, the sets $A$ and $B_i$, the
+  seams, the masks and the contact sets $\mathcal K_i$ of every successful run with this output and
+  this code.
+  \item\label{it:codes-gaps} In every successful run each gap satisfies
+  $1/\abs{\mathcal K_{i}}\le\min\{1,2M^\sigma/c_{i}\}$.
+  \item\label{it:codes-sum} Summed over the codes $c$ of successful runs with this output,
+  $\sum_c\prod_{i\colon c_i\neq\ast}\abs{\mathcal K_i}^{-1}\le\Theta_M^\ell$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\ref{it:codes-inverse}: The code locates the seams among the separating bridges. By
+\cref{lem:switching}, cutting them decomposes $C_x(\omega'^{(0)})$ into $A$ (the part containing $x$)
+and the pieces $B_{i_1},\dots,B_{i_t}$ in their order. This determines the set $S$ before each round,
+hence every mask, and undoing the exchanges in reverse order recovers the input configurations. The
+contact sets are then determined by the input configurations and the pieces.
+
+\ref{it:codes-gaps}: The separating bridges counted in the gap of $e_i$, other than $e_i$ itself, lie
+inside $B_i$, between the point where the next seam (or $z$) attaches and the endpoint of $e_i$.
+Since $B_i$ is joined to the rest of the cluster by at most two edges, both of them bridges, a
+self-avoiding path between two vertices of $B_i$ stays in~$B_i$; so these edges are bridges of $B_i$
+separating two of its vertices.
+By \cref{lem:switching} the open edges inside $B_i$ are those of~$\omega^{(i)}$. Hence
+$c_i-1\le\diambr(B_i)$, the bridge diameter of $B_i$ in~$\omega^{(i)}$. Now $B_i$ is a component of the
+$\omega^{(i)}$-open subgraph induced by $C_i\setminus S$, joined to $C_i\cap S$ by the
+$\abs{\mathcal K_i}\ge1$ open edges of $\mathcal K_i$. Since $C_i$ is $M$-good, $\diambr(B_i)\le
+\abs{\mathcal K_i}M^\sigma$. If $c_i=1$ the claim is $\abs{\mathcal K_i}\ge1$; otherwise $c_i-1\ge
+c_i/2$ gives $1/\abs{\mathcal K_i}\le M^\sigma/(c_i-1)\le2M^\sigma/c_i$. Also $c_i-1\le\abs{B_i}-1$,
+so $c_i\le M$ and codes indeed take values in $\{\ast\}\cup\{1,\dots,M\}$.
+
+\ref{it:codes-sum}: By~\ref{it:codes-gaps}, the product for a code of a successful run is at most
+$\prod_{i\colon c_i\neq\ast}\min\{1,2M^\sigma/c_i\}$. Summing this over all sequences
+$c\in(\{\ast\}\cup\{1,\dots,M\})^\ell$ gives $\Theta_M^\ell$. The bound on $\Theta_M$ is the harmonic sum.
+\end{proof}
+
+All configurations of a successful run are determined, as far as they matter, by the edges in a fixed
+finite ball around~$x$: the cluster $A$ is explored within distance $2n$, the chain moves at most $\nu$
+steps from $z\in C_x(\omega'^{(0)})$, each rule reads edges within distance $r_\Phi$ of its vertex, and
+every mask lies within distance one of a piece. Conditioning on all other edges, we may therefore treat
+the trajectories as elements of a finite product space. On it, the exchanges preserve the total number
+of open edges among the $\ell+1$ configurations, so input and output configurations have the same
+probability under the product measure. This is the basis of the following density description.
+
+\begin{lemma}[The load]\label{lem:density}
+For $x,z\in V$ and a configuration $\omega$ let
+\begin{equation*}
+  L_x(z,\omega)\coloneqq\frac1n\,\EE\Bigl[\sum_\tau\prod_{i=1}^\ell\Phi_{y_i}(\omega^{(i)},y_{i-1})
+  \prod_{j=1}^t\abs{\mathcal K_{i_j}}^{-1}\Bigr]\,,
+\end{equation*}
+where the expectation is over independent auxiliary configurations $\omega'^{(1)},\dots,\omega'^{(\ell)}$
+with law $\PP_{p_c}$, and the sum is over the trajectories $\tau$ of successful runs whose output is
+$(\omega,\omega'^{(1)},\dots,\omega'^{(\ell)})$; the factors are evaluated on these trajectories. Then,
+for every event~$\mathcal B$,
+\begin{equation}\label{eq:density}
+  \frac1n\,\PP\bigl(\text{the experiment succeeds and }\omega'^{(0)}\in\mathcal B\bigr)
+  =\EE_{p_c}\bigl[L_x(z,\omega)\1_{\mathcal B}(\omega)\bigr]\,.
+\end{equation}
+Moreover $0\le L_x(z,\omega)\le\Theta_M^\ell/n$; the function $L_x(z,\cdot)$ depends only on the edges in a
+finite ball around~$x$; $L_{gx}(gz,g\omega)=L_x(z,\omega)$ for $g\in\Aut(G)$; and $L_x(z,\omega)=0$
+unless $z\in C_x(\omega)$ and $\abs{C_x(\omega)}<2n+\nu$.
+\end{lemma}
+
+\begin{proof}
+A trajectory has probability $\PP_{p_c}(\omega^{(0)})\cdots\PP_{p_c}(\omega^{(\ell)})
+\prod_i\Phi_{y_i}(\omega^{(i)},y_{i-1})\prod_j\abs{\mathcal K_{i_j}}^{-1}$ on the finite product space.
+The product of the configuration probabilities equals that of the output configurations. Summing over
+trajectories with a given output gives~\eqref{eq:density}. For the upper bound, group the trajectories
+with a given output by their codes. By \cref{lem:codes}\ref{it:codes-inverse}, the code determines the
+input configurations and the seams, so for fixed code the sum over trajectories is a sum over chains,
+and $\sum_{\text{chains}}\prod_i\Phi_{y_i}(\omega^{(i)},y_{i-1})\le1$ because these are the
+probabilities of the chains given the input configurations. \Cref{lem:codes}\ref{it:codes-sum} bounds
+the remaining sum over codes by $\Theta_M^\ell$. Locality and covariance hold because every ingredient is
+defined locally and covariantly, and the support property is~\eqref{eq:switch-cluster}.
+\end{proof}
+
+\subsection{First and second moment of the load}\label{sec:load}
+
+Let $L(\omega)\coloneqq\sum_zL_x(z,\omega)$ be the \emph{total load} and $\bar L\coloneqq\EE_{p_c}L$; by
+invariance these do not depend on~$x$ in law. Write $\pi\coloneqq\pi_n$, and let
+\begin{align*}
+  T^{(n)}(x,y)&\coloneqq\PP_{p_c}\bigl(y\in C_x,\ n\le\abs{C_x}<2n\bigr)\,,\\
+  \chi^{(n)}&\coloneqq\sum_yT^{(n)}(o,y)=\EE_{p_c}\bigl[\abs{C_o};\,n\le\abs{C_o}<2n\bigr]\,.
+\end{align*}
+The kernel $T^{(n)}$ is symmetric, because $y\in C_x$ implies $C_x=C_y$, and
+$n\pi\le\chi^{(n)}\le2n\pi$.
+
+\begin{lemma}[Mean load]\label{lem:mean-load}
+The \emph{mean load} $\bar L(x,z)\coloneqq\EE_{p_c}L_x(z,\omega)$ is a kernel with row sums $\bar L$, and
+\begin{equation}\label{eq:mean-load}
+  \bar L(x,z)=\frac{s^\ell}n\sum_yT^{(n)}(x,y)\,K^\ell(z,y)\,,\qquad
+  \pi s^\ell\le\bar L\le2\pi s^\ell\,,\qquad\norm{\bar L(\cdot,\cdot)}\le\bar L\,r^\ell\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By~\eqref{eq:density}, $\bar L(x,z)$ is $1/n$ times the success probability of the experiment. The $\ell$ steps
+of the chain use independent configurations, each succeeding with probability $s$ and moving according
+to $K$, so the chain succeeds and ends at $y$ with probability $s^\ell K^\ell(z,y)$; independently, $y\in A$
+and $n\le\abs A<2n$ with probability $T^{(n)}(x,y)$. Since $K^\ell$ is doubly stochastic,
+$\bar L=\sum_z\bar L(x,z)=s^\ell\chi^{(n)}/n\in[\pi s^\ell,2\pi s^\ell]$. Finally
+$\bar L(\cdot,\cdot)=(s^\ell/n)\,T^{(n)}(K^\ell)^\top$, and the Schur test gives
+$\norm{T^{(n)}}\le\chi^{(n)}$, so $\norm{\bar L(\cdot,\cdot)}\le(s^\ell/n)\chi^{(n)}r^\ell=\bar Lr^\ell$.
+\end{proof}
+
+The mean kernel already has the desired small norm. To turn the load into the output probabilities of a
+new map we must divide by a bound on~$L$, and we need that most of the mean is carried by
+configurations on which $L$ is not much larger than its mean. This is what the second moment controls.
+
+\begin{lemma}[Second moment of the load]\label{lem:second-moment}
+There is a polynomial $Q(\ell,M)\ge1$, with coefficients depending only on~$G$, such that
+\begin{equation}\label{eq:second-moment}
+  \EE_{p_c}L^2\le Q(\ell,M)\,\pi s^{2\ell}\qquad\text{whenever }n\in\mathcal N,\ \ell M\le n/2\text{ and }
+  n\ge(\Theta_M/s)^\ell\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand $L^2=\sum_{z_1,z_2}L_x(z_1,\omega)L_x(z_2,\omega)$, using two independent families of auxiliary
+output configurations. Each summand is a weighted sum over pairs $(\tau^1,\tau^2)$ of trajectories of
+successful runs with the common distinguished output~$\omega$ and endpoints $z_1,z_2$. We split the pairs
+into three classes. For a trajectory with at least one round, let $H^1$ or $H^2$ be its hanging part
+(\cref{lem:switching}); it contains the endpoint and has at most $\nu$ vertices. Two hanging parts in the
+same cluster are the far sides of bridges, so they are nested or disjoint.
+
+\emph{Class~1: one of the trajectories has no round.} Let $L^\emptyset(\omega)$ be the part of
+$L(\omega)$ coming from trajectories without rounds. For them the output equals the input, so
+$A=C_x(\omega)$, $n\le\abs A<2n$, $z\in A$, and the chain from $z$ ends in~$A$. Hence
+\begin{equation*}
+  L^\emptyset(\omega)\le\frac{s^\ell}n\,\1\{n\le\abs{C_x(\omega)}<2n\}\sum_{z\in C_x(\omega)}\
+  \sum_{y\in C_x(\omega)}K^\ell(z,y)\le\frac{s^\ell}{n}\,2n=2s^\ell\,,
+\end{equation*}
+using that the column sums of $K^\ell$ are one. The pairs of class~1 contribute at most
+$2\EE_{p_c}[L^\emptyset L]\le4s^\ell\bar L\le8\pi s^{2\ell}$.
+
+\emph{Class~2: the hanging parts are nested or joined by an edge of~$G$.} Fix $\tau^1$, with hanging part
+$H^1\ni z_1$. We claim that at most $N_\nu\coloneqq\nu+\nu^2+d\nu^3$ endpoints $z_2$ admit a
+trajectory $\tau^2$ in this class. If $H^2\subseteq H^1$, then $z_2\in H^1$: at most $\nu$ choices. If
+$H^1\subsetneq H^2$, the first seam of $\tau^2$ is a bridge separating $x$ from $z_1$, and the bridges
+between it and $z_1$ lie in $H^2$; so it is among the last $\nu$ such bridges, it determines $H^2$, and
+$z_2\in H^2$: at most $\nu^2$ choices. If $H^1$ and $H^2$ are disjoint and joined by an edge, pick a
+vertex of $H^2$ adjacent to $H^1$ (at most $d\nu$ choices); the first seam of $\tau^2$ is among the last
+$\nu$ bridges separating $x$ from it, and $z_2\in H^2$: at most $d\nu^3$ choices. By
+\cref{lem:density}, $L_x(z_2,\omega)\le\Theta_M^\ell/n\le s^\ell$ for each such $z_2$. Hence class~2
+contributes at most $\EE_{p_c}[L]N_\nu s^\ell\le2N_\nu\pi s^{2\ell}$.
+
+\emph{Class~3: the hanging parts are disjoint and not joined by any edge of~$G$.} Undo both
+trajectories: by \cref{lem:switching} the changes of the distinguished configuration made by $\tau^a$
+concern edges with an endpoint in $H^a$, and these two sets of edges are disjoint, so the undoing
+operations commute. Let $\omega_{00}$ be the jointly restored distinguished configuration. We claim:
+\begin{enumerate}[label=(\alph*)]
+  \item $C_x(\omega_{00})=A_{00}\coloneqq C_x(\omega)\setminus(H^1\cup H^2)$, and
+  $n-\nu\le\abs{A_{00}}<2n$;
+  \item running the switching procedure of $\tau^1$ from $A_{00}$ instead of from
+  $A^1\coloneqq C_x(\omega)\setminus H^1$, with the jointly restored configurations and the same chain
+  and seams, reproduces the selected indices, pieces, contact sets and masks of~$\tau^1$; the same
+  holds for~$\tau^2$. In particular, the first selected cluster of each chain meets $A_{00}$.
+\end{enumerate}
+For~(a): undoing $\tau^1$ alone restores the input of $\tau^1$, whose cluster of $x$ is $A^1$ by
+\cref{lem:switching}; its edges to $H^1$ are closed and remain so, because undoing $\tau^2$ changes only
+edges with an endpoint in $H^2$, and no edge joins $H^1$ to~$H^2$. The same holds with the roles
+exchanged. Edges with both endpoints in $A_{00}$ are not changed, and $A_{00}$ is connected, because
+removing the far sides of two bridges leaves the near side connected. Hence $C_x(\omega_{00})=A_{00}$.
+Finally $\abs{A^1}\in[n,2n)$ and $\abs{H^2}\le\nu$.
+
+For~(b) we argue by induction over the rounds of $\tau^1$, writing $S$ for the current set of the
+original run and $S_0$ for that of the new run; initially $S_0=S\setminus H^2$, and $H^2\subseteq S$
+throughout, since $H^2\subseteq A^1$. Let $i$ be the index selected in the original run and
+$e_i=\{a_i,b_i\}$ its seam with $a_i\in S$ and $b_i\in B_i\subseteq H^1$. Since no edge joins $H^1$ to
+$H^2$, we have $a_i\notin H^2$, so $C_i\ni a_i$ meets $S_0$, while every larger eligible index misses
+$S\supseteq S_0$. Hence the same index is selected. The new piece is the component of $y_i$ in the
+$\omega^{(i)}$-open subgraph on $V\setminus S_0=(V\setminus S)\cup H^2$; an open path leaving $B_i$
+would have to enter $H^2$ through an edge from $B_i\subseteq H^1$, which does not exist, so the piece is
+again~$B_i$. For the same reason the contact sets and the masks of the two runs coincide, and the states
+exchanged on the mask agree, because undoing $\tau^2$ changed no edge with an endpoint in~$H^1$.
+Afterwards $S_0\cup B_i=(S\cup B_i)\setminus H^2$. The stopping rules agree because $z_1\in H^1$ is not
+in~$H^2$. The first selected cluster meets $S_0=A_{00}$ by the argument just given.
+
+By~(b), a pair $(\tau^1,\tau^2)$ of class~3 is determined by the jointly restored configurations
+together with the two chains and the two seam sequences: rerunning both procedures from $A_{00}$ and
+applying their disjoint exchanges recovers the output. The exchanges preserve the total number of open
+edges, so the weight of the pair equals the probability of the restored configurations, times the
+chain probabilities and the factors $\prod\abs{\mathcal K}^{-1}$ of the two procedures run from
+$A_{00}$. For fixed restored configurations and chains, the selected indices, the pieces and the contact
+sets of each procedure do not depend on the seam choices, because every round adds the whole piece to
+the current set; only the masks and the output depend on the seams. Hence the factors
+$\prod\abs{\mathcal K}^{-1}$ are the probabilities of the uniform seam choices of each run, their sum
+over the seam sequences of one run is one, and the sum over pairs of seam sequences is at most the
+product of these two sums. Dropping
+all conditions except~(a) and the fact that each chain succeeds and meets $A_{00}$, we obtain that
+class~3 contributes at most
+\begin{equation*}
+  \frac1{n^2}\sum_{z_1,z_2}\EE_{p_c}\bigl[\1\{n-\nu\le\abs{C_x}<2n\}\,
+  \mathrm{hit}_{z_1}(C_x)\,\mathrm{hit}_{z_2}(C_x)\bigr]\,,
+\end{equation*}
+where, for a fixed set $D$, $\mathrm{hit}_z(D)$ is the probability that a chain of $\ell$ independent
+steps of $\Phi$ from $z$ succeeds and that one of its clusters $C_i$ meets~$D$. To bound it, let every
+vertex $z$ send unit mass to each vertex of $C_1\cup\dots\cup C_\ell$ when its chain succeeds. A successful
+chain has probability $s^\ell$ and its clusters have at most $\nu$ vertices in total, so each vertex sends
+expected mass at most $\nu s^\ell$, and by the mass-transport principle each vertex receives at most
+$\nu s^\ell$. A union bound over the vertices of $D$ gives
+\begin{equation*}
+  \sum_z\mathrm{hit}_z(D)\le\nu s^\ell\abs D\,.
+\end{equation*}
+Since $\nu\le n/2$, class~3 therefore contributes at most
+\begin{equation*}
+  \frac{\nu^2s^{2\ell}}{n^2}\,\EE_{p_c}\bigl[\abs{C_x}^2;\,n/2\le\abs{C_x}<2n\bigr]
+  \le4\nu^2s^{2\ell}\,\PP_{p_c}(n/2\le\abs{C_o}<2n)\le4(1+2^\beta)\nu^2\pi s^{2\ell}\,,
+\end{equation*}
+by~\eqref{eq:scales}. Adding the three classes gives~\eqref{eq:second-moment} with
+$Q(\ell,M)\coloneqq8+2N_\nu+10\nu^2$, since $4(1+2^\beta)\le10$.
+\end{proof}
+
+\subsection{One amplification step and the iteration}\label{sec:iteration}
+
+By \cref{prop:good} there is $M_\varepsilon$ such that the bound of \cref{prop:good} holds for all
+$M\ge M_\varepsilon$.
+
+\begin{lemma}[One amplification step]\label{lem:one-step}
+Let $\Phi$ be a local endpoint map with cap $M\ge2$, success probability $s$ and kernel norm~$r$. Let
+$\ell\in\N$ and $n\in\mathcal N$ satisfy
+\begin{equation}\label{eq:one-step-conditions}
+  \ell M\le n/2\,,\qquad n\ge(\Theta_M/s)^\ell\,,\qquad 2n\ge M_\varepsilon\,,\qquad
+  16\,Q(\ell,M)\,n^\beta\e^{-n^\varepsilon}\le1\,.
+\end{equation}
+Then there is a local endpoint map $\Phi'$ with cap $M'\coloneqq2n+\ell M$, success probability
+$s'\ge\pi_n/(8Q(\ell,M))$ and kernel norm $r'\le2r^\ell$.
+\end{lemma}
+
+\begin{proof}
+Put $b\coloneqq4Q(\ell,M)s^\ell$. By \cref{lem:mean-load,lem:second-moment},
+$\EE_{p_c}[L;L>b]\le\EE_{p_c}L^2/b\le\pi s^\ell/4\le\bar L/4$. The load vanishes unless
+$\abs{C_x}<2n+\nu\le M'$, so by \cref{prop:good}, $M'\ge M_\varepsilon$ and $\pi_n\ge n^{-\beta}$,
+\begin{equation*}
+  \EE_{p_c}\bigl[L;\,L\le b,\ C_x\text{ not $M'$-good}\bigr]\le b\,\e^{-(M')^\varepsilon}
+  \le\bar L\cdot\frac{4Q(\ell,M)}{\pi_n}\,\e^{-n^\varepsilon}\le\frac{\bar L}4\,,
+\end{equation*}
+by the last condition in~\eqref{eq:one-step-conditions}. Let $\mathcal R$ be the event that $L\le b$
+and $C_x$ is $M'$-good, and define
+\begin{equation*}
+  \Phi'_x(\omega,z)\coloneqq\1_{\mathcal R}(\omega)\,\frac{L_x(z,\omega)}{b}\,.
+\end{equation*}
+By \cref{lem:density} this is a local endpoint map with cap~$M'$: on $\mathcal R$ the outputs have total
+probability $L/b\le1$, every output lies in $C_x$, and $\abs{C_x}<M'$ with $C_x$ being $M'$-good. Its
+unconditional endpoint kernel $F'_{p_c}(x,z)=\EE_{p_c}[L_x(z,\omega);\mathcal R]/b$ satisfies
+$0\le bF'_{p_c}(x,z)\le\bar L(x,z)$, and its row sums are $s'=\EE_{p_c}[L;\mathcal R]/b\ge\bar L/(2b)\ge\pi_n/(8Q(\ell,M))$. Hence
+$r'=\norm{F'_{p_c}}/s'\le\norm{\bar L(\cdot,\cdot)}/(\bar L/2)\le2r^\ell$ by \cref{lem:kernels}\ref{it:domination}
+and~\eqref{eq:mean-load}.
+\end{proof}
+
+The new map $\Phi'$ consists of fixed functions $\Phi'_x(\omega,\cdot)$ of the configuration. Like every
+local endpoint map, it can be evaluated on configurations of any parameter; this is how the maps are used
+in \cref{sec:moments}.
+
+\begin{proof}[Proof of \cref{prop:amplification}]
+We measure a map $\Phi$ with cap $M$ and success probability $s$ by
+\begin{equation*}
+  \operatorname{cost}(\Phi)\coloneqq\log(1/s)+(\sigma+\xi)\log M\,,
+\end{equation*}
+where $\xi>0$ is fixed so small that, by~\eqref{eq:beta-sigma},
+\begin{equation*}
+  c_\xi\coloneqq\frac{\beta+\xi+(\sigma+\xi)(1+\xi)}{1-\xi}<1\,.
+\end{equation*}
+Fix the constant $C$ in $\Theta_M\le CM^\sigma\log M$, and choose $M_1\ge M_\varepsilon$ so large that
+$\log(2C\log M)\le\xi\log M$ for $M\ge M_1$. By \cref{lem:start} there is a map $\Phi_0$ with cap
+$M\ge M_1$ and kernel norm $r<\e^{-1}$.
+
+\emph{One step.} Let $\Phi$ have cap $M\ge M_1$, success probability $s$ and kernel norm
+$r<\e^{-1}$, and put $a\coloneqq\lceil CM^\sigma\log M/s\rceil$. Then $a\ge\max\{2,\Theta_M/s\}$ and
+$\log a\le\log(1/s)+\sigma\log M+\log(2C\log M)\le\operatorname{cost}(\Phi)$. For $n\in\mathcal N$ put
+$\ell\coloneqq\lfloor\log n/\log a\rfloor$, so that $a^\ell\le n<a^{\ell+1}$. As $n\to\infty$ through
+$\mathcal N$, we have $\ell\to\infty$ and $\ell\le\log n/\log2$; hence all conditions
+in~\eqref{eq:one-step-conditions} hold for large~$n$, using that $Q(\ell,M)$ is polynomial in~$\ell$ and
+$n\ge a^\ell\ge(\Theta_M/s)^\ell$. \Cref{lem:one-step} gives a map $\Phi'$ with cap $M'$, success
+probability $s'$ and kernel norm $r'$. By $\pi_n\ge n^{-\beta}$ and
+$\log n<(\ell+1)\operatorname{cost}(\Phi)$,
+\begin{align*}
+  \log(1/s')&\le\beta\log n+\log(8Q(\ell,M))\le\beta(\ell+1)\operatorname{cost}(\Phi)+O_M(\log(\ell+1))\,,\\
+  \log M'&=\log(2n+\ell M)\le\log n+1\le(\ell+1)\operatorname{cost}(\Phi)+1\,,\\
+  \log(1/r')&\ge\ell\log(1/r)-\log2\,.
+\end{align*}
+Since $\operatorname{cost}(\Phi)>0$ and $\log(1/r)>1$ are fixed, for $n$ large enough this gives
+$\log(1/s')\le\ell(\beta+\xi)\operatorname{cost}(\Phi)$, $\log M'\le\ell(1+\xi)\operatorname{cost}(\Phi)$
+and $\log(1/r')\ge\ell(1-\xi)\log(1/r)\ge2\log(1/r)$, and therefore
+\begin{equation*}
+  \frac{\operatorname{cost}(\Phi')}{\log(1/r')}
+  \le\frac{\ell\operatorname{cost}(\Phi)\,\bigl(\beta+\xi+(\sigma+\xi)(1+\xi)\bigr)}{\ell(1-\xi)\log(1/r)}
+  =c_\xi\,\frac{\operatorname{cost}(\Phi)}{\log(1/r)}\,.
+\end{equation*}
+Moreover $\Phi'$ has cap $M'\ge2n\ge M_1$ and $r'<\e^{-2}$.
+
+\emph{Iteration.} Starting from $\Phi_0$ and applying the step repeatedly, we obtain maps
+$\Phi_0,\Phi_1,\dots$ with kernel norms $r_j<\e^{-1}$ and
+\begin{equation*}
+  \frac{\operatorname{cost}(\Phi_j)}{\log(1/r_j)}\le c_\xi^j\,\frac{\operatorname{cost}(\Phi_0)}{\log(1/r_0)}
+  \longrightarrow0\,.
+\end{equation*}
+Since $\log(1/s)+\log M\le\max\{1,(\sigma+\xi)^{-1}\}\operatorname{cost}(\Phi)$ for every map, the
+efficiency ratio $\operatorname{eff}(\Phi_j)$ tends to zero.
+\end{proof}

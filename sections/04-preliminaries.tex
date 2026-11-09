@@ -1,0 +1,329 @@
+\section{Preliminaries}\label{sec:prelim}
+
+This section collects the tools used in the proof. Classical results are quoted; proofs are given for
+the variants that are less standard.
+
+\subsection{Kernels and operators}\label{sec:kernels}
+
+For a kernel~$K$ we use the operator norm
+\begin{equation*}
+  \norm{K}\coloneqq\sup\Bigl\{\Bigl|\sum_{x,y}\overline{g(x)}K(x,y)f(y)\Bigr|\colon
+  f,g\text{ finitely supported},\ \norm{f}_2=\norm{g}_2=1\Bigr\}\in[0,\infty]\,.
+\end{equation*}
+If it is finite, $K$ extends to a bounded operator on $\ell^2(V)$ whose matrix is~$K$; conversely, a
+bounded operator $S$ has the matrix $S(x,y)=\langle\1_x,S\1_y\rangle$, where $\1_x$ is the indicator
+function of~$\{x\}$. We identify the two.
+For a nonnegative kernel $L$ and vertex sets $A,B$ we write
+\begin{equation*}
+  L(A,B)\coloneqq\sum_{a\in A}\sum_{b\in B}L(a,b)\,;
+\end{equation*}
+for instance, $\Adj(A,B)$ is the number of edges with one endpoint in $A$ and the other in~$B$.
+
+\begin{lemma}[Kernel bounds]\label{lem:kernels}
+Let $K$ and $L$ be kernels with $L\ge0$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+  \item\label{it:domination} \emph{Domination.} If $\abs{K}\le L$ entrywise, then $\norm{K}\le\norm{L}$.
+  \item\label{it:schur} \emph{Schur test.} If all row sums and all column sums of $L$ are at most~$b$,
+  then $\norm{L}\le b$.
+  \item\label{it:monotone} \emph{Monotone limits.} For $0<p_*\le1$ and all $x,y$,
+  $T_p(x,y)\uparrow T_{p_*}(x,y)$ as $p\uparrow p_*$, and
+  $\norm{T_{p_*}}=\sup_{p<p_*}\norm{T_p}\in[0,\infty]$. Moreover $T_p\le T_{p'}$ entrywise for
+  $p\le p'$; in particular $T_p$ is bounded for every $p<\ptwo$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For~\ref{it:domination}, $\abs{\sum\overline{g(x)}K(x,y)f(y)}\le\sum\abs{g(x)}L(x,y)\abs{f(y)}
+\le\norm{L}\norm{f}_2\norm{g}_2$. For~\ref{it:schur}, the Cauchy--Schwarz inequality with the weights
+$L(x,y)$ gives
+$\sum L(x,y)\abs{g(x)}\abs{f(y)}\le(\sum L(x,y)\abs{g(x)}^2)^{1/2}(\sum L(x,y)\abs{f(y)}^2)^{1/2}
+\le b\norm{f}_2\norm{g}_2$.
+
+For~\ref{it:monotone}, monotonicity in $p$ follows from the standard monotone coupling. The event
+$\{x\conn y\}$ is the increasing union of the events $\{x\connin{B(x,n)}y\}$, $n\in\N$, whose
+probabilities are polynomials in~$p$; hence $\lim_{p\uparrow p_*}T_p(x,y)=\sup_p\sup_n
+\PP_p(x\connin{B(x,n)}y)=\sup_n\PP_{p_*}(x\connin{B(x,n)}y)=T_{p_*}(x,y)$. If
+$\norm{T_p}\le M$ for all $p<p_*$, then for finitely supported $f,g$ the finite sum
+$\sum\overline{g(x)}T_{p_*}(x,y)f(y)$ is the limit of the corresponding sums for $T_p$, so
+$\norm{T_{p_*}}\le M$. The reverse inequality and the last assertion follow from monotonicity
+and~\ref{it:domination}.
+\end{proof}
+
+\subsection{Unimodularity, mass transport and the trace}\label{sec:mtp}
+
+Equip $\Aut(G)$ with the topology of pointwise convergence. It is a locally compact group whose vertex
+stabilisers $\operatorname{Stab}(x)\coloneqq\{g\in\Aut(G)\colon gx=x\}$ are compact and open. The group
+is \emph{unimodular} if its left Haar measure is also right-invariant. For a transitive graph this is
+equivalent to $\abs{\operatorname{Stab}(x)y}=\abs{\operatorname{Stab}(y)x}$ for all $x,y\in V$, where
+$\operatorname{Stab}(x)y$ is the orbit of $y$ under $\operatorname{Stab}(x)$, and it is equivalent to the mass-transport
+principle below; see~\cite[Section~3]{BLPS99b} and~\cite[Chapter~8]{LP16}. For instance, the
+automorphism group of every Cayley graph is unimodular~\cite[Chapter~8]{LP16}. A function
+$F\colon V\times V\to[0,\infty]$ is \emph{diagonally invariant} if $F(gx,gy)=F(x,y)$ for all
+$g\in\Aut(G)$ and $x,y\in V$.
+
+\begin{lemma}[Mass-transport principle, \cite{BLPS99b}, {\cite[Chapter~8]{LP16}}]\label{lem:mtp}
+Assume \cref{ass:G,ass:U}. For every diagonally invariant $F\colon V\times V\to[0,\infty]$,
+\begin{equation*}
+  \sum_{y\in V}F(o,y)=\sum_{x\in V}F(x,o)\,.
+\end{equation*}
+\end{lemma}
+
+We think of $F(x,y)$ as mass sent from $x$ to~$y$: the expected mass sent out by the root equals the
+expected mass it receives. The identity extends to diagonally invariant real or complex $F$ with
+$\sum_y\abs{F(o,y)}<\infty$, by splitting into positive and negative parts. Typically
+$F(x,y)=\EE_p[m(x,y;\omega)]$ for a random mass $m$ that is \emph{equivariant}, that is,
+$m(gx,gy;g\omega)=m(x,y;\omega)$, where $g\omega$ is the image of the configuration under~$g$; such
+$F$ are diagonally invariant because $\PP_p$ is invariant. Two consequences are used repeatedly.
+First, every nonnegative invariant kernel has equal row and column sums; in particular an invariant
+stochastic kernel is doubly stochastic and has norm at most one by \cref{lem:kernels}. Second, the
+diagonal of an invariant operator defines a trace.
+
+A bounded operator $S$ on $\ell^2(V)$ is \emph{invariant} if its matrix is an invariant kernel,
+equivalently if $S$ commutes with the unitary operators $U_gf\coloneqq f\circ g^{-1}$, $g\in\Aut(G)$.
+For such $S$ we set
+\begin{equation*}
+  \tr S\coloneqq S(o,o)=\langle\1_o,S\1_o\rangle\,.
+\end{equation*}
+Since $\1_o$ is a unit vector, $\abs{\tr S}\le\norm S$. For example, $\tr(T_p^3)=\nabla_p$ whenever
+$T_p$ is bounded.
+
+\begin{lemma}[The trace]\label{lem:trace}
+Assume \cref{ass:G,ass:U}, and let $A$ and $B$ be bounded invariant operators.
+\begin{enumerate}[label=\textup{(\alph*)}]
+  \item\label{it:trace-cyclic} $\tr(AB)=\tr(BA)$.
+  \item\label{it:trace-positive} If $A$ is positive semidefinite and $B$ is self-adjoint, then
+  $\abs{\tr(BA)}\le\norm{B}\tr A$.
+  \item\label{it:trace-diagonal} If $A$ is positive semidefinite, then $A(x,x)=\tr A$ and
+  $\abs{A(x,y)}\le\tr A$ for all $x,y\in V$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For~\ref{it:trace-cyclic}, the series defining $\tr(AB)$ converges absolutely, since
+\begin{equation*}
+  \sum_y\abs{A(o,y)B(y,o)}\le\norm{A^*\1_o}_2\,\norm{B\1_o}_2\le\norm{A}\,\norm{B}\,.
+\end{equation*}
+The function $F(x,y)\coloneqq A(x,y)B(y,x)$ is diagonally invariant, and the mass-transport principle
+gives $\tr(AB)=\sum_yA(o,y)B(y,o)=\sum_xA(x,o)B(o,x)=\tr(BA)$.
+
+For~\ref{it:trace-positive}, the positive square root $A^{1/2}$ commutes with every $U_g$, because $A$
+does and the functional calculus preserves commutation; so $A^{1/2}$ is invariant. By~\ref{it:trace-cyclic},
+$\tr(BA)=\tr(A^{1/2}BA^{1/2})$. Since $-\norm{B}A\le A^{1/2}BA^{1/2}\le\norm{B}A$ in the order of
+quadratic forms, evaluating at $\1_o$ gives the claim.
+
+For~\ref{it:trace-diagonal}, $A(x,x)=A(o,o)$ by invariance and transitivity, and
+$\abs{A(x,y)}^2\le A(x,x)A(y,y)$ by the Cauchy--Schwarz inequality for the positive semidefinite form
+$(f,g)\mapsto\langle f,Ag\rangle$.
+\end{proof}
+
+\subsection{The lazy random walk}\label{sec:walk}
+
+Recall from \cref{sec:mechanism} the lazy simple random walk $P=(I+\Adj/d)/2$ and
+$\rho=\norm{P}$. The following is a version of the discrete Cheeger inequality; see~\cite{Dod84} for its
+background.
+
+\begin{lemma}[Spectral gap]\label{lem:walk}
+Assume \cref{ass:G}. The kernel $P$ is symmetric, invariant and positive semidefinite, and
+\begin{equation*}
+  \rho=\norm{P}\le1-\frac{\iota^2}{4d^2}<1\,.
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+Symmetry and invariance are clear. By the Schur test $\norm{\Adj/d}\le1$, so $P=(I+\Adj/d)/2$ is
+positive semidefinite. For finitely supported $f$,
+\begin{equation*}
+  \langle f,(I-P)f\rangle=\frac1{2d}\sum_{\{x,y\}\in E}\abs{f(x)-f(y)}^2\,.
+\end{equation*}
+Let $f\ge0$. By the co-area formula and the isoperimetric inequality,
+$\sum_{\{x,y\}\in E}\abs{f(x)^2-f(y)^2}=\int_0^\infty\abs{\partial_E\{f^2>s\}}\dd s\ge\iota\norm{f}_2^2$.
+The Cauchy--Schwarz inequality and $\sum_{\{x,y\}\in E}(f(x)+f(y))^2\le2d\norm{f}_2^2$ bound the
+left-hand side by $(2d)^{1/2}\norm{f}_2(\sum_{\{x,y\}\in E}(f(x)-f(y))^2)^{1/2}$. Hence
+$\langle f,(I-P)f\rangle\ge\iota^2\norm{f}_2^2/(4d^2)$, that is,
+$\langle f,Pf\rangle\le(1-\iota^2/(4d^2))\norm{f}_2^2$. Since $P$ has nonnegative entries,
+$\abs{\langle f,Pf\rangle}\le\langle\abs{f},P\abs{f}\rangle$ for general~$f$, and for the self-adjoint
+operator $P$ this bound on the quadratic form bounds the norm.
+\end{proof}
+
+\subsection{Correlation inequalities}\label{sec:correlation}
+
+An event or a function of the configuration is \emph{increasing} if it is preserved, respectively does
+not decrease, when edges are opened. Two increasing events $\mathcal A,\mathcal B$ occur
+\emph{disjointly}, written $\mathcal A\circ\mathcal B$, if there are disjoint finite sets of open edges
+that witness $\mathcal A$ and $\mathcal B$ respectively.
+
+\begin{lemma}[Harris, van den Berg--Kesten, tree-graph bound]\label{lem:correlation}
+Let $p\in[0,1]$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+  \item\label{it:harris} Increasing nonnegative functions of the configuration are positively
+  correlated under $\PP_p$.
+  \item\label{it:bk} For increasing events $\mathcal A_1,\dots,\mathcal A_m$ whose occurrence is
+  witnessed by finite sets of open edges,
+  $\PP_p(\mathcal A_1\circ\dots\circ\mathcal A_m)\le\prod_i\PP_p(\mathcal A_i)$.
+  \item\label{it:tree} For all $x,y,z\in V$ and every domain $\Lambda$,
+  \begin{equation*}
+    \PP_p(x\connin{\Lambda}y,\ x\connin{\Lambda}z)\le\sum_{w\in V}T_p(x,w)\,T_p(w,y)\,T_p(w,z)\,.
+  \end{equation*}
+  In particular $\EE_p\abs{C_x}^2\le\chi(p)^3$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Parts~\ref{it:harris} and~\ref{it:bk} are the Harris inequality~\cite{Har60} and the
+van den Berg--Kesten inequality~\cite{vdBK85}; see~\cite[Sections~2.2 and~2.3]{Gri99}. The passage from
+finitely many edges to events with finite witnesses on~$G$ is by monotone approximation. For~\ref{it:tree},
+on the event on the left choose self-avoiding open paths in $\Lambda$ from $x$ to $y$ and from $x$ to~$z$.
+Their union contains an open tree spanning $x,y,z$, which has a vertex $w$ joined to $x$, $y$ and $z$ by
+three edge-disjoint open paths; paths of length zero are allowed. A union bound over $w$ and
+part~\ref{it:bk} give the claim, using $T_p^\Lambda\le T_p$. Summing over $y,z$ gives the bound on the
+second moment.
+\end{proof}
+
+\subsection{The subcritical regime}\label{sec:subcritical}
+
+\begin{lemma}[Subcritical susceptibility]\label{lem:subcritical}
+Assume \cref{ass:G}. For every $p<p_c$ the susceptibility $\chi(p)$ is finite. The kernel $T_p$ is then
+a bounded, invariant, symmetric and positive semidefinite operator with $\norm{T_p}\le\chi(p)$.
+\end{lemma}
+
+\begin{proof}
+Finiteness of $\chi(p)$ below $p_c$ is the sharpness of the phase transition. It was proved on the
+hypercubic lattice by Aizenman and Barsky~\cite{AB87} and Menshikov~\cite{Men86}, and on quasi-transitive
+graphs by Antunovi\'c and Veseli\'c~\cite[Theorem~2]{AV08}; on every locally finite, transitive, infinite
+graph it is~\cite[Theorem~1.1]{DCT16}, which also gives a short proof. The norm bound is the Schur test. Since
+$T_p(x,y)=\EE_p\sum_C\1\{x,y\in C\}$, where the sum runs over the clusters, every finitely supported $f$
+satisfies $\sum_{x,y}\overline{f(x)}T_p(x,y)f(y)=\EE_p\sum_C\abs{\sum_{x\in C}f(x)}^2\ge0$.
+\end{proof}
+
+The next lemma is Russo's formula in the form we need: in operator norm and for the infinite graph. Its
+proof is given in \cref{app:russo}.
+
+\begin{lemma}[Russo's formula]\label{lem:russo}
+Assume \cref{ass:G,ass:U}. The map $p\mapsto T_p$ is locally absolutely continuous on $(0,p_c)$ in
+operator norm, and $\chi$ is locally absolutely continuous on $(0,p_c)$. For almost every $p\in(0,p_c)$,
+\begin{align}
+  (1-p)\,T_p'(x,y)&=\EE_p\bigl[\Adj(C_x,C_y)\,\1\{C_x\neq C_y\}\bigr]\qquad\text{for all }x,y\in V\,,
+  \label{eq:russo-kernel}\\
+  (1-p)\,\chi'(p)&=\sum_{b\sim o}\EE_p\bigl[\abs{C_o}\,\abs{C_b};\,C_o\neq C_b\bigr]
+  =\chi(p)^2\,\Delta(p)\,,\label{eq:russo-chi}
+\end{align}
+where $T_p'$ is the derivative in operator norm and $\Delta(p)$ is defined by the last identity.
+\end{lemma}
+
+The quantity $\Delta(p)$ is the normalised expected product of the sizes of two adjacent distinct
+clusters; it already appeared in \cref{sec:part1}. In~\eqref{eq:russo-kernel}, $\Adj(C_x,C_y)$ counts
+the closed edges between the two clusters, each of which is pivotal for $x\conn y$.
+
+\begin{lemma}[Sprinkling, {\cite[Lemma~2.4]{Hut19}}]\label{lem:sprinkling}
+For $p,a\in[0,1]$,
+\begin{equation}\label{eq:sprinkling}
+  T_{p+(1-p)a}\le\sum_{j\ge0}a^j\,T_p(\Adj\,T_p)^j\qquad\text{entrywise.}
+\end{equation}
+Consequently, if $ad\norm{T_p}<1$ then $\norm{T_{p+(1-p)a}}\le\norm{T_p}/(1-ad\norm{T_p})$, and if
+$ad\chi(p)<1$ then $\chi(p+(1-p)a)\le\chi(p)/(1-ad\chi(p))$.
+\end{lemma}
+
+\begin{proof}
+Let $\omega_1$ and $\omega_2$ be independent configurations with laws $\PP_p$ and $\PP_a$. Their union
+$\omega_1\vee\omega_2$ has law $\PP_{p+(1-p)a}$. If $x$ and $y$ are joined by a self-avoiding path open
+in $\omega_1\vee\omega_2$, let $e_1,\dots,e_j$ be the edges of the path, in order, that are closed
+in~$\omega_1$; they are open in $\omega_2$ and pairwise distinct. Orient $e_i=(x_i,y_i)$ along the path.
+The pieces of the path between them are edge-disjoint and open in~$\omega_1$, joining $x$ to $x_1$,
+$y_1$ to $x_2$, \dots, $y_j$ to~$y$. By a union bound over $j$ and the oriented edges, independence of
+$\omega_2$ and the van den Berg--Kesten inequality for~$\omega_1$,
+\begin{equation*}
+  T_{p+(1-p)a}(x,y)\le\sum_{j\ge0}a^j\sum_{(x_i,y_i)_{i\le j}}T_p(x,x_1)\,T_p(y_1,x_2)\cdots T_p(y_j,y)\,,
+\end{equation*}
+which is~\eqref{eq:sprinkling}. Since $\norm{\Adj}\le d$ and the row sums of $\Adj$ equal~$d$, the
+norm and the row sums of the right-hand side are at most $\sum_ja^jd^j\norm{T_p}^{j+1}$ and
+$\sum_ja^jd^j\chi(p)^{j+1}$, respectively. \Cref{lem:kernels}\ref{it:domination} concludes.
+\end{proof}
+
+\subsection{Criticality and two reductions}\label{sec:criticality}
+
+\begin{lemma}[Critical finiteness]\label{lem:pc}
+Assume \cref{ass:G}. Then $0<p_c<1$, and $\PP_{p_c}$-almost surely every cluster is finite. In
+particular, for every domain $\Lambda$, all clusters $C^\Lambda_x$ are finite $\PP_{p_c}$-almost surely.
+\end{lemma}
+
+\begin{proof}
+There are at most $d^n$ self-avoiding paths of length $n$ from~$o$, so $\theta(p)=0$ for $p<1/d$. On the
+other hand, a connected vertex set $A\ni o$ with $\abs{A}=n$ can be encoded by a closed walk of length
+$2n-2$ from $o$ around a spanning tree of~$A$, so there are at most $d^{2n}$ such sets. If $C_o=A$, then
+all $\abs{\partial_E A}\ge\iota n$ edges of $\partial_EA$ are closed. Hence
+$\PP_p(\abs{C_o}<\infty)\le\sum_{n\ge1}d^{2n}(1-p)^{\iota n}<1$ for $p$ close to one, and $p_c<1$.
+
+Every ball satisfies $\abs{B(o,r+1)}\ge(1+\iota/d)\abs{B(o,r)}$, since each vertex of the outer vertex
+boundary of $B(o,r)$ is incident to at most $d$ edges of $\partial_EB(o,r)$. Thus $G$ has exponential
+growth, and by a theorem of Hutchcroft~\cite[Theorem~1.2]{Hut16} there are almost surely no infinite
+clusters at~$p_c$. Clusters in a domain are contained in clusters of~$G$.
+\end{proof}
+
+\begin{lemma}[The operator threshold precedes uniqueness]\label{lem:p22-pu}
+Assume \cref{ass:G}. If $\PP_p(N_\infty=1)=1$, then $T_p$ is unbounded. Consequently $\ptwo\le p_u$.
+\end{lemma}
+
+\begin{proof}
+If $\PP_p(N_\infty=1)=1$, then some vertex lies in an infinite cluster with positive probability, so
+$\theta(p)>0$ by transitivity. By uniqueness and the Harris inequality,
+$T_p(x,y)\ge\PP_p(\abs{C_x}=\abs{C_y}=\infty)\ge\theta(p)^2$ for all $x,y$. For finite $F\subseteq V$
+this gives $\langle\1_F,T_p\1_F\rangle\ge\theta(p)^2\abs{F}^2=\theta(p)^2\abs{F}\,\norm{\1_F}_2^2$, so
+$T_p$ is unbounded. If we had $\ptwo>p_u$, the definition of $p_u$ as an infimum would provide
+$p<\ptwo$ with $\PP_p(N_\infty=1)=1$, and $T_p$ would be both bounded (\cref{lem:kernels}) and
+unbounded.
+\end{proof}
+
+\begin{proposition}[The nonunimodular case, {\cite[Theorem~2.9]{Hut19}}]\label{prop:nonunimodular}
+Assume \cref{ass:G}. If $\Aut(G)$ is not unimodular, then $p_c<\ptwo$.
+\end{proposition}
+
+\begin{proof}
+Hutchcroft's theorem states that $p_c<p_{q\to q}$ for every $q\in(1,\infty)$ on every connected, locally
+finite graph whose automorphism group has a quasi-transitive nonunimodular subgroup. Under our
+assumption, $\Aut(G)$ itself is such a subgroup, and $q=2$ gives the claim.
+\end{proof}
+
+The last result of this section turns boundedness of one connection operator above $p_c$ into a
+simultaneous nonuniqueness statement. It follows the argument of~\cite{Ope26}.
+
+\begin{proposition}[Simultaneous nonuniqueness]\label{prop:interval}
+Assume \cref{ass:G}, and let $p_c<p_1<p_2<1$ be such that $T_{p_2}$ is bounded. In the standard
+monotone coupling, almost surely for every $p\in[p_1,p_2]$ there are infinitely many infinite clusters
+at parameter~$p$.
+\end{proposition}
+
+\begin{proof}
+\emph{Stage 1: ergodicity.} Every $\Aut(G)$-invariant event $\mathcal E$ of the labels $(U_e)_{e\in E}$
+has probability zero or one. Indeed, for $r\in\N$ choose an event $\mathcal A_r$ depending only on the
+labels in the ball $B(o,r)$ such that $\PP(\mathcal E\triangle\mathcal A_r)\to0$ as $r\to\infty$, and an
+automorphism $g_r$ with $\dist(o,g_ro)>2r+2$, which exists by transitivity. Then $\mathcal A_r$ and
+$g_r\mathcal A_r$ are independent, while $g_r\mathcal E=\mathcal E$, so
+$\abs{\PP(\mathcal E)-\PP(\mathcal E)^2}\le4\PP(\mathcal E\triangle\mathcal A_r)\to0$.
+
+\emph{Stage 2: the count.} Let $N_{12}\in\{0,1,2,\dots\}\cup\{\infty\}$ be the number of
+$p_2$-clusters that contain an infinite $p_1$-cluster. It is invariant, hence almost surely constant.
+Since $\theta(p_1)>0$, it is positive.
+
+It is not one. Otherwise any two vertices in infinite $p_1$-clusters would lie in the same
+$p_2$-cluster, and the Harris inequality would give $T_{p_2}(x,y)\ge\theta(p_1)^2$ for all $x,y$; as
+in the proof of \cref{lem:p22-pu}, $T_{p_2}$ would be unbounded.
+
+It is not an integer $n\ge2$. Otherwise there would be vertices $x,y$ such that, with positive
+probability, $x$ and $y$ lie in infinite $p_1$-clusters contained in distinct $p_2$-clusters; call
+this event~$\mathcal E_{xy}$. Fix a path $\pi$ from $x$ to $y$, and replace the labels of the edges of
+$\pi$ by independent labels uniform on $[0,p_1]$. The law of the modified labels is absolutely
+continuous with respect to the original law, since finitely many coordinates were replaced by
+variables with bounded densities. The modification only opens edges, at both parameters, and only
+finitely many. Hence clusters at either parameter can only merge: every cluster after the modification
+is the union of finitely many clusters before it. In particular every infinite $p_1$-cluster after the
+modification contains an infinite $p_1$-cluster from before. Consequently every counted $p_2$-cluster
+before the modification lies in a counted $p_2$-cluster after it, and every counted $p_2$-cluster after
+the modification contains a counted one from before. On $\mathcal E_{xy}$ the path $\pi$ joins two
+distinct counted $p_2$-clusters, which therefore lie in the same counted cluster after the modification.
+So the modified labels have $N_{12}\le n-1$ with positive probability, which contradicts absolute
+continuity and $N_{12}=n$ almost surely.
+
+\emph{Stage 3: conclusion.} Hence $N_{12}=\infty$ almost surely. On this event choose infinite
+$p_1$-clusters in infinitely many distinct counted $p_2$-clusters. For every $p\in[p_1,p_2]$ they lie in
+infinite $p$-clusters, which are distinct because they lie in distinct $p_2$-clusters.
+\end{proof}

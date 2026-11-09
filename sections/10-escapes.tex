@@ -1,0 +1,172 @@
+\section{Escapes at both ends of a random path}\label{sec:escapes}
+
+In this section we prove \cref{prop:escapes}. We assume \cref{ass:G,ass:U}, fix $p\in[p_c/2,p_c)$ and
+write $T=T_p$. The construction is the one of~\cite{Ope26}, with one simplification available in the
+transitive case: the geodesic segments below are chosen among all geodesic segments, rather than within
+the orbit of a fixed one.
+
+We must find, for a positive fraction of lazy-walk paths $w$, short paths from both endpoints that avoid
+the interior of the corridor and end at vertices from which $T$ sees little of the neighbourhood of the
+corridor. Two observations make this possible. First, after a few steps an independent random walk
+averages the connection kernel, and this averaging does not depend on $\norm T$
+(\cref{lem:smoothing}). Second, if the raw path starts and ends with halves of geodesic segments, an
+escape can leave along the other half of the segment and is then unlikely to meet the raw path, by the
+decay of $P^l$ on $\ell^2(V)$. A symmetry of the construction under reversal, obtained from the
+mass-transport principle, transfers the estimate from one endpoint to the other.
+
+\begin{lemma}[Smoothing]\label{lem:smoothing}
+For all $a,b\in V$ and $l\ge0$, $0\le(P^lT)(a,b)\le\rho^l$.
+\end{lemma}
+
+\begin{proof}
+Since $T$ is positive semidefinite (\cref{lem:subcritical}), the Cauchy--Schwarz inequality for the form
+$(f,g)\mapsto\langle f,Tg\rangle$ gives
+$(P^lT)(a,b)^2=\langle P^l\1_a,T\1_b\rangle^2\le(P^lTP^l)(a,a)\,T(b,b)$, and $T(b,b)=1$. The
+operator $P^lTP^l$ is invariant and positive semidefinite, so by \cref{lem:trace},
+\begin{equation*}
+  (P^lTP^l)(a,a)=\tr(P^lTP^l)=\tr(P^{2l}T)\le\norm{P^{2l}}\tr(T)=\rho^{2l}\,,
+\end{equation*}
+since $\tr(T)=T(o,o)=1$.
+\end{proof}
+
+\paragraph{Geodesic segments.}
+For $J\in\N$ let $\mathsf S_J$ be the set of geodesic paths $g=(g_{-J},\dots,g_J)$ in~$G$, that is, of
+sequences of vertices with $\dist(g_i,g_{i'})=\abs{i-i'}$. Since $G$ is infinite, connected and locally
+finite, there are vertices at distance $2J$, so $\mathsf S_J\neq\emptyset$; it is invariant under
+automorphisms. For $x\in V$ and $\abs i\le J$, the number $n_i\coloneqq\#\{g\in\mathsf S_J\colon
+g_i=x\}$ is finite, because such $g$ lie in $B(x,2J)$, and positive and independent of $x$ by
+transitivity. The mass-transport principle applied to $\#\{g\in\mathsf S_J\colon g_i=x,\,g_{i'}=y\}$
+shows that $n_i=n_{i'}$ for all $i,i'$; we write $n_\star$ for this number. Consequently, for
+$\abs i,\abs{i'}\le J$ the \emph{position kernel}
+\begin{equation*}
+  \Pi_{i\to i'}(x,y)\coloneqq\frac{\#\{g\in\mathsf S_J\colon g_i=x,\ g_{i'}=y\}}{n_\star}
+\end{equation*}
+is doubly stochastic, so $\norm{\Pi_{i\to i'}}\le1$.
+
+\paragraph{The labelled experiment.}
+Let $k>2J$ and $m\in\N$. A \emph{labelled object} rooted at $u$ is a tuple $\Xi=(g,\pi,g',\zeta,\zeta')$
+consisting of $g\in\mathsf S_J$ with $g_0=u$; a lazy-walk path $\pi=(\pi_0,\dots,\pi_{k-2J})$ with
+$\pi_0=g_J$; a segment $g'\in\mathsf S_J$ with $g'_J=\pi_{k-2J}$; and lazy-walk paths $\zeta$ and
+$\zeta'$ of length $m$ starting at $g_{-J}$ and $g'_{-J}$. Under the probability measure
+\begin{equation}\label{eq:labelled-law}
+  \mathbb Q_u(\Xi)\coloneqq\frac{\mu(\pi)\,\mu(\zeta)\,\mu(\zeta')}{n_\star^2}
+\end{equation}
+the segment $g$ is uniform, $\pi$ is a lazy walk from $g_J$, the segment $g'$ is uniform given its
+position $g'_J$, and $\zeta,\zeta'$ are independent lazy walks. The object determines (see
+\cref{fig:escapes}):
+\begin{itemize}
+  \item the \emph{raw path}, a $k$-step lazy-walk path with base $u$ and end $v\coloneqq g'_0$,
+  \begin{equation*}
+    w(\Xi)\coloneqq(g_0,g_1,\dots,g_J,\pi_1,\dots,\pi_{k-2J},g'_{J-1},\dots,g'_0)\,;
+  \end{equation*}
+  \item the \emph{escapes} from $u$ and from~$v$, with endpoints $Z\coloneqq\zeta_m$ and
+  $Z'\coloneqq\zeta'_m$,
+  \begin{equation*}
+    \psi\coloneqq(g_0,g_{-1},\dots,g_{-J},\zeta_1,\dots,\zeta_m)\,,\qquad
+    \psi'\coloneqq(g'_0,g'_{-1},\dots,g'_{-J},\zeta'_1,\dots,\zeta'_m)\,.
+  \end{equation*}
+\end{itemize}
+
+\begin{figure}[t]
+\centering
+\input{figures/fig-escapes}
+\caption{The labelled experiment (schematic). The raw path (solid) consists of the positive half of a
+geodesic segment $g$ through~$u$, a middle walk~$\pi$, and the positive half of a geodesic segment $g'$
+through~$v$, traversed backwards. The escapes (dashed) follow the negative halves of the same segments
+and continue as independent walks $\zeta,\zeta'$ of length~$m$. Reversing the middle walk and exchanging
+the roles of $(g,\zeta)$ and $(g',\zeta')$ gives the experiment rooted at~$v$.}\label{fig:escapes}
+\end{figure}
+
+\paragraph{Reversal.}
+The \emph{reversal} of $\Xi$ is $\Xi^\dagger\coloneqq(g',\overleftarrow\pi,g,\zeta',\zeta)$, where
+$\overleftarrow\pi$ is $\pi$ traversed backwards; it is a labelled object rooted at~$v$, its raw path is
+$w(\Xi)$ traversed backwards, and its two escapes are those of $\Xi$ in exchanged order. By symmetry of
+$P$, $\mu(\overleftarrow\pi)=\mu(\pi)$, so $\mathbb Q_v(\Xi^\dagger)=\mathbb Q_u(\Xi)$. We claim that
+\begin{equation}\label{eq:reversal}
+  \EE_{\mathbb Q_o}[F]=\EE_{\mathbb Q_o}[F\circ\dagger]
+\end{equation}
+for every nonnegative function $F$ of labelled objects that is invariant under automorphisms. Indeed,
+the mass $M_F(x,y)\coloneqq\sum\mathbb Q_x(\Xi)F(\Xi)$, summed over the objects rooted at $x$ whose raw
+path ends at~$y$, is diagonally invariant. The mass sent out by $o$ is $\EE_{\mathbb Q_o}F$. Since
+$\Xi\mapsto\Xi^\dagger$ is a bijection between the objects rooted at $x$ ending at $o$ and the objects
+rooted at $o$ ending at~$x$, the mass received by $o$ is $\EE_{\mathbb Q_o}[F\circ\dagger]$. The
+mass-transport principle gives~\eqref{eq:reversal}.
+
+\paragraph{Comparison with the lazy walk.}
+For a raw path $w$ with base $o$, we claim
+\begin{equation}\label{eq:domination}
+  \mathbb Q_o\bigl(w(\Xi)=w\bigr)\le(2d)^{2J}\mu(w)\,.
+\end{equation}
+Indeed, $w(\Xi)=w$ fixes $\pi$, the positive half of $g$ and the reversed positive half of~$g'$. Summing
+\eqref{eq:labelled-law} over the at most $n_\star$ compatible segments $g$, the at most $n_\star$ compatible
+segments $g'$, and all tails gives at most $\mu(\pi)$. The $2J$ steps of $w$ along the two
+half-segments are steps between distinct neighbours, each of probability $1/(2d)$, so
+$\mu(w)=(2d)^{-2J}\mu(\pi)$.
+
+\begin{proof}[Proof of \cref{prop:escapes}]
+Let $\lambda\coloneqq\log(1/\rho)>0$. Throughout, $\Xi$ has law $\mathbb Q_o$, so $u=o$.
+
+\emph{Stage 1: the escape from $u$ avoids the raw path.} We bound the probability that $\psi$ visits a
+vertex of $w(\Xi)$ other than~$u$; revisits of $u$ are allowed. Condition on~$g$. The deterministic part
+$(g_0,\dots,g_{-J})$ of $\psi$ meets the first block $(g_0,\dots,g_J)$ of the raw path only in $u$,
+because $g$ is a geodesic. We use $P^r(a,b)=\langle\1_a,P^r\1_b\rangle\le\rho^r$ throughout.
+\begin{itemize}
+  \item The middle walk visits a given vertex $g_{-i}$, $0\le i\le J$, at time $r$ with probability at
+  most $\rho^r$, and with probability zero for $r<J$.
+  \item The tail $\zeta$ visits a given vertex $g_i$, $0\le i\le J$, at time $l$ with probability at most
+  $\rho^l$, and with probability zero for $l<J$.
+  \item Since $\zeta$ and $\pi$ are independent given $g$, the probability that $\zeta_l=\pi_r$ is
+  \begin{equation*}
+    \sum_xP^l(g_{-J},x)\,P^r(g_J,x)=P^{l+r}(g_{-J},g_J)\le\rho^{l+r}\,,
+  \end{equation*}
+  and it is zero for $l+r<2J$.
+\end{itemize}
+These collisions have total probability at most
+\begin{equation*}
+  E_J\coloneqq2(J+1)\sum_{r\ge J}\rho^r+\sum_{s\ge2J}(s+1)\rho^s\,,
+\end{equation*}
+which tends to zero as $J\to\infty$; the time sums run to infinity, so the bound is uniform in $k$
+and~$m$. It remains to consider collisions with the last block $(g'_J,\dots,g'_0)$. Given $g$, the
+endpoint of the middle walk has law $\varphi\coloneqq P^{k-2J}(g_J,\cdot)$ with
+$\norm\varphi_2\le\rho^{k-2J}$, and $g'_i$ has law $\varphi\Pi_{J\to i}$, whose $\ell^2$ norm is also at
+most $\rho^{k-2J}$. The escape $\psi$ is independent of $(\pi,g')$ given $g$. A deterministic position
+of $\psi$ is hit by $g'_i$ with probability at most $\norm{\varphi\Pi_{J\to i}}_2\le\rho^{k-2J}$, and the
+tail position $\zeta_l$, whose law has $\ell^2$ norm at most $\rho^l$, with probability at most
+$\rho^{l+k-2J}$ by the Cauchy--Schwarz inequality. A union bound over $0\le i\le J$, the $J+1$
+deterministic positions and $l\ge0$ bounds these collisions by $F_J\rho^{k-2J}$ with
+$F_J\coloneqq(J+1)(J+1+(1-\rho)^{-1})$. In the same way,
+$\mathbb Q_o(\dist(u,v)<3)\le\abs{B(o,2)}^{1/2}\rho^{k-2J}$.
+
+\emph{Stage 2: the escape from $v$.} The event that $\psi'$ visits a vertex of $w(\Xi)$ other than~$v$ is
+the event that the escape from the root of $\Xi^\dagger$ visits a vertex of the raw path of $\Xi^\dagger$
+other than the root. By~\eqref{eq:reversal} it has the same probability as the event of Stage~1.
+
+\emph{Stage 3: choice of $J$ and $k_0$.} Fix $J$ with $2E_J\le1/8$, and then $L_0$ with
+$(2F_J+\abs{B(o,2)}^{1/2})\rho^{L_0}\le1/8$. For $k-2J\ge L_0$ and every~$m$, with
+$\mathbb Q_o$-probability at least $3/4$, both escapes avoid every vertex of the raw path other than
+their starting points, and $\dist(u,v)\ge3$. The escapes need not avoid each other.
+
+\emph{Stage 4: the endpoints of the escapes.} Fix $C_1$ with $\lambda C_1>1$, and let
+$m\coloneqq\lceil C_1\log((k+1)R)\rceil$. Given $g,\pi,g'$, and hence the raw path, the tails are
+independent lazy walks, and $\abs{\Nb[I_w]}\le(d+1)(k+1)$. By \cref{lem:smoothing},
+\begin{equation*}
+  \EE_{\mathbb Q_o}\Bigl[\sum_{b\in\Nb[I_{w(\Xi)}]}T(Z,b)\Bigm|g,\pi,g'\Bigr]
+  =\sum_{b\in\Nb[I_{w(\Xi)}]}(P^mT)(g_{-J},b)\le(d+1)(k+1)\rho^m\,,
+\end{equation*}
+and the same holds for~$Z'$. By Markov's inequality and $\rho^m\le((k+1)R)^{-\lambda C_1}$, the
+probability that one of the two sums exceeds $1/(4R)$ is at most
+$8(d+1)((k+1)R)^{1-\lambda C_1}$. Fix $k_0\ge2J+L_0$ such that this is at most $1/4$ for all
+$k\ge k_0$ and $R\ge1$.
+
+\emph{Stage 5: conclusion.} For $k\ge k_0$, with $\mathbb Q_o$-probability at least $1/2$ the events of
+Stages~3 and~4 occur together. Then $\abs{\gamma_w}\ge\dist(u,v)\ge3$ for $w=w(\Xi)$, and the interior
+$I_w$ consists of vertices of the raw path other than $u$ and~$v$. So $\psi$ avoids $I_w$, and erasing its
+holding steps and loops yields a self-avoiding path in $\Lambda_w$ from $u$ to $Z$ of length at most
+$J+m\le j$; similarly for~$v$. Hence $w(\Xi)\in\mathcal W$ on this event, and~\eqref{eq:domination}
+gives
+\begin{equation*}
+  \Erw\bigl[\1\{w\in\mathcal W\}\bigr]\ge(2d)^{-2J}\,\mathbb Q_o\bigl(w(\Xi)\in\mathcal W\bigr)
+  \ge\tfrac12(2d)^{-2J}\eqqcolon c_\star\,.
+\end{equation*}
+The constants $J$, $k_0$, $C_1$ and $c_\star$ depend only on~$G$.
+\end{proof}

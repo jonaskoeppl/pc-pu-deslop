@@ -1,0 +1,537 @@
+\section{Strategy of the proof}\label{sec:strategy}
+
+The proof of \cref{thm:main} has two layers. The first is a short reduction to the boundedness of the
+critical connection operator for graphs with a unimodular automorphism group
+(\cref{sec:reduction}). The second proves this boundedness; it occupies
+\cref{sec:prelim,sec:bridges,sec:maps,sec:moments,sec:triangle,sec:deformation,sec:escapes}. We first
+explain the mechanism (\cref{sec:mechanism}). We then state the four steps of the proof precisely: two a
+priori estimates on critical and near-critical clusters (Steps~1 and~2, \cref{sec:part1}), and two
+properties of a deformation of the connection kernel (Steps~3 and~4, \cref{sec:part2}). Finally we show
+how the four steps combine (\cref{sec:assembly}). \Cref{fig:dependencies} summarises the logical
+structure.
+
+\begin{figure}[t]
+\centering
+\input{figures/fig-dependencies}
+\caption{Logical structure of the proof. An arrow points from a statement to a statement whose proof
+uses it. Dashed boxes are results from the literature. Step~1 is proved by contradiction: if the
+critical cluster size had an infinite moment of order $\alpha<1/2$, the amplification would produce
+efficient endpoint maps, which force all such moments to be finite. The assembly
+(\cref{sec:assembly}) combines the four steps with the sprinkling bound.}\label{fig:dependencies}
+\end{figure}
+
+\subsection{Reduction to critical boundedness}\label{sec:reduction}
+
+The core of the argument is the following theorem.
+
+\begin{theorem}[Critical boundedness]\label{thm:crit-bdd}
+Assume \cref{ass:G,ass:U}. Then $\norm{T_{p_c}}<\infty$.
+\end{theorem}
+
+Everything else in \cref{thm:main} follows from \cref{thm:crit-bdd} and the tools of
+\cref{sec:prelim}.
+
+\begin{proof}[Proof of \cref{thm:main} given \cref{thm:crit-bdd}]
+We first show that $T_{p_c}$ is bounded and $p_c<\ptwo$. If $\Aut(G)$ is unimodular,
+$\norm{T_{p_c}}<\infty$ by \cref{thm:crit-bdd}. Since $p_c<1$ (\cref{lem:pc}), the sprinkling bound
+(\cref{lem:sprinkling}) with a small $a>0$ then shows that $T_p$ is bounded at
+$p=p_c+(1-p_c)a>p_c$, so $p_c<\ptwo$. If $\Aut(G)$ is not unimodular, then $p_c<\ptwo$ by a theorem of
+Hutchcroft (\cref{prop:nonunimodular}). Since $T_p\le T_{p'}$ entrywise for $p\le p'$, the kernel
+$T_p$ is bounded for every $p<\ptwo$ (\cref{lem:kernels}), in particular for $p=p_c$.
+
+\Cref{lem:p22-pu} gives $\ptwo\le p_u$, and \cref{lem:kernels} identifies $\norm{T_{p_c}}$ with
+$\sup_{p<p_c}\norm{T_p}$. This proves~\eqref{eq:main}. Finally, choose $p_c<p_1<p_2<\ptwo$. Then $T_{p_2}$
+is bounded, and \cref{prop:interval} yields the simultaneous statement on $[p_1,p_2]$.
+\end{proof}
+
+\subsection{The mechanism: row sums versus norm}\label{sec:mechanism}
+
+\paragraph{Row sums and norm.}
+The connection kernel $T_p$ is nonnegative, symmetric and invariant, and its row sums equal $\chi(p)$.
+By the Schur test (\cref{lem:kernels}), $\norm{T_p}\le\chi(p)$. Below $p_c$ the susceptibility is finite
+by sharpness of the phase transition, so $T_p$ is bounded. The row sums, however, explode as
+$p\uparrow p_c$: if $\chi$ stayed bounded, then $\chi(p_c)<\infty$ by monotone convergence, and the
+sprinkling bound (\cref{lem:sprinkling}) would give $\chi(p)<\infty$ for some $p>p_c$, which is
+impossible because $\theta(p)>0$. \Cref{thm:crit-bdd} therefore asserts that the norm of $T_p$ stays
+bounded although its row sums do not. On a nonamenable graph this is possible because the $\ell^2$ norm
+can be much smaller than the row sums. The basic example is the \emph{lazy simple random walk}
+\begin{equation*}
+  P(x,y)\coloneqq\frac{1}{2d}\,\1\{x\sim y\}+\frac12\,\1\{x=y\}\,,
+  \qquad
+  \rho\coloneqq\norm{P}<1\,,
+\end{equation*}
+whose row sums are one, while its norm is strictly smaller than one by nonamenability
+(\cref{lem:walk}). We use $P$ and $\rho$ throughout.
+
+\paragraph{What unboundedness would mean.}
+Suppose that $\norm{T_{p_c}}=\infty$, and write $\delta\coloneqq p_c-p$ for $p<p_c$. Adding an
+independent configuration of parameter $a$ to one of parameter $p$ and splitting open paths at the added
+edges gives the sprinkling bound (\cref{lem:sprinkling})
+\begin{align*}
+  T_{p+(1-p)a}&\le\sum_{j\ge0}a^j\,T_p(\Adj\,T_p)^j\qquad\text{entrywise, and hence}\\
+  \norm{T_{p+(1-p)a}}&\le\frac{\norm{T_p}}{1-ad\norm{T_p}}\qquad\text{if }ad\norm{T_p}<1\,.
+\end{align*}
+With $a=\delta/(1-p)$, so that $p+(1-p)a=p_c$, this turns a small norm at~$p$ into boundedness
+at~$p_c$. Hence
+\begin{equation}\label{eq:norm-lower}
+  \norm{T_p}\ge\frac{1-p}{d\,\delta}\qquad\text{for all }p<p_c\,.
+\end{equation}
+Step~2 below shows that $\chi(p)\le C_\eta\delta^{-1-\eta}$ for every $\eta>0$. Hence the ratio
+\begin{equation}\label{eq:R}
+  R=R(p)\coloneqq\frac{\chi(p)}{\norm{T_p}}\in[1,\infty)
+\end{equation}
+satisfies $R\le C_\eta\delta^{-\eta}$ for every $\eta>0$: the norm of $T_p$ would agree with its row
+sums up to a factor that is smaller than every power of $1/\delta$. We show that this is impossible by
+deforming $T_p$ in a way that decreases its row sums by a large factor while decreasing its norm by at
+most a factor two. This contradicts $\norm{\,\cdot\,}\le$ row sum.
+
+\paragraph{Three structural facts.}
+The comparison of norm and row sums rests on three properties of unimodular transitive graphs and of the
+connection kernel, which we use throughout. First, the \emph{mass-transport principle}
+(\cref{lem:mtp}): $\sum_yF(o,y)=\sum_xF(x,o)$ for every nonnegative function $F$ on $V\times V$ that is
+invariant under the diagonal action of $\Aut(G)$; in particular every invariant kernel has equal row and
+column sums. Second, for $p<p_c$ the kernel $T_p$ is \emph{positive semidefinite}
+(\cref{lem:subcritical}). Third, the diagonal entry $\tr S\coloneqq S(o,o)$ of a bounded invariant
+operator is a \emph{trace}: it is cyclic, and $\abs{\tr(BA)}\le\norm B\tr A$ for $A$ positive
+semidefinite and $B$ self-adjoint (\cref{lem:trace}). Two consequences show how the decay of the
+random walk on $\ell^2(V)$ enters. By the Cauchy--Schwarz inequality for $T_p$ and the trace,
+\begin{equation*}
+  (P^mT_p)(a,b)^2\le(P^mT_pP^m)(a,a)\,T_p(b,b)=\tr(P^{2m}T_p)\le\rho^{2m}\,:
+\end{equation*}
+a random walk of $m$ steps smooths the connection kernel at rate $\rho^m$, however large $\norm{T_p}$ is
+(\cref{lem:smoothing}). And sums of the form $\sum_vP^k(o,v)\,T_p^3(v,o)=\tr(P^kT_p^3)$ are at most
+$\rho^k\tr(T_p^3)=\rho^k\nabla_p$; this is how the triangle diagram enters the proof.
+
+\paragraph{A deformation that separates the two.}
+Fix an integer $k\ge3$ and let $w$ be a path of $k$ steps of the lazy walk, with probability $\mu(w)$
+under~$P$. Erasing its loops produces a self-avoiding path $\gamma_w$ from $u=w_0$ to $v=w_k$. On the
+\emph{corridor event} $\Cor_w$ all edges of $\gamma_w$ are open and all other edges at the interior
+vertices of $\gamma_w$ are closed. Then $\gamma_w$ is an isolated open path, a \emph{corridor}. It joins
+the clusters of $u$ and $v$ outside its interior, and it is their only open link unless these two
+clusters coincide (\cref{fig:corridor}).
+The deformation multiplies the indicator of $\{x\conn y\}$ by $\exp(-t\,c(w))$ for every corridor $w$
+all of whose edges are pivotal for $x\conn y$, where $t\ge0$ is the deformation time and the weight
+$c(w)=\mu(w)/\PP_p(\Cor_w)$ is calibrated so that each corridor is penalised at rate equal to its
+random-walk probability. A penalised connection consists of a connection from $x$ to~$u$, a corridor,
+and a connection from $v$ to~$y$. Summed over corridors, the rate at which the deformed kernel $T_t$
+decreases is therefore at most $2\,T_pP^kT_p$, whose norm is at most $2\rho^k\norm{T_p}^2$. The rate
+at which its row sum decreases is, roughly, the $\mu$-average of the product of the cluster masses at
+$u$ and~$v$. Here no factor comparable to $\rho^k$ appears, since the row sums of $P^k$ equal one. Thus
+over a time interval of length $(kR)^{C}/\norm{T_p}$ the norm changes by a negligible amount, while
+the row sum, if the masses at the ends of corridors are comparable to the full row sum, decreases at a
+rate proportional to its own square and must drop far below $\norm{T_p}$.
+
+\paragraph{The three costs.}
+Turning the last sentence into a proof requires three corrections, and each has a price.
+\begin{enumerate}[label=(\roman*)]
+  \item \emph{Distinct clusters.} The edges of a corridor are pivotal for $x\conn y$ only if the
+  clusters of $u$ and $v$ outside the corridor are distinct. By the van den Berg--Kesten inequality
+  and the trace bound above, the resulting error is at most
+  $C\chi(p)^2\rho^k\nabla_p=CR^2\nabla_p\rho^k\norm{T_p}^2$
+  (\cref{prop:deformation}\ref{it:def-rate}). It is negligible once $k$ is a large multiple of
+  $\log R+\log\nabla_p$.
+  \item \emph{Removing the corridor.} The cluster masses at $u$ and $v$ are computed after deleting the
+  interior of the corridor, which may cut off most of the mass. Step~4 shows that for a positive
+  fraction of paths $w$, both endpoints are joined by short paths avoiding the corridor to vertices
+  whose connections to the neighbourhood of the corridor are tiny. Its key input is the smoothing bound
+  above. Transporting the mass along these short paths costs a factor of order $(kR)^{-C}$.
+  \item \emph{Interaction of corridors.} Penalties of different corridors on the same connection
+  interact, which costs a factor $\e^{-tc_k}$ with $c_k=\e^{C_0k}$. This is harmless as long as
+  $tc_k\ll1$ up to the final time $t\approx(kR)^C/\norm{T_p}$. By~\eqref{eq:norm-lower} this holds if
+  $\e^{C_0k}(kR)^C\ll1/\delta$, in particular if $k$ and $\log R$ are $o(\log(1/\delta))$.
+\end{enumerate}
+The requirements (i) and (iii) can be met simultaneously if $\log R$ and $\log\nabla_p$ are
+$o(\log(1/\delta))$: then $k$ can be chosen as a large multiple of
+$\log R+\log\nabla_p+\log\log(1/\delta)$, which is still $o(\log(1/\delta))$. A bound
+$R+\nabla_p\le C\delta^{-a}$ with a fixed $a>0$ would also do, but only if $a$ is smaller than a
+threshold determined by constants of the construction (such as $C_0$ and the constants of Step~4) that
+we do not control explicitly. This is why Step~2 proves the a priori bounds with an arbitrarily small
+power of $1/\delta$.
+
+\paragraph{Where the a priori bounds come from.}
+Mean-field theory predicts $\PP_{p_c}(\abs{C_o}\ge n)\asymp n^{-1/2}$; \cref{thm:consequences} confirms
+this a posteriori. Step~1 proves the weaker statement that $\EE_{p_c}\abs{C_o}^\alpha<\infty$ for every
+$\alpha<1/2$. Step~2 converts it into the near-critical bounds. A decision-tree inequality transfers
+the critical tail to $\chi(p)\le\delta^{-1-o(1)}$. A differential inequality for the triangle diagram
+gives $\nabla_p\le\delta^{-o(1)}$; in it, the critical tail bounds the probability that two adjacent
+distinct clusters are both large, and a concentration estimate bounds the number of edges between
+them.
+
+\paragraph{Critical moments by contradiction.}
+Step~1 is proved by contradiction. If $\EE_{p_c}\abs{C_o}^\alpha=\infty$ for some $\alpha<1/2$, then at
+infinitely many scales $n$ the probability that $\abs{C_o}\in[n,2n)$ is at least $n^{-\beta}$ for some
+$\beta<1/2$: there are more large critical clusters than mean-field theory allows. We exploit them by
+splicing independent small critical clusters onto a large one. This produces \emph{local endpoint
+maps}, random rules that select a vertex of the cluster of the root, whose selection kernel has a very
+small norm on $\ell^2(V)$ compared with their cost, measured by the logarithms of the inverse success
+probability and of the cluster size. The multiplicity of the splicing is controlled by a bound on the
+number of bridges in pieces cut out of critical clusters. Running such an efficient map slightly below
+$p_c$ shows that $\chi$ grows at least as fast as a solution of $\chi'=\chi^{2-\gamma}$ for every
+$\gamma>0$. This gives $\chi(p)\le\delta^{-1-o(1)}$ and hence a near-mean-field tail bound for the
+critical cluster size, which contradicts the assumption. The susceptibility bound obtained in this way
+is conditional on the heavy tail, which is used to construct the maps; Step~2 proves it unconditionally
+from Step~1.
+
+\subsection{Part I: a priori estimates (Steps 1 and 2)}\label{sec:part1}
+
+\begin{theorem}[Step~1: critical moments]\label{thm:moments}
+Assume \cref{ass:G,ass:U}. Then $\EE_{p_c}\abs{C_o}^\alpha<\infty$ for every $\alpha\in(0,1/2)$.
+\end{theorem}
+
+The proof of \cref{thm:moments} combines three propositions. The first concerns the geometry of
+critical clusters. A \emph{bridge} of a finite connected graph~$H$ is an edge whose removal
+disconnects~$H$. For vertices $x,y$ of~$H$ let $\dbr^H(x,y)$ be the number of bridges of~$H$ that
+separate $x$ from~$y$; this is a pseudometric, the \emph{bridge distance}, and
+$\diambr(H)\coloneqq\max_{x,y}\dbr^H(x,y)$ is the \emph{bridge diameter}. Throughout, a vertex set $B$
+of an open cluster is regarded as a graph with the open edges joining its vertices.
+
+\begin{definition}[Good clusters]\label{def:good}
+Let $\varepsilon\in(0,1/2)$ and $\sigma\coloneqq1/2+\varepsilon$. A finite open cluster~$C$ with
+$\abs{C}\le M$ is \emph{$M$-good} if the following holds for every $A\subseteq C$ and every connected
+component $B$ of the open subgraph induced by $C\setminus A$: if the set $\mathcal K$ of open edges
+between $B$ and $A$ is not empty, then $\diambr(B)\le\abs{\mathcal K}M^\sigma$.
+\end{definition}
+
+\begin{proposition}[Step~1a: bridges in critical clusters]\label{prop:good}
+Assume \cref{ass:G} and let $\varepsilon\in(0,1/2)$. For all sufficiently large~$M$,
+\begin{equation*}
+  \PP_{p_c}\bigl(\abs{C_o}\le M \text{ and } C_o \text{ is not $M$-good}\bigr)\le\exp(-M^\varepsilon)\,.
+\end{equation*}
+Moreover, the event $\{\abs{C_o}\le M,\ C_o\text{ is $M$-good}\}$ is determined by the states of the
+edges with an endpoint in $B(o,M)$.
+\end{proposition}
+
+In a critical branching process of total size~$M$, every edge is a bridge and the height is of order
+$M^{1/2}$; heuristically, critical clusters on a nonamenable graph behave alike. \Cref{prop:good} is a
+robust form of this heuristic: pieces cut out of a critical cluster have bridge diameter at most
+$M^{1/2+\varepsilon}$ per cut edge, outside an event of stretched-exponentially small probability. It
+is proved in \cref{sec:bridges} by an exploration-martingale bound on the number of pivotal edges of a
+marked cluster. The exponent $\sigma$ enters the next step through the requirement $\beta+\sigma<1$.
+
+\begin{definition}[Local endpoint maps]\label{def:map}
+A \emph{local endpoint map} is a family $\Phi=(\Phi_x)_{x\in V}$ of functions
+$\Phi_x\colon\{0,1\}^E\times V\to[0,1]$ with $\sum_y\Phi_x(\omega,y)\le1$, to be read as a randomised
+rule: given the configuration~$\omega$, the rule at $x$ outputs $y$ with probability
+$\Phi_x(\omega,y)$ and fails with the remaining probability. We require that there is $r_\Phi<\infty$
+such that $\Phi_x(\omega,\cdot)$ depends only on the states of the edges with an endpoint in
+$B(x,r_\Phi)$, that $\Phi_x(\omega,y)=0$ unless $y\in C_x(\omega)$, and that
+$\Phi_{gx}(g\omega,gy)=\Phi_x(\omega,y)$ for all $g\in\Aut(G)$. The map has \emph{cap}~$M\in\N$ if
+$\Phi_x(\omega,\cdot)\equiv0$ unless $\abs{C_x}\le M$ and $C_x$ is $M$-good. Its \emph{success
+probability}, \emph{endpoint kernel} and \emph{kernel norm} are
+\begin{equation*}
+  s\coloneqq\EE_{p_c}\sum_{y}\Phi_x(\omega,y)\,,\qquad
+  K(x,y)\coloneqq\frac{\EE_{p_c}\Phi_x(\omega,y)}{s}\,,\qquad
+  r\coloneqq\norm{K}\,;
+\end{equation*}
+by invariance $s$ does not depend on~$x$. If $s>0$ and $r<1$, the \emph{efficiency ratio} of~$\Phi$ is
+\begin{equation*}
+  \operatorname{eff}(\Phi)\coloneqq\frac{\log(1/s)+\log M}{\log(1/r)}\,.
+\end{equation*}
+\end{definition}
+
+Thus $K(x,y)$ is the probability that the rule at $x$ outputs~$y$, given that it succeeds; caps refer
+to $M$-goodness for the parameter $\varepsilon$ of \cref{def:good}, which is kept fixed. Under
+\cref{ass:U} the endpoint kernel is doubly stochastic, so $r\le1$ (\cref{lem:map-basic}). A small
+efficiency ratio means that the selected vertex is spread out very widely, as measured on $\ell^2(V)$,
+at a moderate price in success probability and cluster size. Steps of the lazy random walk along open
+edges give a first map with $r<\e^{-1}$ (\cref{lem:start}); the point of the next proposition is to make
+the efficiency ratio small.
+
+\begin{proposition}[Step~1b: heavy tails yield efficient maps]\label{prop:amplification}
+Assume \cref{ass:G,ass:U}, and suppose that $\EE_{p_c}\abs{C_o}^{\alpha}=\infty$ for some
+$\alpha\in(0,1/2-\varepsilon)$. Then there are local endpoint maps with cap $M\ge2$ and $r<\e^{-1}$
+whose efficiency ratios are arbitrarily small.
+\end{proposition}
+
+The proof in \cref{sec:maps} improves a given map~$\Phi$ in one \emph{amplification step}, at a heavy
+scale~$n$, that is, a scale with $\PP_{p_c}(n\le\abs{C_o}<2n)\ge n^{-\beta}$ for some fixed
+$\beta<1/2-\varepsilon$. For a root $x$, let $A$ be the cluster of $x$ in a first configuration, and
+for a vertex $z$ run $\ell$ steps of $\Phi$ from~$z$, each in a fresh independent configuration. If
+$n\le\abs A<2n$ and the last step lands in~$A$, we splice the pieces of the $\ell$ old clusters onto~$A$
+by exchanging finitely many edge states between the configurations. Afterwards $z$ lies in the cluster
+of~$x$, which has fewer than $2n+\ell M$ vertices. The new map at $x$ outputs $z$ with probability
+proportional to the total weight of the splicings that produce the observed configuration and end
+at~$z$. Its endpoint kernel is essentially the $\ell$-th power of the old one composed with a stochastic
+kernel, so $\log(1/r)$ is multiplied by about~$\ell$. Since the old kernel is doubly stochastic, summing
+over $z$ the probability that the chain from $z$ succeeds and ends in $A$ gives $s^\ell\abs A$; this
+makes the new success probability of order $\PP_{p_c}(n\le\abs{C_o}<2n)\ge n^{-\beta}$, up to a factor
+polynomial in $\ell$ and~$M$. The cap is about $2n$. To control fluctuations, the splicing must be
+undone: once the positions of the $\ell$ seams among the bridges of the final cluster are known,
+everything else is determined, and \cref{prop:good} bounds the number of possible seam positions,
+weighted by the probabilities of choosing them, by about $M^{\sigma\ell}$. A second-moment estimate
+needs this number to be at most $ns^\ell$, which is why the number of steps can be as large as about
+$\log n/(\log(1/s)+\sigma\log M)$. With this choice, each amplification step multiplies the ratio
+$(\log(1/s)+\sigma\log M)/\log(1/r)$ by a factor close to $\beta+\sigma<1$.
+
+\begin{proposition}[Step~1c: efficient maps yield light tails]\label{prop:efficient}
+Assume \cref{ass:G,ass:U}, and suppose that there are local endpoint maps with cap $M\ge2$ and
+$r<\e^{-1}$ whose efficiency ratios are arbitrarily small. Then
+$\EE_{p_c}\abs{C_o}^\alpha<\infty$ for every $\alpha\in(0,1/2)$.
+\end{proposition}
+
+The proof in \cref{sec:moments} runs a fixed efficient map at parameter $p$ slightly below $p_c$; its
+cap is used only through $\abs{C_x}\le M$, not through goodness. Starting from the root of an
+independent, size-biased cluster~$A$, iterates of the endpoint kernel spread so quickly that after
+$\ell\approx\log\chi(p)/\log(1/r)$ steps the endpoint has left $A$, and the susceptibility in
+$V\setminus A$ at the endpoint is comparable to $\chi(p)$. On the other hand, a successful output lies
+within $M$ open steps of its input, and moving along at most $M$ open edges increases the
+susceptibility in $V\setminus A$ by a factor at most of order $M$ (\cref{lem:intrinsic-ball}); after
+dividing by the success probability, one step of the map multiplies it by at most a factor $Z\le CM/s$,
+up to a contribution from the boundary of~$A$. The boundary contribution is controlled by the quantity
+\begin{equation*}
+  \Delta(p)\coloneqq\chi(p)^{-2}\sum_{b\sim o}\EE_p\bigl[\abs{C_o}\,\abs{C_b};\,C_o\neq C_b\bigr]
+  =(1-p)\,\frac{\chi'(p)}{\chi(p)^2}\,,
+\end{equation*}
+where the identity holds for almost every $p$ by Russo's formula. Comparing the two bounds gives
+$\Delta(p)\ge cZ^{-\ell}$, that is, $\chi'\ge c\chi^{2-\gamma}$ with $\gamma\approx\operatorname{eff}(\Phi)$,
+and so $\chi(p)\le C\delta^{-1/(1-\gamma)}$. A comparison of explorations at $p$ and at $p_c$ then bounds
+the critical tail: $\PP_{p_c}(\abs{C_o}\ge N)\le N^{-1/2+o(1)}$.
+
+\begin{proof}[Proof of \cref{thm:moments} given \cref{prop:amplification,prop:efficient}]
+Suppose that $\EE_{p_c}\abs{C_o}^{\alpha_0}=\infty$ for some $\alpha_0\in(0,1/2)$, and choose the
+parameter of \cref{def:good} as some $\varepsilon\in(0,1/2-\alpha_0)$. By \cref{prop:amplification}, the
+hypothesis of \cref{prop:efficient} holds, and \cref{prop:efficient} gives
+$\EE_{p_c}\abs{C_o}^{\alpha_0}<\infty$, a contradiction.
+\end{proof}
+
+\begin{theorem}[Step~2: near-critical a priori bounds]\label{thm:apriori}
+Assume \cref{ass:G,ass:U}. For every $\eta>0$ there is $C_\eta<\infty$ such that
+\begin{align}
+  \chi(p)&\le C_\eta\,(p_c-p)^{-1-\eta}&&\text{for all }p\in[0,p_c)\,,\label{eq:apriori-chi}\\
+  \nabla_p&\le C_\eta\,(p_c-p)^{-\eta}&&\text{for all }p\in[p_c/2,p_c)\,.\label{eq:apriori-triangle}
+\end{align}
+\end{theorem}
+
+Both bounds are proved from \cref{thm:moments}. The susceptibility bound~\eqref{eq:apriori-chi}
+(\cref{sec:chi}) follows from a differential inequality for $\PP_p(\abs{C_o}\ge n)$ in~$p$, obtained from
+the decision-tree inequality of O'Donnell, Saks, Schramm and Servedio, applied to an algorithm that
+marks every vertex independently with probability $1/n$ and explores the clusters of the marked
+vertices. The triangle bound~\eqref{eq:apriori-triangle} (\cref{sec:triangle}) follows from a
+differential inequality for $\nabla_p$. By Russo's formula, $\nabla_p'$ is a sum over pairs of distinct
+clusters, weighted by the number of edges between them and by a kernel built from $T_p$. Pairs with a
+small cluster contribute at most a power of the size cutoff times $\nabla_p$. For two large clusters,
+Step~1 bounds the probability that two adjacent distinct clusters are both large, and the number of
+edges between them is controlled by comparing two explorations of one cluster, with and without the
+other cluster removed. The centred scores of the two explorations differ by exactly $-p$ times this
+number, and each score is concentrated.
+
+\subsection{Part II: the corridor deformation (Steps 3 and 4)}\label{sec:part2}
+
+We now define the deformation precisely. Throughout this subsection $p\in[p_c/2,p_c)$ and $k\ge3$ are
+fixed, and $q\coloneqq1-p$.
+
+\begin{definition}[Corridors and the deformed kernel]\label{def:deformation}
+A \emph{raw path} is a sequence $w=(w_0,\dots,w_k)$ of vertices with $P(w_{i-1},w_i)>0$ for all~$i$;
+it has \emph{base} $w_0$, \emph{end} $w_k$ and probability $\mu(w)\coloneqq\prod_{i=1}^kP(w_{i-1},w_i)$.
+Delete the holding steps $w_{i-1}=w_i$ and erase the loops of the remaining path in chronological
+order. This gives a self-avoiding path $\gamma_w$ from $w_0$ to $w_k$ with $\abs{\gamma_w}$ edges. Its
+\emph{interior} $I_w$ is the set of its vertices other than $w_0$ and $w_k$, and $\Lambda_w\coloneqq
+V\setminus I_w$. The \emph{blockers} $\Bl_w$ are the edges incident to $I_w$ that are not edges
+of~$\gamma_w$. The raw path is a \emph{template} if $\abs{\gamma_w}\ge3$. Its \emph{corridor event}
+$\Cor_w$ is the event that all edges of $\gamma_w$ are open and all blockers are closed, and its
+\emph{weight} is
+\begin{equation*}
+  c(w)\coloneqq\mu(w)\,p^{-\abs{\gamma_w}}\,q^{-\abs{\Bl_w}}\,,\qquad\text{so that}\qquad
+  c(w)\,\PP_p(\Cor_w)=\mu(w)\,.
+\end{equation*}
+For a domain $\Lambda\subseteq V$ and $x,y\in\Lambda$, a template
+$w$ is \emph{counted} for $(x,y)$ in~$\Lambda$ if all vertices of $\gamma_w$ lie in~$\Lambda$, every
+edge of $\gamma_w$ is open and \emph{pivotal} for $x\connin{\Lambda}y$ (that is, $x\connin{\Lambda}y$
+holds and fails after closing this edge), and every blocker is closed or has an endpoint outside
+$\Lambda$. With the sum over all templates~$w$ of any base, define
+\begin{equation*}
+  N^\Lambda_{xy}\coloneqq\sum_{w\text{ counted for }(x,y)\text{ in }\Lambda}c(w)\,,\qquad
+  W^\Lambda_t(x,y)\coloneqq\1\{x\connin{\Lambda}y\}\,\e^{-tN^\Lambda_{xy}}\qquad(t\ge0)\,,
+\end{equation*}
+and $W^\Lambda_t(x,y)\coloneqq0$ if $x\notin\Lambda$ or $y\notin\Lambda$. The \emph{deformed
+susceptibilities} and the \emph{deformed kernel} are
+\begin{equation*}
+  \chi^\Lambda_t(x)\coloneqq\EE_p\sum_{y\in V}W^\Lambda_t(x,y)\,,\qquad
+  \chi_t\coloneqq\chi^V_t(o)\,,\qquad
+  T_t(x,y)\coloneqq\EE_p\,W^V_t(x,y)\,.
+\end{equation*}
+Finally, $\Erw[F(w)]\coloneqq\sum_w\mu(w)F(w)$ denotes the average over $k$-step lazy-walk paths $w$ with
+base $w_0=o$.
+\end{definition}
+
+At $t=0$ nothing is penalised: $T_0=T_p$ and $\chi_0=\chi(p)$. Different raw paths with the same
+loop erasure are different templates, and the convention for blockers outside~$\Lambda$ lets us compare
+domains without changing the weights.
+
+\begin{figure}[ht]
+\centering
+\input{figures/fig-corridor}
+\caption{A corridor on the event $\Cor_w$ (schematic). The loop-erased path $\gamma_w$ (thick) is
+open, and every other edge at its interior $I_w$ is closed (dashed). Its edges are all pivotal for
+$x\conn y$ if and only if $x$ and $y$ lie in the clusters $C_u^{\Lambda_w}$ and $C_v^{\Lambda_w}$ of its
+endpoints in $\Lambda_w=V\setminus I_w$, in either order, and these two clusters are distinct
+(\cref{lem:calibration}).}\label{fig:corridor}
+\end{figure}
+
+\begin{proposition}[Step~3: properties of the deformation]\label{prop:deformation}
+Assume \cref{ass:G,ass:U}. There is $C_0\ge1$, depending only on~$G$, such that, with
+$c_k\coloneqq\e^{C_0k}$, the following holds for all $p\in[p_c/2,p_c)$, $k\ge3$ and $t\ge0$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+  \item\label{it:def-basic} \emph{Basic bounds.} $T_t$ is symmetric and invariant,
+  $0\le T_t\le T_p$ entrywise, and $\norm{T_t}\le\chi_t\le\chi(p)$. The function $t\mapsto\chi_t$ is
+  continuously differentiable on $[0,\infty)$.
+  \item\label{it:def-norm} \emph{The norm barely moves.}
+  $\norm{T_t}\ge\norm{T_p}-2t\rho^k\norm{T_p}^2$.
+  \item\label{it:def-rate} \emph{The row sum decreases.}
+  \begin{equation*}
+    -\frac{\d}{\d t}\chi_t\ge\e^{-tc_k}\Bigl(\Erw\bigl[\1\{\abs{\gamma_w}\ge3\}\,
+    \chi^{\Lambda_w}_t(w_0)\,\chi^{\Lambda_w}_t(w_k)\bigr]-C_0\,\chi(p)^2\rho^k\,\nabla_p\Bigr)\,.
+  \end{equation*}
+  \item\label{it:def-deletion} \emph{Deletion.} For every domain $\Lambda$, every $A\subseteq V$ and
+  every $z\in V$,
+  $\chi^{\Lambda\setminus A}_t(z)\ge\chi^\Lambda_t(z)-\chi(p)\sum_{b\in\Nb[A]}T_p(z,b)$.
+  \item\label{it:def-path} \emph{Transport along a path.} If $\Lambda$ contains a self-avoiding path
+  of length~$l$ from $b$ to~$z$, then $\chi^\Lambda_t(b)\ge\e^{-tlc_k}p^l\chi^\Lambda_t(z)$.
+\end{enumerate}
+\end{proposition}
+
+Items~\ref{it:def-norm} and~\ref{it:def-rate} are the two halves of the comparison described in
+\cref{sec:mechanism}. Item~\ref{it:def-norm} holds because a penalised connection factors through a
+corridor, so that $T_p-T_t\le2t\,T_pP^kT_p$ entrywise. Item~\ref{it:def-rate} is obtained by moving
+the root of the susceptibility to the base of the corridor with the mass-transport principle: the
+calibration $c(w)\PP_p(\Cor_w)=\mu(w)$ then produces the average over raw paths, and the two exterior
+clusters contribute the product of the deformed susceptibilities at the two ends. The error term
+accounts for the requirement that the exterior clusters be distinct and is bounded with the
+van den Berg--Kesten inequality and the trace. The factor $\e^{-tc_k}$ is the price for the penalties
+of corridors that overlap the given one. Items~\ref{it:def-deletion} and~\ref{it:def-path} are the
+tools that make the main term of~\ref{it:def-rate} usable: deleting a set $A$ can only destroy the
+connections that pass near~$A$, and an open path transports mass at the cost of its probability.
+\Cref{prop:deformation} is proved in \cref{sec:deformation}.
+
+\begin{proposition}[Step~4: escapes at both ends]\label{prop:escapes}
+Assume \cref{ass:G,ass:U}. There are $J,k_0\in\N$ and $C_1,c_\star>0$, depending only on~$G$, with the
+following property. Let $p\in[p_c/2,p_c)$, $k\ge k_0$ and $R\ge1$, and put
+$j\coloneqq J+\lceil C_1\log((k+1)R)\rceil$. Let $\mathcal W$ be the set of raw paths $w$ with
+$\abs{\gamma_w}\ge3$ such that each of $w_0$ and $w_k$ is joined by a self-avoiding path in
+$\Lambda_w$ of length at most $j$ to a vertex~$z$ with
+\begin{equation*}
+  \sum_{b\in\Nb[I_w]}T_p(z,b)\le\frac{1}{4R}\,.
+\end{equation*}
+Then $\Erw[\1\{w\in\mathcal W\}]\ge c_\star$.
+\end{proposition}
+
+The vertices $z$ are \emph{escapes}: from them, deleting the corridor costs little in
+\cref{prop:deformation}\ref{it:def-deletion}. The proof in \cref{sec:escapes} lets the raw path begin
+and end with halves of geodesic segments, and lets the escapes leave along the opposite halves and then
+continue as independent random walks of length $m$ of order $C_1\log((k+1)R)$. Avoidance of the raw
+path follows from the decay of $P^l$ on $\ell^2(V)$. The construction is symmetric under reversal of the
+raw path, and the mass-transport principle turns this symmetry into an identity of probabilities, which
+transfers the avoidance estimate from one endpoint to the other. Finally, the walks smooth the
+connection kernel, $(P^mT_p)(a,b)\le\rho^m$, which makes the sum over $\Nb[I_w]$ small.
+
+\subsection{Proof of critical boundedness}\label{sec:assembly}
+
+We now prove \cref{thm:crit-bdd} from the four steps and the sprinkling bound.
+
+\begin{proof}[Proof of \cref{thm:crit-bdd}]
+Suppose, for a contradiction, that $\norm{T_{p_c}}=\infty$. For $p\in[p_c/2,p_c)$ put
+\begin{equation*}
+  \delta\coloneqq p_c-p\,,\qquad S\coloneqq\log(1/\delta)\,,\qquad R\coloneqq\frac{\chi(p)}{\norm{T_p}}\ge1\,.
+\end{equation*}
+All limits below are taken as $\delta\downarrow0$, that is, $p\uparrow p_c$.
+
+\emph{Stage 1: size of the parameters.}
+By~\eqref{eq:norm-lower}, which follows from \cref{lem:sprinkling}, $\norm{T_p}\ge(1-p_c)/(d\delta)$,
+so $\log\norm{T_p}\ge S-C$. By
+\cref{thm:apriori}, for every $\eta>0$ we have $R\le C_\eta\delta^{-1-\eta}\cdot d\delta/(1-p_c)\le
+C'_\eta\delta^{-\eta}$ and $\nabla_p\le C_\eta\delta^{-\eta}$. Hence
+\begin{equation}\label{eq:assembly-subpower}
+  \log R=o(S)\qquad\text{and}\qquad\log\nabla_p=o(S)\,.
+\end{equation}
+
+\emph{Stage 2: choice of the constants.}
+Fix the constants $J,k_0,C_1,c_\star$ of \cref{prop:escapes}; they do not depend on~$p$. Since $p\ge p_c/2$ and $j\le J+1+C_1\log((k+1)R)$, we have
+\begin{equation}\label{eq:assembly-pj}
+  p^{2j}\ge c_2\,(kR)^{-C_2}\qquad\text{for all }k\ge1\text{ and }R\ge1\,,
+\end{equation}
+with $C_2\coloneqq2C_1\log(2/p_c)$ and $c_2\coloneqq(p_c/2)^{2J+2}\,2^{-C_2}$. Let
+$\lambda\coloneqq\log(1/\rho)>0$, fix $K_\star>0$ with $\kappa_\star\coloneqq\lambda K_\star>C_2+4$, and set
+\begin{equation*}
+  A_\delta\coloneqq\log(2R)+\log(2+\nabla_p)+\log S\,,\qquad
+  k\coloneqq\lceil K_\star A_\delta\rceil\,,\qquad
+  D_\star\coloneqq(kR)^{C_2+2}\,,\qquad
+  t_\star\coloneqq\frac{D_\star}{\norm{T_p}}\,.
+\end{equation*}
+By~\eqref{eq:assembly-subpower}, $k\to\infty$ and $k=o(S)$; in particular $k\ge\max\{k_0,3\}$ and
+$k\le S$ for small~$\delta$. We claim that
+\begin{equation}\label{eq:assembly-small}
+  D_\star\rho^k\to0\,,\qquad(kR)^{C_2}R^2\nabla_p\,\rho^k\to0\,,\qquad t_\star jc_k\to0\,.
+\end{equation}
+Indeed, $\rho^k\le\e^{-\lambda K_\star A_\delta}=(2R)^{-\kappa_\star}(2+\nabla_p)^{-\kappa_\star}
+S^{-\kappa_\star}$. Since $R,\nabla_p\ge1$ and $k\le S$, this gives
+$D_\star\rho^k\le S^{C_2+2-\kappa_\star}\to0$ and
+$(kR)^{C_2}R^2\nabla_p\,\rho^k\le S^{C_2-\kappa_\star}\to0$. Finally, $c_k=\e^{C_0k}$ and
+$\log\norm{T_p}\ge S-C$ give
+\begin{equation*}
+  \log(t_\star jc_k)\le(C_2+2)(\log k+\log R)-S+C+\log j+C_0k=-S+o(S)\,,
+\end{equation*}
+by~\eqref{eq:assembly-subpower}, $k=o(S)$ and $j=O(\log(kR))$.
+
+\emph{Stage 3: the norm stays large.}
+Consider the deformation of \cref{def:deformation} with these $p$ and~$k$, for $t\in[0,t_\star]$. By
+\cref{prop:deformation}\ref{it:def-norm} and~\eqref{eq:assembly-small}, for small $\delta$,
+\begin{equation}\label{eq:assembly-norm}
+  \norm{T_t}\ge\norm{T_p}\bigl(1-2t_\star\rho^k\norm{T_p}\bigr)=\norm{T_p}(1-2D_\star\rho^k)\ge\tfrac12\norm{T_p}\,,
+  \qquad\text{hence}\qquad
+  \chi_t\ge\tfrac12\norm{T_p}
+\end{equation}
+by \cref{prop:deformation}\ref{it:def-basic}.
+
+\emph{Stage 4: the row sum decreases quadratically.}
+Let $w\in\mathcal W$, the set of \cref{prop:escapes} for our $p$, $k$ and~$R$, and let $z$ be the
+escape vertex of the endpoint $w_0$. The deformation is invariant, so $\chi_t^V(z)=\chi_t$. By
+\cref{prop:deformation}\ref{it:def-deletion} with $\Lambda=V$ and $A=I_w$, then $\chi(p)=R\norm{T_p}$
+and~\eqref{eq:assembly-norm},
+\begin{equation*}
+  \chi^{\Lambda_w}_t(z)\ge\chi_t-\frac{\chi(p)}{4R}=\chi_t-\tfrac14\norm{T_p}\ge\tfrac12\chi_t\,.
+\end{equation*}
+\Cref{prop:deformation}\ref{it:def-path}, applied along the escape path of length at most~$j$ in
+$\Lambda_w$, gives $\chi^{\Lambda_w}_t(w_0)\ge\e^{-tjc_k}p^j\chi_t/2$, and the same bound holds at~$w_k$.
+Since $\e^{-2t_\star jc_k}\ge1/2$ for small~$\delta$ by~\eqref{eq:assembly-small}, the bound
+\eqref{eq:assembly-pj} and $\Erw[\1\{w\in\mathcal W\}]\ge c_\star$ yield, for all $t\in[0,t_\star]$,
+\begin{equation*}
+  \Erw\bigl[\1\{\abs{\gamma_w}\ge3\}\,\chi^{\Lambda_w}_t(w_0)\,\chi^{\Lambda_w}_t(w_k)\bigr]
+  \ge c_\star\cdot\tfrac12\,p^{2j}\cdot\tfrac14\chi_t^2
+  \ge\tfrac18c_\star c_2\,(kR)^{-C_2}\chi_t^2\,.
+\end{equation*}
+The error term in \cref{prop:deformation}\ref{it:def-rate} satisfies, by $\chi(p)=R\norm{T_p}\le2R\chi_t$
+and~\eqref{eq:assembly-small},
+\begin{equation*}
+  C_0\,\chi(p)^2\rho^k\nabla_p\le4C_0\,R^2\nabla_p\,\rho^k\,\chi_t^2=o\bigl((kR)^{-C_2}\bigr)\,\chi_t^2\,.
+\end{equation*}
+Since also $\e^{-tc_k}\ge1/2$ for $t\le t_\star$, \cref{prop:deformation}\ref{it:def-rate} gives, for
+small~$\delta$,
+\begin{equation}\label{eq:assembly-ode}
+  -\frac{\d}{\d t}\chi_t\ge c_3\,(kR)^{-C_2}\chi_t^2\qquad\text{for all }t\in[0,t_\star]\,,
+  \qquad c_3\coloneqq c_\star c_2/32\,.
+\end{equation}
+
+\emph{Stage 5: contradiction.}
+The function $t\mapsto\chi_t$ is positive and continuously differentiable, so~\eqref{eq:assembly-ode}
+integrates to
+\begin{equation*}
+  \frac{1}{\chi_{t_\star}}\ge\frac1{\chi_0}+c_3\,(kR)^{-C_2}t_\star\ge c_3\,\frac{(kR)^2}{\norm{T_p}}\,.
+\end{equation*}
+By~\eqref{eq:assembly-norm}, $1/\chi_{t_\star}\le2/\norm{T_p}$. Hence $c_3(kR)^2\le2$, which fails for
+small~$\delta$ because $k\to\infty$. This contradiction proves $\norm{T_{p_c}}<\infty$.
+\end{proof}
+
+\begin{remark}[Order of the choices]\label{rem:order}
+The constants $J,k_0,C_1,c_\star$ of the escape construction and $C_0$ of the deformation depend only
+on~$G$; they are fixed before $p$ is chosen. The length $k$ and the final time $t_\star$ are then chosen
+as functions of $p$ through $R$, $\nabla_p$ and $S$. The a priori bounds of Step~2 are used only
+through~\eqref{eq:assembly-subpower}.
+\end{remark}
+
+\subsection{Roadmap}\label{sec:roadmap}
+
+\Cref{fig:dependencies} shows how the statements depend on each other. Part~I
+(\cref{sec:bridges,sec:maps,sec:moments,sec:triangle}) establishes the a priori estimates. It only
+concerns critical and near-critical percolation and does not involve the deformation. Part~II
+(\cref{sec:deformation,sec:escapes}) holds at every fixed $p\in[p_c/2,p_c)$ and uses only subcritical
+facts; the two parts meet only in the proof above.

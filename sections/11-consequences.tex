@@ -1,0 +1,51 @@
+\section{Consequences: proof of \texorpdfstring{\cref{thm:consequences}}{Theorem 2.3}}\label{sec:consequences}
+
+We deduce \cref{thm:consequences} from \cref{thm:main} and known conditional results. The two parts of
+\cref{thm:main} play different roles. Boundedness at $p_c$ gives the triangle condition, the classical
+hypothesis of mean-field theory. The strict inequality $p_c<\ptwo$ is the hypothesis of Hutchcroft's
+results on near-critical clusters~\cite{Hut22sup} and on exponential decay~\cite{Hut20L2}, which we
+apply directly. Since $G$ is transitive and simple, no transfer between graphs is needed, in contrast
+to~\cite{Ope26}. Assume \cref{ass:G}.
+
+\paragraph{The triangle condition.}
+By \cref{thm:main}, $T\coloneqq T_{p_c}$ is a bounded operator on $\ell^2(V)$. By Tonelli's theorem the
+triangle sum equals the diagonal entry of the product, so
+$\nabla_{p_c}=\langle\1_o,T^3\1_o\rangle\le\norm{T^3}\le\norm{T}^3<\infty$,
+which is~\eqref{eq:triangle-condition}.
+
+\paragraph{Susceptibility and cluster volume.}
+\Cref{thm:main} gives $p_c<\ptwo$, so the results of~\cite{Hut22sup}, which are stated for connected,
+locally finite, quasi-transitive graphs with $p_c<\ptwo$, apply to~$G$. By~\cite[Corollary~1.4]{Hut22sup}
+with $k=1$, there is $\delta_0>0$ with $c(p_c-p)^{-1}\le\EE_p[\abs{C_o};\abs{C_o}<\infty]\le
+C(p_c-p)^{-1}$ for $p\in(p_c-\delta_0,p_c)$; below $p_c$ all clusters are finite, so this is the first
+part of~\eqref{eq:chi-theta}. By~\cite[Theorem~1.1]{Hut22sup} at $p=p_c$, $\PP_{p_c}(n\le\abs{C_o}<\infty)
+\asymp n^{-1/2}$; since critical clusters are finite (\cref{lem:pc}), this is the first part
+of~\eqref{eq:critical-tails}.
+
+\paragraph{Percolation probability.}
+For the upper bound we use~\cite[Lemma~2.1]{Hut22sup}, whose hypothesis is the triangle condition
+\eqref{eq:triangle-condition}. Applied with the subgraph $G$ itself, it gives $\delta_0>0$ and $C$ such
+that the intrinsic radius $R_o$ of $C_o$ satisfies $\PP_p(R_o\ge r)\le C\max\{1/r,\,p-p_c\}$ for all
+$r\ge1$ and $p\in[0,p_c+\delta_0)$. Since $G$ is locally finite, $C_o$ is infinite if and only if $R_o$
+is infinite; letting $r\to\infty$ gives $\theta(p)\le C(p-p_c)$ for $p\in(p_c,p_c+\delta_0)$. For the
+lower bound we use~\cite[Theorem~1.1]{DCT16}, which applies to every locally finite transitive infinite
+graph. In its parametrisation an edge is open with probability $1-\e^{-b}$ for a parameter $b>0$, and
+it gives $\theta\ge(b-b_c)/b$ for $b>b_c$, where $b_c$ is the critical value of~$b$. With $b=-\log(1-p)$
+and $b_c=-\log(1-p_c)$ we have $b-b_c=\log(1+(p-p_c)/(1-p))\ge(p-p_c)/(1-p_c)$, and $b$ is
+bounded for $p\le(1+p_c)/2$. Hence $\theta(p)\ge c(p-p_c)$ near $p_c$, which completes the
+proof of~\eqref{eq:chi-theta}.
+
+\paragraph{Intrinsic and extrinsic radius.}
+By~\cite[Theorem~1.2]{Hut22sup} at $p=p_c$, both $\PP_{p_c}(n\le\radint(C_o)<\infty)$ and
+$\PP_{p_c}(n\le\radext(C_o)<\infty)$ are of order $n^{-1}$. Since critical clusters are finite, this is
+the second part of~\eqref{eq:critical-tails}. The extrinsic bound is also~\cite[Theorem~3.1]{Hut20L2}.
+
+\paragraph{Exponential decay.}
+By~\cite[Theorem~2.2]{Hut20L2}, $\ptwo\le\pexp$ on every connected, locally finite graph, and together
+with \cref{thm:main} this gives $p_c<\ptwo\le\pexp$. More precisely,~\cite[Remark~2.3]{Hut20L2} gives,
+for $0<p<\ptwo$,
+\begin{equation*}
+  T_p(x,y)\le2\norm{T_p}\exp\Bigl(-\frac{\dist(x,y)}{\e\norm{T_p}}\Bigr)\qquad\text{for all }x,y\in V\,,
+\end{equation*}
+where $\norm{T_p}<\infty$ by \cref{lem:kernels}\ref{it:monotone}. For $p=0$ the off-diagonal
+connection probabilities vanish. This proves~\eqref{eq:exp-decay}.

@@ -1,0 +1,49 @@
+% Logical dependencies of the proof (a graph of labelled statements; nothing quantitative is drawn)
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners=2pt, align=center, font=\small, text width=4.6cm,
+                inner sep=3pt, minimum height=1.05cm,
+                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+    main/.style={box, very thick},
+    cite/.style={box, draw=figgrey, dashed},
+    arr/.style={-{Stealth[length=2.2mm]}, thick},
+    lab/.style={font=\footnotesize\itshape, fill=white, inner sep=1pt}]
+  % column headers
+  \node[font=\footnotesize\scshape, text=figgrey] at (5.1,1.0) {Part I: a priori estimates};
+  \node[font=\footnotesize\scshape, text=figgrey] at (13.05,1.0) {Part II: deformation};
+  % Part I
+  \node[box] (bridges) at (2.45,0)    {Bridges in critical clusters\\ \cref{prop:good}, \cref{sec:bridges}};
+  \node[box] (ampl)    at (7.75,0)    {Heavy tail $\Rightarrow$ efficient maps\\ \cref{prop:amplification}, \cref{sec:maps}};
+  \node[box] (eff)     at (2.45,-2.0) {Efficient maps $\Rightarrow$ light tail\\ \cref{prop:efficient}, \cref{sec:moments}};
+  \node[box] (mom)     at (7.75,-2.0) {Step~1: \mbox{$\EE_{p_c}\abs{C_o}^\alpha<\infty$} for \mbox{$\alpha<\tfrac12$}\\ \cref{thm:moments}};
+  \node[box] (apr)     at (7.75,-4.0) {Step~2: \mbox{$\chi(p)\le C_\eta\delta^{-1-\eta}$}, \mbox{$\nabla_p\le C_\eta\delta^{-\eta}$}\\ \cref{thm:apriori}};
+  % Part II
+  \node[box] (def)     at (13.05,0)    {Step~3: corridor deformation\\ \cref{prop:deformation}, \cref{sec:deformation}};
+  \node[box] (esc)     at (13.05,-2.0) {Step~4: escapes at both ends\\ \cref{prop:escapes}, \cref{sec:escapes}};
+  % assembly, the sprinkling bound and the main results
+  \node[box]  (spr)    at (2.45,-6.0)  {Sprinkling bound\\ \cref{lem:sprinkling}};
+  \node[main] (cb)     at (7.75,-6.0)  {Assembly: \mbox{$\norm{T_{p_c}}<\infty$} if \cref{ass:U} holds\\ \cref{thm:crit-bdd}, \cref{sec:assembly}};
+  \node[cite] (nonu)   at (2.45,-8.0)  {Nonunimodular case\\ \cite[Theorem~2.9]{Hut19}};
+  \node[box]  (aux)    at (13.05,-8.0) {\mbox{$\ptwo\le p_u$}; simultaneous interval\\ \cref{lem:p22-pu}, \cref{prop:interval}};
+  \node[main] (thm)    at (7.75,-8.0)  {Main result\\ \cref{thm:main}};
+  \node[cite] (hut)    at (13.05,-9.9) {Conditional results\\ \cite{DCT16,Hut20L2,Hut22sup}};
+  \node[box]  (cons)   at (7.75,-9.9)  {Mean-field behaviour\\ \cref{thm:consequences}, \cref{sec:consequences}};
+  % arrows inside Part I
+  \draw[arr] (bridges) -- (ampl);
+  \draw[arr] (ampl) -- node[lab, right=3pt] {by contradiction} (mom);
+  \draw[arr] (eff) -- (mom);
+  \draw[arr] (mom) -- (apr);
+  \draw[arr] (apr) -- (cb);
+  % Part II feeds the assembly through one bus
+  \draw[thick] (def.west) -| (10.4,-6.0);
+  \draw[thick] (esc.west) -- (10.4,-2.0);
+  \draw[arr] (10.4,-6.0) -- (cb.east);
+  % the sprinkling bound enters the assembly and the reduction
+  \draw[arr] (spr) -- (cb);
+  \draw[arr] (spr.south east) -- (thm.north west);
+  % from critical boundedness to the main results
+  \draw[arr] (cb) -- (thm);
+  \draw[arr] (nonu) -- (thm);
+  \draw[arr] (aux) -- (thm);
+  \draw[arr] (thm) -- (cons);
+  \draw[arr] (hut) -- (cons);
+\end{tikzpicture}

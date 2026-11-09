@@ -1,0 +1,99 @@
+% preamble.tex -- house style of Gruppe Jahnel (TU Braunschweig)
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=1.05in]{geometry}
+\usepackage{microtype}
+\setlength{\emergencystretch}{1em}
+\usepackage{xcolor}
+\definecolor{paperlink}{RGB}{0,0,114}
+% shared figure colours (roles; every colour is paired with a line style or a label)
+\definecolor{figmain}{RGB}{0,62,140}   % raw path, corridor, main objects
+\definecolor{figaux}{RGB}{176,84,0}    % escapes, inserted pieces
+\definecolor{figgrey}{gray}{0.5}       % guides, closed edges
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=2em,itemsep=0.25em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=2.25em,itemsep=0.25em,topsep=0.35em}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,fit,backgrounds}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Nonuniqueness on nonamenable transitive graphs}
+\fancyhead[R]{\small\thepage}
+\setlength{\headheight}{14pt}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linktoc=all,linkcolor=paperlink,citecolor=paperlink,
+  urlcolor=paperlink,pdfstartview=Fit}
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
+\setlength{\parindent}{1.25em}
+\setlength{\parskip}{0pt}
+\numberwithin{equation}{section}
+\setcounter{tocdepth}{1}
+
+% ---------------------------------------------------------------- theorems
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% standing assumptions (A1), (A2): referenced with \cref
+\newlist{asslist}{enumerate}{1}
+\setlist[asslist]{label=\textup{(A\arabic*)},ref=\textup{(A\arabic*)},leftmargin=3em}
+\crefformat{asslisti}{#2#1#3}
+\Crefformat{asslisti}{#2#1#3}
+\crefrangeformat{asslisti}{#3#1#4--#5#2#6}
+\crefmultiformat{asslisti}{#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
+
+% ---------------------------------------------------------------- macros
+\newcommand{\PP}{\mathbb P}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+% indicator: \mathds 1 (dsfont); bold fallback where dsfont is not installed
+\IfFileExists{dsfont.sty}{\usepackage{dsfont}\newcommand{\1}{\mathds{1}}}{\newcommand{\1}{\mathbf{1}}}
+\newcommand{\e}{\mathrm{e}}
+% \d and \c: upright d and complement sign in math mode, the usual accents in text mode
+\let\accentdotbelow\d
+\DeclareRobustCommand{\d}{\ifmmode\mathrm{d}\else\expandafter\accentdotbelow\fi}
+\newcommand{\dd}{\,\mathrm{d}}
+\let\accentcedilla\c
+\DeclareRobustCommand{\c}{\ifmmode\mathrm{c}\else\expandafter\accentcedilla\fi}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Adj}{Adj}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Piv}{Piv}
+\DeclareMathOperator{\Cay}{Cay}
+\newcommand{\given}{\,\lvert\,}
+\newcommand{\conn}{\leftrightarrow}
+\newcommand{\nconn}{\mathrel{\not\leftrightarrow}}
+\newcommand{\connin}[1]{\xleftrightarrow{\;#1\;}}
+\newcommand{\ptwo}{p_{2\to 2}}
+\newcommand{\pexp}{p_{\mathrm{exp}}}
+\newcommand{\dbr}{d_{\mathrm{br}}}
+\newcommand{\diambr}{\diam_{\mathrm{br}}}
+\newcommand{\radbr}{\operatorname{rad}_{\mathrm{br}}}
+\newcommand{\radint}{\operatorname{rad}_{\mathrm{int}}}
+\newcommand{\radext}{\operatorname{rad}_{\mathrm{ext}}}
+\newcommand{\Nb}{\mathrm{N}}                   % closed neighbourhood N[A]
+\newcommand{\Cor}{\mathrm{Cor}}                % corridor event
+\newcommand{\Bl}{\mathrm{Bl}}                  % blockers
+\newcommand{\Erw}{\mathbf{E}^{\mathrm{rw}}_{k}}  % average over k-step lazy walk paths from o
+\newcommand{\Ehat}{\widehat{\EE}}

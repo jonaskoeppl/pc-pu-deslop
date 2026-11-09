@@ -1,0 +1,83 @@
+\section{Proofs of two auxiliary results}\label{app:aux}
+
+\subsection{Russo's formula in operator norm}\label{app:russo}
+
+\begin{proof}[Proof of \cref{lem:russo}]
+\emph{Finite domains.} Let $\Lambda$ be a finite domain. For an increasing event depending on finitely
+many edges, Russo's formula~\cite[Section~2.4]{Gri99} expresses the derivative in $p$ as the expected
+number of pivotal edges, and since pivotality of an edge does not depend on its state,
+$(1-p)\,\PP_p(e\text{ is pivotal})=\PP_p(e\text{ is closed and pivotal})$. An edge $e=\{a,b\}$ is closed and
+pivotal for $x\connin{\Lambda}y$ exactly when, for one of its two orientations, $x\in C_a^\Lambda$,
+$y\in C_b^\Lambda$ and $C_a^\Lambda\neq C_b^\Lambda$. Hence
+\begin{equation}\label{eq:russo-finite}
+  (1-p)\frac{\d}{\d p}T_p^\Lambda(x,y)=\sum_{a}\sum_{b\sim a}
+  \PP_p\bigl(x\in C_a^\Lambda,\ y\in C_b^\Lambda,\ C_a^\Lambda\neq C_b^\Lambda\bigr)\,,
+\end{equation}
+where both $a$ and $b$ range over~$\Lambda$. The right-hand side equals
+$\EE_p[\Adj(C^\Lambda_x,C^\Lambda_y)\1\{C^\Lambda_x\neq C^\Lambda_y\}]$.
+
+\emph{Passage to $G$.} Fix $\bar p<p_c$. For $p\le \bar p$, each summand in~\eqref{eq:russo-finite} is at most
+$\PP_p(\{x\conn a\}\circ\{b\conn y\})\le T_{\bar p}(x,a)T_{\bar p}(b,y)$ by the van den Berg--Kesten
+inequality. The bound is summable over $(a,b)$, with sum $(T_{\bar p}\Adj\,T_{\bar p})(x,y)$, and also over
+$y$, with sum $d\chi(\bar p)^2$. Let $\Lambda$ increase to~$V$ through finite domains. Below $p_c$ all
+clusters are almost surely finite, so for almost every configuration the clusters $C_a^\Lambda$,
+$C_b^\Lambda$ eventually coincide with $C_a$, $C_b$, and the events in~\eqref{eq:russo-finite} converge to their analogues on~$G$.
+Integrating~\eqref{eq:russo-finite} in $p$ and using dominated convergence, we obtain for
+$0<p'<p\le \bar p$
+\begin{equation}\label{eq:russo-integrated}
+  T_p(x,y)-T_{p'}(x,y)=\int_{p'}^pD_{\tilde p}(x,y)\dd\tilde p\,,\qquad
+  D_{\tilde p}(x,y)\coloneqq\frac1{1-\tilde p}\EE_{\tilde p}\bigl[\Adj(C_x,C_y)\1\{C_x\neq C_y\}\bigr]\,,
+\end{equation}
+with $0\le D_{\tilde p}\le\bar D\coloneqq(1-\bar p)^{-1}T_{\bar p}\Adj\,T_{\bar p}$ entrywise.
+
+\emph{Operator norm.} The kernels $D_{\tilde p}$ and $\bar D$ are invariant and symmetric, and the row
+$\bar D(o,\cdot)$ is summable. By~\eqref{eq:russo-integrated}, every coordinate of the row
+$T_{\tilde p}(o,\cdot)$ is absolutely continuous with derivative $D_{\tilde p}(o,\cdot)$ almost everywhere. Let $F_n$ be
+finite sets increasing to $V$ with $\sum_{y\notin F_n}\bar D(o,y)\le1/n$. For almost every $\tilde p$, all
+coordinates are differentiable at $\tilde p$ with the stated derivative, since $V$ is countable, and then
+\begin{equation*}
+  \limsup_{h\to0}\sum_y\Bigl|\frac{T_{\tilde p+h}(o,y)-T_{\tilde p}(o,y)}h-D_{\tilde p}(o,y)\Bigr|
+  \le\limsup_{h\to0}\sum_{y\in F_n}\Bigl|\cdots\Bigr|+2\sum_{y\notin F_n}\bar D(o,y)\le\frac2n
+\end{equation*}
+for every $n$. So the row is differentiable in $\ell^1(V)$ almost everywhere, and absolutely continuous
+in $\ell^1(V)$, since $\norm{T_p(o,\cdot)-T_{p'}(o,\cdot)}_1\le\int_{p'}^p\norm{D_{\tilde p}(o,\cdot)}_1\dd\tilde p$. For an
+invariant symmetric kernel, all row and column sums of its absolute value equal the $\ell^1$ norm of
+the row of~$o$, so by the Schur test the operator norm is at most this $\ell^1$ norm. Applied to the
+difference quotients and to the increments, this gives local absolute continuity in operator norm and
+\eqref{eq:russo-kernel}.
+
+\emph{The susceptibility.} Summing~\eqref{eq:russo-integrated} over $y$ with Tonelli's theorem shows that
+$\chi$ is locally absolutely continuous with
+$(1-p)\chi'(p)=\sum_y\EE_p[\Adj(C_o,C_y)\1\{C_o\neq C_y\}]$ almost everywhere. Grouping the vertices $y$
+by their clusters, the right-hand side equals $\EE_p\sum_{a\in C_o}\mathsf m(a)$, where
+$\mathsf m(a)\coloneqq\sum_{b\sim a}\abs{C_b}\1\{C_b\neq C_a\}$. Let each vertex $x$ send the mass $\mathsf m(a)$
+to every $a\in C_x$; by the mass-transport principle,
+$\EE_p\sum_{a\in C_o}\mathsf m(a)=\EE_p[\abs{C_o}\,\mathsf m(o)]$, which is~\eqref{eq:russo-chi}.
+\end{proof}
+
+\subsection{The decision-tree covariance inequality}\label{app:osss}
+
+\Cref{lem:osss} is a form of~\cite[Section~3.3, Equation~(6)]{OSSS05}; there the algorithm computes the
+bounded function, as here. We give the proof for completeness, for random variables taking finitely many
+values, which is the case needed in \cref{sec:chi}.
+
+\begin{proof}[Proof of \cref{lem:osss}]
+Let $Y$ be an independent copy of $X$, independent of the randomness of the algorithm. Run the
+algorithm on~$X$, let $i_1,\dots,i_{\mathsf T}$ be the queried coordinates in the order of the queries,
+and let $Z^t$ be $X$ with the coordinates $i_1,\dots,i_t$ replaced by those of~$Y$, so that $Z^0=X$.
+The \emph{transcript} consists of the randomness of the algorithm, the queried indices and the queried
+values of~$X$.
+
+Given the transcript up to some time, the coordinates of $X$ that have not been queried keep their
+original independent laws, because the decision to query a coordinate depends only on the transcript so
+far. The coordinates of $Y$ are independent of everything else. Hence, given the full transcript, $Z^{\mathsf T}$
+has the law of~$X$. Since the transcript determines $g(X)$,
+\begin{equation*}
+  \Cov\bigl(f(X),g(X)\bigr)=\EE\bigl[(f(X)-f(Z^{\mathsf T}))\,g(X)\bigr]\,.
+\end{equation*}
+Write $f(X)-f(Z^{\mathsf T})$ as the telescoping sum of $f(Z^{t-1})-f(Z^t)$ and use $0\le g\le1$:
+$\abs{\Cov(f(X),g(X))}\le\EE\sum_{t\le\mathsf T}\abs{f(Z^{t-1})-f(Z^t)}$. Given the transcript before the
+$t$-th query, and given that this query concerns coordinate~$i$, the pair $(Z^{t-1},Z^t)$ has the law of
+$(X,X^{(i)})$ by the same reasoning. Since every coordinate is queried at most once, taking expectations
+gives $\EE\sum_{t\le\mathsf T}\abs{f(Z^{t-1})-f(Z^t)}=\sum_i\operatorname{rev}_i\,\EE\abs{f(X)-f(X^{(i)})}$.
+\end{proof}

@@ -1,0 +1,163 @@
+\section{The triangle diagram}\label{sec:triangle}
+
+In this section we prove the triangle bound~\eqref{eq:apriori-triangle} of \cref{thm:apriori}. We assume
+\cref{ass:G,ass:U}, fix $p\in[p_c/2,p_c)$ and write $T=T_p$ and $\delta=p_c-p$. By
+\cref{lem:subcritical} the operator $T$ is bounded and positive semidefinite, and
+$\nabla_p=\tr(T^3)\ge T(o,o)^3=1$.
+
+By Russo's formula, the derivative of $\nabla_p$ is a sum over pairs of distinct clusters, weighted by
+the number of edges between them and by a kernel built from~$T$. We split this sum according to the size
+of the smaller cluster. If it is small, the weight is bounded by its size times~$\nabla_p$. If both
+clusters are large, we use that two distinct large clusters have few edges between them: comparing an
+exploration of one cluster with an exploration of the same cluster after deleting the other, the
+difference of their centred scores is exactly minus $p$ times the number of these (closed) edges, and
+both scores are concentrated (\cref{lem:contacts}). Together with the a priori bound on $\chi(p)$ this
+yields a differential inequality for $\nabla_p$ whose solution grows more slowly than every power of
+$1/\delta$.
+
+\paragraph{Sums over pairs of clusters.}
+For a nonnegative function $F$ of ordered pairs of distinct finite vertex sets, invariant under
+automorphisms, put
+\begin{equation*}
+  \mathcal S(F)\coloneqq\EE_p\Bigl[\frac1{\abs{C_o}}\sum_{B\neq C_o}F(C_o,B)\Bigr]\,,
+\end{equation*}
+where the sum runs over the clusters $B$ other than~$C_o$. This is a positive linear functional, so it
+satisfies the Cauchy--Schwarz inequality $\mathcal S(F_1F_2)\le\mathcal S(F_1^2)^{1/2}\mathcal S(F_2^2)^{1/2}$.
+For a nonnegative invariant kernel~$\mathsf J$, recall $\mathsf J(A,B)=\sum_{a\in A,b\in B}\mathsf J(a,b)$. The mass-transport
+principle gives the \emph{rerooting formula}
+\begin{equation}\label{eq:reroot}
+  \mathcal S\bigl(\mathsf J(A,B)\,F(A,B)\bigr)=\EE_p\Bigl[\sum_v\mathsf J(o,v)\,F(C_o,C_v)\,\1\{C_o\neq C_v\}\Bigr]\,:
+\end{equation}
+send from $x$ to each $y\in C_x$ the mass $\abs{C_x}^{-1}\sum_v\mathsf J(y,v)F(C_x,C_v)\1\{C_x\neq C_v\}$; the
+expected mass sent out by $o$ is the left-hand side, and the expected mass received is the right-hand
+side. Sending $F(A,B)/(\abs A\abs B)$ from every vertex of $A$ to every vertex of $B$ shows in the same
+way that $\mathcal S(F)=\mathcal S(F^\top)$, where $F^\top(A,B)\coloneqq F(B,A)$.
+
+\begin{lemma}[Edges between two large clusters]\label{lem:contacts}
+Let $\alpha\in(0,1/2)$ and $\varepsilon_1>0$ with $\kappa\coloneqq1/2+\varepsilon_1-2\alpha<0$. There
+is $C<\infty$ such that for all $p\in[p_c/2,p_c)$ and $n_0\ge1$,
+\begin{equation}\label{eq:contacts}
+  \mathcal S\bigl(\Adj(A,B)^2\,\1\{\min(\abs A,\abs B)\ge n_0\}\bigr)\le C\,n_0^\kappa\,.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Fix an edge $\{x,v\}$ and a real number $n\ge1$, and let
+$\mathcal H_n\coloneqq\{C_x\neq C_v,\ n\le\min(\abs{C_x},\abs{C_v})<2n\}$.
+
+\emph{Stage 1: probability of two large clusters.} On $\mathcal H_n$ the events $\{\abs{C_x}\ge n\}$ and
+$\{\abs{C_v}\ge n\}$ have disjoint finite witnesses, namely trees in the two distinct clusters. By the
+van den Berg--Kesten inequality, monotonicity in~$p$ and Markov's inequality,
+\begin{equation*}
+  \PP_p(\mathcal H_n)\le\PP_{p_c}(\abs{C_o}\ge n)^2\le C n^{-2\alpha}\,,
+\end{equation*}
+using \cref{thm:moments}.
+
+\emph{Stage 2: two explorations.} Explore $C_v$ in the full graph, testing every edge incident to a
+discovered vertex exactly once (including edges between two discovered vertices), and stop after
+$N\coloneqq\lceil2dn\rceil$ tests if the exploration has not finished. Let $S_1$ be the sum of
+$\omega(e)-p$ over the tested edges. Every test is a fresh Bernoulli variable given the past, so by the
+Azuma--Hoeffding inequality $\PP_p(\abs{S_1}>n^{1/2+\varepsilon_1})\le2\exp(-2n^{1+2\varepsilon_1}/N)$,
+without any conditioning on the sizes.
+Second, on the same configuration, expose $A\coloneqq C_x$ together with the states of its internal and
+boundary edges; if $v\notin A$, explore the cluster of $v$ in $V\setminus A$ in the same way, with the
+same cap~$N$, and let $S_2$ be its score ($S_2\coloneqq0$ if $v\in A$). Given the exposure, the tested
+edges are fresh, so the same tail bound holds for~$S_2$.
+
+On $\mathcal H_n\cap\{\abs{C_v}\le\abs{C_x}\}$, the cluster $B\coloneqq C_v$ has fewer than $2n$
+vertices and fewer than $N$ incident edges, so both explorations finish. The first tests all edges
+incident to~$B$, the second those that have no endpoint in~$A$. The difference consists of the edges
+between $A$ and~$B$, all of which are closed, so
+\begin{equation*}
+  S_1-S_2=-p\,\Adj(A,B)\,.
+\end{equation*}
+Hence, on this event, $\Adj(A,B)>2n^{1/2+\varepsilon_1}/p$ forces $\abs{S_1}>n^{1/2+\varepsilon_1}$ or
+$\abs{S_2}>n^{1/2+\varepsilon_1}$. Using $p\ge p_c/2$ and $N\le3dn$, and exchanging the roles of $x$ and
+$v$ for the other size order, we obtain
+\begin{equation*}
+  \PP_p\bigl(\mathcal H_n,\ \Adj(C_x,C_v)>4n^{1/2+\varepsilon_1}/p_c\bigr)\le C\e^{-cn^{2\varepsilon_1}}\,.
+\end{equation*}
+The two scores are concentrated separately; no independence between them is used.
+
+\emph{Stage 3: summation.} Since $\Adj(C_x,C_v)\le d\min(\abs{C_x},\abs{C_v})<2dn$ on $\mathcal H_n$,
+Stages~1 and~2 give
+$\EE_p[\Adj(C_x,C_v)\1_{\mathcal H_n}]\le Cn^{1/2+\varepsilon_1-2\alpha}+Cn\e^{-cn^{2\varepsilon_1}}
+\le Cn^\kappa$. By the rerooting formula~\eqref{eq:reroot} with $\mathsf J=\Adj$, the left-hand side
+of~\eqref{eq:contacts} equals
+$\EE_p[\sum_{v\sim o}\Adj(C_o,C_v)\1\{\min(\abs{C_o},\abs{C_v})\ge n_0,\ C_o\neq C_v\}]$. Splitting the
+minimum into the ranges $[2^in_0,2^{i+1}n_0)$, $i\ge0$, bounds it by $d\sum_{i\ge0}C(2^in_0)^\kappa\le
+Cn_0^\kappa$, because $\kappa<0$.
+\end{proof}
+
+\begin{proof}[Proof of~\eqref{eq:apriori-triangle}]
+\emph{Stage 1: the derivative.} Put $\mathsf J\coloneqq T^2$, a bounded, invariant, symmetric kernel. By
+\cref{lem:russo} the map $p\mapsto T_p$ is locally absolutely continuous in operator norm; the trace is
+cyclic by \cref{lem:trace}\ref{it:trace-cyclic} and satisfies $\abs{\tr S}\le\norm S$
+(\cref{sec:mtp}). Hence $\nabla_p=\tr(T^3)$ is
+locally absolutely continuous on $(0,p_c)$, with $\nabla_p'=3\tr(T^2T')$ almost everywhere. By
+\eqref{eq:russo-kernel} and the rerooting formula with $F=\Adj$,
+\begin{equation}\label{eq:triangle-derivative}
+  (1-p)\nabla_p'=3\sum_v\mathsf J(o,v)\,\EE_p\bigl[\Adj(C_v,C_o)\1\{C_v\neq C_o\}\bigr]
+  =3\,\mathcal S\bigl(\mathsf J(A,B)\Adj(A,B)\bigr)\,.
+\end{equation}
+
+\emph{Stage 2: a square bound.} By~\eqref{eq:reroot}, expanding the second factor $\mathsf J(C_o,C_v)$,
+\begin{equation*}
+  \mathcal S\bigl(\mathsf J(A,B)^2\bigr)=\sum_{v,x',y'}\mathsf J(o,v)\,\mathsf J(x',y')\,
+  \PP_p\bigl(o\conn x',\ v\conn y',\ C_o\neq C_v\bigr)\,.
+\end{equation*}
+The two connections occur disjointly, so the van den Berg--Kesten inequality bounds the probability by
+$T(o,x')T(v,y')$. By symmetry of $\mathsf J$ and~$T$, the resulting sum is $\tr(T\mathsf J T\mathsf J)=\tr(T^6)$, and
+\cref{lem:trace}\ref{it:trace-positive} with the positive operator $T^3$ gives
+\begin{equation}\label{eq:square-bound}
+  \mathcal S\bigl(\mathsf J(A,B)^2\bigr)\le\tr(T^6)\le\norm{T}^3\,\nabla_p\,.
+\end{equation}
+
+\emph{Stage 3: splitting by size.} Fix $\alpha\in(0,1/2)$, $\varepsilon_1>0$ with $\kappa<0$ as in
+\cref{lem:contacts}, and a size $n_0\ge1$. For the pairs in which $A=C_o$ has fewer than $n_0$ vertices,
+reroot the factor $\Adj$ with~\eqref{eq:reroot} and expose~$A$. If $v\notin A$, the cluster $C_v$ is
+the cluster of $v$ in $V\setminus A$, which is fresh, so
+\begin{equation*}
+  \EE_p\bigl[\mathsf J(A,C_v)\given A\bigr]\le\sum_{y\in A}\sum_z\mathsf J(y,z)\,T(v,z)=\sum_{y\in A}T^3(y,v)\le\abs A\,\nabla_p\,,
+\end{equation*}
+by \cref{lem:trace}\ref{it:trace-diagonal} for the positive operator $T^3$. Hence, using
+$\abs A\1\{\abs A<n_0\}\le n_0^{1-\alpha}\abs A^\alpha$ and \cref{thm:moments},
+\begin{equation*}
+  \mathcal S\bigl(\mathsf J(A,B)\Adj(A,B)\1\{\abs A<n_0\}\bigr)\le d\,\nabla_p\,\EE_p\bigl[\abs{C_o};\abs{C_o}<n_0\bigr]
+  \le C\,n_0^{1-\alpha}\,\nabla_p\,.
+\end{equation*}
+Since $\mathsf J(A,B)\Adj(A,B)$ is symmetric in $A$ and $B$ and $\mathcal S(F)=\mathcal S(F^\top)$, the same
+bound holds for the pairs with $\abs B<n_0$. For the remaining pairs, the Cauchy--Schwarz inequality,
+\eqref{eq:contacts} and~\eqref{eq:square-bound} give
+\begin{equation*}
+  \mathcal S\bigl(\mathsf J(A,B)\Adj(A,B)\1\{\min(\abs A,\abs B)\ge n_0\}\bigr)
+  \le C\,n_0^{\kappa/2}\,\norm{T}^{3/2}\,\nabla_p^{1/2}\,.
+\end{equation*}
+
+\emph{Stage 4: the differential inequality.} The factor $(1-p)^{-1}$ in~\eqref{eq:triangle-derivative}
+is bounded. Since $\nabla_p\ge1$, the function $\mathsf b\coloneqq\nabla_p^{1/2}$ is locally absolutely
+continuous, and by Stages~1 and~3, for almost every $p\in[p_c/2,p_c)$,
+\begin{equation}\label{eq:triangle-ode}
+  \mathsf b'\le C\,n_0^{1-\alpha}\,\mathsf b+C\,n_0^{\kappa/2}\norm{T}^{3/2}\,.
+\end{equation}
+
+\emph{Stage 5: choice of exponents.} Let $\eta>0$, and fix $\varepsilon_2\in(0,\min\{1,\eta\})$. Choose
+$\alpha<1/2$ and $\varepsilon_1,\eta'>0$ such that $\kappa<0$ and
+\begin{equation*}
+  A_\star\coloneqq(2-\varepsilon_2)(1-\alpha)<1\,,\qquad
+  B_\star\coloneqq(2-\varepsilon_2)\bigl(\tfrac14+\tfrac{\varepsilon_1}2-\alpha\bigr)+\tfrac32(1+\eta')<1+\tfrac\eta2\,.
+\end{equation*}
+This is possible by continuity, because at $\alpha=1/2$ and $\varepsilon_1=\eta'=0$ the two expressions
+equal $1-\varepsilon_2/2$ and $1+\varepsilon_2/4$. Take $n_0\coloneqq\delta^{-(2-\varepsilon_2)}\ge1$. By~\eqref{eq:apriori-chi},
+$\norm T\le\chi(p)\le C\delta^{-1-\eta'}$, and since $\kappa/2=1/4+\varepsilon_1/2-\alpha$,
+inequality~\eqref{eq:triangle-ode} becomes
+\begin{equation*}
+  \mathsf b'(p)\le C\,(p_c-p)^{-A_\star}\,\mathsf b(p)+C\,(p_c-p)^{-B_\star}\,.
+\end{equation*}
+Since $A_\star<1$, the coefficient of $\mathsf b$ is integrable on $[p_c/2,p_c)$, and the integrating
+factor is bounded above and below. Hence
+\begin{equation*}
+  \mathsf b(p)\le C\Bigl(\mathsf b(p_c/2)+\int_{p_c/2}^p(p_c-p')^{-B_\star}\dd p'\Bigr)\le C_\eta\,\delta^{-\eta/2}\,,
+\end{equation*}
+where the last step uses $B_\star<1+\eta/2$. Squaring gives $\nabla_p\le C_\eta\delta^{-\eta}$.
+\end{proof}
