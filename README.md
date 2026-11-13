@@ -15,7 +15,7 @@ operator-threshold conjecture `p_c < p_{2→2}`, which gives mean-field
 criticality as a consequence.
 
 The goal here is not to add new mathematics. It is to produce a version
-of the argument that a percolation theorist can **read, check, and cite
+of the argument that a percolation theorist can **read, check, actually learn something from, and cite
 responsibly**.
 
 ## Current scope: the transitive case first
